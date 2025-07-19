@@ -2,11 +2,12 @@ import { getProject } from "@/sanity/sanity-utils";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 type Props = {
-  params: { project: string };
+  params: Promise<{ project: string }>;
 };
 
 export default async function Project({ params }: Props) {
-  const slug = params.project;
+  const resolvedParams = await params;
+  const slug = resolvedParams.project;
   const project = await getProject(slug);
   return (
     <div>
@@ -27,7 +28,7 @@ export default async function Project({ params }: Props) {
 
       {/*content goes here*/}
       <div className="mt-5 text-lg text-gray-700">
-        <PortableText value={project.content}> </PortableText>
+        <PortableText value={project.content} />
       </div>
       {/*image goes here*/}
       <Image

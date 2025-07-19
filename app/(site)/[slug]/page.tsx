@@ -1,47 +1,26 @@
-/************************************************/
-// import { getPage, getPages } from "@/sanity/sanity-utils";
-// import { PortableText } from "@portabletext/react";
-
-// export async function generateStaticParams() {
-//   const pages = await getPages();
-
-//   return pages.map((page) => ({
-//     slug: page.slug,
-//   }));
-// }
-// export default async function Page({ params }: { params: { slug: string } }) {
-//   const page = await getPage(params.slug);
-
-//   return (
-//     <div>
-//       <h1 className="bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent text-5xl font-extrabold drop-shadow">
-//         {page.title}
-//       </h1>
-
-//       <div className="text-lg text-gray-700 mt-10">
-//         <PortableText value={page.content} />
-//       </div>
-//     </div>
-//   );
-// }
-/************************************************/
 import { getPage } from "@/sanity/sanity-utils";
 import { PortableText } from "@portabletext/react";
+
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
+
 export default async function Page({ params }: Props) {
-  // const slug = params.page;
-  const page = await getPage(params.slug);
+  const resolvedParams = await params;
+  const page = await getPage(resolvedParams.slug);
 
   return (
-    <div>
-      <h1 className="bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent text-5xl font-extrabold drop-shadow">
-        {page.title}
-      </h1>
-
-      <div className="text-lg text-gray-700 mt-10">
-        <PortableText value={page.content} />
+    <div className="page-container">
+      <div className="content-wrapper">
+        <div className="content-header">
+          <h1 className="page-title">
+            {page.title}
+          </h1>
+        </div>
+        
+        <div className="content-body">
+          <PortableText value={page.content} />
+        </div>
       </div>
     </div>
   );

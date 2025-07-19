@@ -1,6 +1,6 @@
 import { getProjects } from "@/sanity/sanity-utils";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import ContactSection from "../components/ContactSection/ContactSection";
 import QuoteCTA from "../components/CTA/Cta";
 import Hero from "../components/Hero/Hero";
@@ -12,9 +12,8 @@ import WhyElixderm from "../components/WhyElixderm/WhyElixderm";
 
 export default async function Home() {
   const projects = await getProjects();
-
   return (
-    <div>
+    <main className="w-full">
       <Hero />
       <Philosophy />
       <WhyElixderm />
@@ -22,31 +21,46 @@ export default async function Home() {
       <QuoteCTA />
       <Partner />
       <Testimonials />
-      <h2 className="mt-24 font-bold text-gray-700 text-3xl">My Projects</h2>
-      <div className="mt-5 grid grid-cols-3 gap-8">
-        {projects.map((project) => (
-          <Link
-            href={`/projects/${project.slug}`}
-            key={project._id}
-            className="border-2 border-gray-500 rounded-lg p-1 hover:scale-105 hover:border-blue-500"
-          >
-            {project.image && (
-              <Image
-                src={project.image}
-                alt={project.name}
-                width={750}
-                height={300}
-                className="object-cover rounded-lg border borde-gray-500"
-              />
-            )}
-
-            <div className="mt-2 font-extrabold bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent">
-              {project.name}
-            </div>
-          </Link>
-        ))}
-      </div>
+      
+      {/* Projects Section */}
+      <section className="projects-section">
+        <div className="projects-container">
+          <div className="projects-header">
+            <h2 className="projects-title">Featured Projects</h2>
+            <p className="projects-subtitle">
+              Discover our latest work and innovative solutions
+            </p>
+          </div>
+          
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <Link
+                href={`/projects/${project.slug}`}
+                key={project._id}
+                className="project-card"
+              >
+                {project.image && (
+                  <div className="project-image-container">
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      width={750}
+                      height={300}
+                      className="project-image"
+                    />
+                  </div>
+                )}
+                
+                <div className="project-content">
+                  <h3 className="project-title">{project.name}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      
       <ContactSection />
-    </div>
+    </main>
   );
 }
