@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Link from "next/link";
 import { getPages } from "@/sanity/sanity-utils";
+import Footer from "../components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default async function RootLayout({
             className="bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent text-lg font-bold"
           >
             {" "}
-            Kapehe
+            Elixderm
           </Link>
           <div className="flex items-center gap-5 text-sm text-gray-600">
             {pages.map((page) => (
@@ -53,6 +54,7 @@ export default async function RootLayout({
         </header>
 
         <main className="py-20"> {children}</main>
+        <Footer />
       </body>
     </html>
   );

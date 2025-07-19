@@ -1,22 +1,27 @@
 import { getProjects } from "@/sanity/sanity-utils";
 import Image from "next/image";
 import Link from "next/link";
+import ContactSection from "../components/ContactSection/ContactSection";
+import QuoteCTA from "../components/CTA/Cta";
+import Hero from "../components/Hero/Hero";
+import HowItWorks from "../components/HowItWorks/HowItWorks";
+import Partner from "../components/Partner/Partner";
+import Philosophy from "../components/Philosophy/Philosophy";
+import Testimonials from "../components/Testimonials/Testimonials";
+import WhyElixderm from "../components/WhyElixderm/WhyElixderm";
+
 export default async function Home() {
   const projects = await getProjects();
 
   return (
     <div>
-      <h1 className="text-7xl font-extrabold">
-        Hello I&apos;m{" "}
-        <span className="bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 bg-clip-text text-transparent">
-          Kapehe!
-        </span>
-      </h1>
-
-      <p className="mt-3 text-xl text-gray-600">
-        Aloha every one check out my projects!
-      </p>
-
+      <Hero />
+      <Philosophy />
+      <WhyElixderm />
+      <HowItWorks />
+      <QuoteCTA />
+      <Partner />
+      <Testimonials />
       <h2 className="mt-24 font-bold text-gray-700 text-3xl">My Projects</h2>
       <div className="mt-5 grid grid-cols-3 gap-8">
         {projects.map((project) => (
@@ -41,6 +46,7 @@ export default async function Home() {
           </Link>
         ))}
       </div>
+      <ContactSection />
     </div>
   );
 }
