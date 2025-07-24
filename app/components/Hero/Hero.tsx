@@ -110,7 +110,7 @@ const HeroSection: React.FC = () => {
 
           <div className="hero-cta opacity-0 transform translate-y-[30px] animate-cta-reveal">
             <Link
-              href="/contact"
+              href="/contact-us"
               className="cta-primary group relative inline-flex items-center text-white no-underline rounded-full font-semibold overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 active:-translate-y-0.5"
               style={{
                 gap: '0.75rem',
