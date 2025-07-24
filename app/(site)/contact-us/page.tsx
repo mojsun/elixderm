@@ -25,9 +25,47 @@ export default function ContactUs() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Form submitted! (This is just a demo - no actual submission)');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: '',
+          productType: '',
+          timeline: '',
+          quantity: '',
+          formulation: '',
+          vision: '',
+          budget: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -276,12 +314,48 @@ export default function ContactUs() {
                     </select>
                   </div>
 
-                  <button type="submit" className="form-submit-btn">
-                    Get Your Custom Quote
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12,5 19,12 12,19"></polyline>
-                    </svg>
+                  {submitStatus === 'success' && (
+                    <div className="success-message" style={{
+                      padding: '1rem',
+                      backgroundColor: '#10b981',
+                      color: 'white',
+                      borderRadius: '0.5rem',
+                      marginBottom: '1rem',
+                      textAlign: 'center'
+                    }}>
+                      ✅ Thank you! Your inquiry has been sent successfully. We'll respond within 2-3 business days.
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="error-message" style={{
+                      padding: '1rem',
+                      backgroundColor: '#ef4444',
+                      color: 'white',
+                      borderRadius: '0.5rem',
+                      marginBottom: '1rem',
+                      textAlign: 'center'
+                    }}>
+                      ❌ Sorry, there was an error sending your message. Please try again or contact us directly at hello@elixderm.com
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit" 
+                    className="form-submit-btn"
+                    disabled={isSubmitting}
+                    style={{
+                      opacity: isSubmitting ? 0.7 : 1,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                    }}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Get Your Custom Quote'}
+                    {!isSubmitting && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12,5 19,12 12,19"></polyline>
+                      </svg>
+                    )}
                   </button>
                 </form>
               </div>
