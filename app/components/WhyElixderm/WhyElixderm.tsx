@@ -111,8 +111,9 @@ export default function WhyElixderm(): React.JSX.Element {
   return (
     <section 
       ref={sectionRef}
-      className="why-different-section relative overflow-hidden py-24 w-full"
+      className="why-different-section relative overflow-hidden w-full"
       style={{
+        padding: '6rem 0',
         background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
       }}
     >
@@ -143,12 +144,12 @@ export default function WhyElixderm(): React.JSX.Element {
             
             {/* Features Container */}
             <div className="features-container relative overflow-hidden mt-8"
-                 style={{ height: '520px' }}>
+                 style={{ height: '600px' }}>
               <div className={`features-grid grid grid-cols-2 gap-8 relative transition-transform duration-800 ease-out ${
                 isScrolled ? 'features-scrolled' : ''
               }`}
                    style={{ 
-                     height: '780px',
+                     height: '820px',
                      transform: isScrolled ? 'translateY(-272px)' : 'translateY(0)'
                    }}>
                 
@@ -174,9 +175,10 @@ export default function WhyElixderm(): React.JSX.Element {
                          }} />
                     
                     {/* Feature Icon */}
-                    <div className="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white transition-all duration-300 ease-out"
+                    <div className="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center text-white transition-all duration-300 ease-out"
                          style={{
-                           background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)'
+                           background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+                           marginBottom: '2rem'
                          }}>
                       {feature.icon}
                     </div>

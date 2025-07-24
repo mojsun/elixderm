@@ -222,9 +222,10 @@ export default function HowItWorks(): React.JSX.Element {
               
               {/* Step Info */}
               <div className="step-info p-8">
-                <div className="step-number inline-block text-2xl font-extrabold text-primary mb-4 px-4 py-2 rounded-xl"
-                     style={{
-                       background: 'rgba(16, 185, 129, 0.1)',
+                                                                <div className="step-number w-10 h-10 flex items-center justify-center font-bold text-lg rounded-full mb-4 flex-shrink-0"
+                        style={{
+                          background: 'rgba(16, 185, 129, 0.1)',
+                          color: '#10b981',
                        letterSpacing: '0.1em'
                      }}>
                   {steps[currentStepIndex].number}

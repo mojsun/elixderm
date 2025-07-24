@@ -39,7 +39,7 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="hero-section relative flex items-center justify-center overflow-hidden mx-8 rounded-b-[2rem]" style={{ minHeight: '80vh' }}>
+    <section className="hero-section relative flex items-center justify-center overflow-hidden" style={{ minHeight: '80vh', margin: '0 2rem', borderRadius: '0 0 2rem 2rem' }}>
       {/* Background Video */}
       <div className="hero-background absolute inset-0 pointer-events-none z-[1]">
         <video
@@ -49,7 +49,6 @@ const HeroSection: React.FC = () => {
           muted
           loop
           playsInline
-          poster="/images/design.png"
         >
           <source src="/videos/leaf-elix.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -103,7 +102,8 @@ const HeroSection: React.FC = () => {
                color: '#e5e7eb',
                marginBottom: '2.5rem',
                textShadow: '0 1px 4px rgba(0, 0, 0, 0.6)',
-               fontWeight: '500'
+               fontWeight: '500',
+               textAlign: 'center'
              }}>
             Boutique manufacturing for indie beauty brands. Low MOQs, transparent pricing, and flexible production.
           </p>
