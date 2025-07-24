@@ -72,7 +72,7 @@ Please respond within 2-3 business days as promised on the website.
     // Send email using Resend
     const emailData = await resend.emails.send({
       from: 'Elixderm Contact Form <noreply@elixderm.com>',
-      to: ['YOUR_NEW_EMAIL@example.com'], // Change this to your desired email
+      to: ['hello@elixderm.com'],
       subject: `New Manufacturing Inquiry from ${formData.company}`,
       text: emailContent,
       replyTo: formData.email,
