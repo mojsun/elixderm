@@ -1,7 +1,16 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from 'next-sanity';
+import clientConfig from '@/sanity/config/client-config';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Create Sanity client for writing data
+const sanityClient = createClient({
+  ...clientConfig,
+  useCdn: false, // Important for write operations
+  token: process.env.SANITY_WRITE_TOKEN, // We'll need to add this
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -43,17 +52,38 @@ This inquiry was submitted through the Elixderm contact form.
 Please respond within 2-3 business days as promised on the website.
     `;
 
+    // Save to Sanity CMS
+    const sanityDoc = await sanityClient.create({
+      _type: 'contact',
+      name: formData.name,
+      email: formData.email,
+      company: formData.company,
+      phone: formData.phone || '',
+      productType: formData.productType,
+      timeline: formData.timeline,
+      quantity: formData.quantity,
+      formulation: formData.formulation,
+      vision: formData.vision,
+      budget: formData.budget,
+      submittedAt: new Date().toISOString(),
+      status: 'new',
+    });
+
     // Send email using Resend
-    const data = await resend.emails.send({
+    const emailData = await resend.emails.send({
       from: 'Elixderm Contact Form <noreply@elixderm.com>',
-      to: ['hello@elixderm.com'],
+      to: ['YOUR_NEW_EMAIL@example.com'], // Change this to your desired email
       subject: `New Manufacturing Inquiry from ${formData.company}`,
       text: emailContent,
       replyTo: formData.email,
     });
 
     return NextResponse.json(
-      { message: 'Email sent successfully', data: data },
+      { 
+        message: 'Contact saved and email sent successfully', 
+        sanityId: sanityDoc._id,
+        emailData: emailData 
+      },
       { status: 200 }
     );
 
