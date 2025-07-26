@@ -113,7 +113,7 @@ export default function Testimonials() {
                     ))}
                   </div>
                   <p className="testimonial-quote">
-                    &ldquo;{testimonial.quote}&rdquo;
+                    "{testimonial.quote}"
                   </p>
                   <div className="testimonial-author-info">
                     <div className="author-avatar">
