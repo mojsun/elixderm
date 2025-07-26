@@ -135,7 +135,7 @@ export default function WhyElixderm(): React.JSX.Element {
               Why Elixderm is Different
             </h2>
             <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal">
-              While other manufacturers focus on volume and standardization, we&apos;ve built our entire operation around flexibility, transparency, and genuine partnership. Here&apos;s what sets us apart in the beauty manufacturing landscape.
+              While other manufacturers focus on volume and standardization, we've built our entire operation around flexibility, transparency, and genuine partnership. Here's what sets us apart in the beauty manufacturing landscape.
             </p>
           </div>
           

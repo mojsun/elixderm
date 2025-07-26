@@ -78,7 +78,7 @@ export default function Testimonials() {
         <div className="testimonials-header">
           <h2 className="testimonials-title">Hear From People Just Like You</h2>
           <p className="testimonials-subtitle">
-            Real feedback from entrepreneurs, creators, and business owners who&apos;ve worked with us
+                          Real feedback from entrepreneurs, creators, and business owners who've worked with us
           </p>
         </div>
         
