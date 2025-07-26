@@ -91,7 +91,7 @@ const HeroSection: React.FC = () => {
                     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))',
                     textShadow: 'none'
                   }}>
-              we manufacture what others won't.
+              we manufacture what others won&apos;t.
             </span>
           </h1>
 
@@ -120,7 +120,7 @@ const HeroSection: React.FC = () => {
                 background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)'
               }}
             >
-                              <span className="cta-text relative z-10">Let's Start</span>
+                              <span className="cta-text relative z-10">Let&apos;s Start</span>
               <div 
                 className="cta-ripple absolute top-1/2 left-1/2 w-0 h-0 rounded-full transform -translate-x-1/2 -translate-y-1/2"
                 style={{

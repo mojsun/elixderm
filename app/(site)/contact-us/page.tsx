@@ -231,7 +231,7 @@ export default function ContactUs() {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="timeline">What's your target launch timeline? *</label>
+                    <label htmlFor="timeline">What&apos;s your target launch timeline? *</label>
                     <select
                       id="timeline"
                       name="timeline"
@@ -249,7 +249,7 @@ export default function ContactUs() {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="quantity">What's your estimated initial order quantity? *</label>
+                    <label htmlFor="quantity">What&apos;s your estimated initial order quantity? *</label>
                     <select
                       id="quantity"
                       name="quantity"
@@ -298,7 +298,7 @@ export default function ContactUs() {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="budget">What's your approximate budget range for this project? *</label>
+                    <label htmlFor="budget">What&apos;s your approximate budget range for this project? *</label>
                     <select
                       id="budget"
                       name="budget"
@@ -323,7 +323,7 @@ export default function ContactUs() {
                       marginBottom: '1rem',
                       textAlign: 'center'
                     }}>
-                      ✅ Thank you! Your inquiry has been sent successfully. We'll respond within 2-3 business days.
+                      ✅ Thank you! Your inquiry has been sent successfully. We&apos;ll respond within 2-3 business days.
                     </div>
                   )}
 
