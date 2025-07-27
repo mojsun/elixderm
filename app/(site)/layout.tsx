@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Elixderm - Boutique Beauty Manufacturing",
-  description: "Professional beauty manufacturing for indie brands. Low MOQs, transparent pricing, and flexible production.",
+  description: "Best Professional beauty manufacturing for indie brands. Low MOQs, transparent pricing, and flexible production.",
 };
 
 export default async function RootLayout({
