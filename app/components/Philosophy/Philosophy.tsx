@@ -126,41 +126,71 @@ export default function PhilosophySection(): React.JSX.Element {
     <section 
       ref={sectionRef}
       id="philosophy-section" 
-      className="relative flex items-center justify-center overflow-hidden py-8 h-[50vh] md:h-[40vh] sm:h-[35vh] bg-gradient-to-br from-light-DEFAULT to-light-gray md:py-6 sm:py-4"
+      className="philosophy-section relative flex items-center justify-center overflow-hidden py-8"
+      style={{
+        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+        height: '50vh'
+      }}
     >
-      <div className="w-full h-full flex items-center justify-center max-w-[95%] lg:max-w-full mx-auto px-8 md:px-6 sm:px-4">
-        <div className="text-center w-full mx-auto relative flex flex-col items-center justify-center h-[300px] md:h-[250px] sm:h-[200px]">
+      <div className="philosophy-container w-full h-full flex items-center justify-center max-w-full mx-auto px-8">
+        <div className="philosophy-content text-center w-full mx-auto relative flex flex-col items-center justify-center" style={{ height: '300px' }}>
           
           {/* Philosophy Title */}
-          <h2 className="font-heading font-semibold text-grayish transition-all duration-[600ms] ease-in-out text-[clamp(1.8rem,3vw,2.5rem)] md:text-[clamp(1.5rem,4vw,2rem)] leading-[1.2] tracking-[-0.01em] mb-12 md:mb-8 sm:mb-6">
+          <h2 className="philosophy-title font-heading font-semibold text-grayish transition-all duration-600 ease-in-out"
+              style={{
+                fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+                lineHeight: '1.2',
+                letterSpacing: '-0.01em',
+                marginBottom: '3rem'
+              }}>
             Your Manufacturing Partner
           </h2>
           
           {/* Philosophy Values */}
-          <div className="relative w-full flex items-center justify-center h-[120px] md:h-[100px] sm:h-[80px]">
+          <div className="philosophy-values relative w-full flex items-center justify-center" style={{ height: '120px' }}>
             {philosophyValues.map((text, index) => (
               <div
                 key={index}
-                className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-full transition-all duration-[600ms] cubic-bezier(0.4, 0, 0.2, 1) ${
+                className={`philosophy-value absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-full ${
                   index === currentIndex 
                     ? 'opacity-100 pointer-events-auto' 
                     : 'opacity-0 pointer-events-none'
                 }`}
+                style={{
+                  transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
                 data-index={index}
               >
-                <span className="relative font-[800] text-center whitespace-nowrap md:whitespace-normal lg:whitespace-normal leading-none transition-transform duration-300 ease-in-out hover:scale-[1.02] text-[clamp(2.5rem,5vw,4rem)] lg:text-[clamp(2rem,6vw,3.5rem)] md:text-[clamp(1.8rem,7vw,2.8rem)] sm:text-[clamp(1.5rem,8vw,2.5rem)] leading-[1.1] md:leading-[1.2] sm:leading-[1.3] tracking-[-0.02em] bg-gradient-to-r from-dark-DEFAULT via-dark-light to-dark-DEFAULT bg-clip-text text-transparent font-heading"
+                <span className="value-text relative font-bold text-center whitespace-nowrap leading-none transition-transform duration-300 ease-in-out hover:scale-102"
                       style={{
-                        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+                        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                        fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+                        fontWeight: '800',
+                        lineHeight: '1.1',
+                        letterSpacing: '-0.02em',
+                        background: 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text'
                       }}>
                   {text}
-                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-0.5 opacity-60 w-[60px] bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
+                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-0.5 opacity-60"
+                       style={{
+                         width: '60px',
+                         background: 'linear-gradient(90deg, transparent, #10b981, transparent)'
+                       }} />
                 </span>
               </div>
             ))}
           </div>
           
           {/* Scroll Instruction */}
-          <div className="absolute bottom-4 md:bottom-2 sm:bottom-2 left-1/2 transform -translate-x-1/2 text-grayish-light font-medium opacity-80 text-[0.85rem] md:text-xs animate-pulse">
+          <div className="scroll-instruction absolute left-1/2 transform -translate-x-1/2 text-grayish-light font-medium opacity-80"
+               style={{
+                 bottom: '1rem',
+                 fontSize: '0.85rem',
+                 animation: 'fade-pulse 2s ease-in-out infinite'
+               }}>
             Scroll to explore our advantages
           </div>
           

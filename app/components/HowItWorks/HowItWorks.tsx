@@ -182,54 +182,75 @@ export default function HowItWorks(): React.JSX.Element {
     <section 
       ref={sectionRef}
       id="how-it-works-section" 
-      className="relative w-full overflow-hidden py-32 md:py-16 sm:py-12 min-h-screen flex justify-center items-center bg-gradient-to-br from-light-DEFAULT to-light-darker"
+      className="how-it-works-section relative w-full overflow-hidden py-32"
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
+      }}
     >
-      <div className="mx-auto px-8 md:px-6 sm:px-4 max-w-[1400px] w-full flex flex-col justify-center">
+      <div className="how-it-works-container mx-auto px-8" style={{ maxWidth: '1400px' }}>
         
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-16 md:gap-12 sm:gap-8 mb-4 md:mb-6 sm:mb-8 items-start">
-          <div>
-            <h2 className="font-heading font-extrabold leading-tight text-[4rem] md:text-[3rem] sm:text-[2.5rem] bg-gradient-to-br from-primary-500 to-primary-600 bg-clip-text text-transparent m-0">
+        <div className="how-it-works-header grid grid-cols-1 lg:grid-cols-2 gap-16 mb-4 items-start">
+          <div className="how-it-works-left">
+            <h2 className="how-it-works-title font-heading font-extrabold leading-tight"
+                style={{
+                  fontSize: '4rem',
+                  background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
               How it Works
             </h2>
           </div>
           
-          <div>
-            <p className="text-xl md:text-lg sm:text-base text-grayish leading-relaxed font-medium m-0">
+          <div className="how-it-works-right">
+            <p className="how-it-works-subtitle text-xl text-grayish leading-relaxed font-medium">
               Our streamlined process takes you from concept to market-ready product in just 5 simple steps. 
               Each phase is designed to maximize quality while minimizing complexity and timeline.
             </p>
           </div>
         </div>
 
-        {/* Steps Container */}
-        <div className="relative mt-25 md:mt-16 sm:mt-12 min-h-[60vh] md:min-h-0 sm:min-h-0 overflow-visible">
+                {/* Steps Container */}
+        <div className="how-it-works-steps relative mt-25" style={{ minHeight: '60vh' }}>
           
           {/* Show only current step */}
-          <div className="relative w-full min-h-[400px] md:min-h-0 sm:min-h-0 opacity-100 translate-y-0 pointer-events-auto z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-16 md:gap-12 sm:gap-8 h-full items-center">
+          <div className="step-item w-full h-full">
+            <div className="step-content grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center">
               
               {/* Step Info */}
-              <div className="p-8 md:p-6 sm:p-4">
-                <div className="inline-block mb-4 md:mb-3 sm:mb-2 px-4 py-2 md:px-3 md:py-1.5 sm:px-2 sm:py-1 bg-primary-100/50 text-primary-500 rounded-xl tracking-[0.1em] text-lg md:text-base sm:text-sm font-bold">
+              <div className="step-info p-8">
+                                                                <div className="step-number w-10 h-10 flex items-center justify-center font-bold text-lg rounded-full mb-4 flex-shrink-0"
+                        style={{
+                          background: 'rgba(16, 185, 129, 0.1)',
+                          color: '#10b981',
+                       letterSpacing: '0.1em'
+                     }}>
                   {steps[currentStepIndex].number}
                 </div>
                 
-                <h3 className="font-heading font-bold text-dark leading-tight mb-6 md:mb-4 sm:mb-3 text-[2.5rem] md:text-[2rem] sm:text-[1.75rem] m-0">
+                <h3 className="step-title font-heading font-bold text-dark leading-tight mb-6"
+                    style={{ fontSize: '2.5rem' }}>
                   {steps[currentStepIndex].title}
                 </h3>
                 
-                <p className="text-lg md:text-base sm:text-sm text-grayish leading-relaxed font-medium mb-8 md:mb-6 sm:mb-4 m-0">
+                <p className="step-description text-lg text-grayish leading-relaxed font-medium mb-8">
                   {steps[currentStepIndex].description}
                 </p>
               </div>
 
               {/* Step Visual */}
-              <div className="flex items-center justify-center h-full p-8 md:p-6 sm:p-4">
-                <div className="w-full h-auto flex items-center justify-center transition-transform duration-300 hover:scale-105 md:hover:scale-102 sm:hover:scale-[1.01] bg-gray-50 rounded-3xl min-h-[300px] md:min-h-[250px] sm:min-h-[200px]">
+              <div className="step-visual flex items-center justify-center h-full p-8">
+                <div className="step-image-container w-full h-auto flex items-center justify-center transition-transform duration-300 hover:scale-105 bg-gray-50 rounded-3xl" style={{ minHeight: '300px' }}>
                   {steps[currentStepIndex].media.type === 'video' ? (
                     <video 
-                      className="w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white max-h-[400px] md:max-h-[300px] sm:max-h-[250px] object-cover"
+                      className="step-image w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white"
+                      style={{
+                        maxHeight: '400px',
+                        objectFit: 'cover'
+                      }}
                       autoPlay 
                       muted 
                       loop 
@@ -238,15 +259,19 @@ export default function HowItWorks(): React.JSX.Element {
                       onLoadStart={() => console.log('Video loading started:', steps[currentStepIndex].media.src)}
                     >
                       <source src={steps[currentStepIndex].media.src} type="video/mp4" />
-                      <div className="flex items-center justify-center h-64 md:h-48 sm:h-40 bg-gray-200 rounded-3xl">
-                        <p className="text-gray-500 text-sm md:text-xs">Video: {steps[currentStepIndex].title}</p>
+                      <div className="flex items-center justify-center h-64 bg-gray-200 rounded-3xl">
+                        <p className="text-gray-500">Video: {steps[currentStepIndex].title}</p>
                       </div>
                     </video>
                   ) : (
                     <img 
                       src={steps[currentStepIndex].media.src} 
                       alt={steps[currentStepIndex].media.alt || steps[currentStepIndex].title} 
-                      className="w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white max-h-[400px] md:max-h-[300px] sm:max-h-[250px] object-cover"
+                      className="step-image w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white"
+                      style={{
+                        maxHeight: '400px',
+                        objectFit: 'cover'
+                      }}
                       loading="lazy"
                       onError={(e) => console.error('Image failed to load:', steps[currentStepIndex].media.src, e)}
                       onLoad={() => console.log('Image loaded:', steps[currentStepIndex].media.src)}
@@ -260,11 +285,17 @@ export default function HowItWorks(): React.JSX.Element {
         </div>
 
         {/* Scroll Instruction */}
-        <div className="scroll-instruction fixed bottom-8 md:bottom-6 sm:bottom-4 left-1/2 transform -translate-x-1/2 text-center text-grayish text-sm md:text-xs font-medium z-[100] opacity-0 invisible transition-all duration-300 px-8 md:px-6 sm:px-4 py-4 md:py-3 sm:py-2 rounded-full bg-white/90 backdrop-blur-[10px] border border-black/10">
+        <div className="scroll-instruction fixed bottom-8 left-1/2 transform -translate-x-1/2 text-center text-grayish text-sm font-medium z-50 opacity-0 invisible transition-all duration-300 px-8 py-4 rounded-full"
+             style={{
+               background: 'rgba(255, 255, 255, 0.9)',
+               backdropFilter: 'blur(10px)',
+               border: '1px solid rgba(0, 0, 0, 0.1)'
+             }}>
           <span>Scroll to explore each step</span>
-          <div className="w-25 md:w-20 sm:w-16 h-1 mx-auto mt-2 md:mt-1.5 sm:mt-1 rounded-full overflow-hidden bg-primary-200/50">
+          <div className="scroll-progress w-25 h-1 mx-auto mt-2 rounded-full overflow-hidden"
+               style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
             <div 
-              className="h-full bg-primary-500 rounded-full transition-all duration-300"
+              className="scroll-progress-bar h-full bg-primary rounded-full transition-all duration-300"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
