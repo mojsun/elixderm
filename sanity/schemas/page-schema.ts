@@ -1,4 +1,6 @@
-const page = {
+import { defineType } from 'sanity'
+
+const page = defineType({
   name: "page",
   title: "Pages",
   type: "document",
@@ -24,6 +26,6 @@ const page = {
       of: [{ type: "block" }],
     },
   ],
-};
+});
 
 export default page;
