@@ -79,11 +79,10 @@ const contact = {
     select: {
       title: 'name',
       subtitle: 'company',
-      media: 'status',
       email: 'email',
       submittedAt: 'submittedAt'
     },
-    prepare(selection: any) {
+    prepare(selection: {title: string, subtitle: string, email: string, submittedAt: string}) {
       const { title, subtitle, email, submittedAt } = selection;
       const date = submittedAt ? new Date(submittedAt).toLocaleDateString() : 'No date';
       return {
