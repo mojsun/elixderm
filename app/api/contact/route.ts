@@ -372,10 +372,10 @@ Please respond within 2-3 business days as promised on the website.
     const htmlTemplate = createEmailTemplate(formData);
 
     // Send email using Resend with TypeScript template
-    console.log('Attempting to send email to:', 'm.khorashahi7@gmail.com');
+    console.log('Attempting to send email to:', 'hello@elixderm.com');
     const emailData = await resend.emails.send({
       from: 'Elixderm Contact Form <onboarding@resend.dev>',
-      to: ['m.khorashahi7@gmail.com'],
+      to: ['hello@elixderm.com'],
       subject: `New Manufacturing Inquiry from ${formData.company}`,
       html: htmlTemplate,
       text: textContent,
