@@ -56,6 +56,13 @@ const config: Config = {
         'scale-in': 'scaleIn 0.3s ease-out',
         'step-slide-in': 'step-slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
         'step-slide-out': 'step-slide-out 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        // Hero animations
+        'title-reveal-1': 'titleReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both',
+        'title-reveal-2': 'titleReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both',
+        'subtitle-reveal': 'subtitleReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both',
+        'cta-reveal': 'ctaReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both',
+        'scroll-reveal': 'scrollIndicatorReveal 1s ease-out 1.5s both',
+        'scroll-line-move': 'scrollLineMove 2s ease-in-out infinite',
       },
       animationDelay: {
         '100': '100ms',
@@ -85,6 +92,27 @@ const config: Config = {
         'step-slide-out': {
           '0%': { opacity: '1', transform: 'translateY(0)' },
           '100%': { opacity: '0', transform: 'translateY(-50px)' },
+        },
+        // Hero keyframes
+        'titleReveal': {
+          '0%': { opacity: '0', transform: 'translateY(50px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'subtitleReveal': {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'ctaReveal': {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'scrollIndicatorReveal': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'scrollLineMove': {
+          '0%, 100%': { transform: 'translateY(0)', opacity: '0.4' },
+          '50%': { transform: 'translateY(6px)', opacity: '0.1' },
         },
       },
       scale: {
