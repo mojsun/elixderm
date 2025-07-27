@@ -82,8 +82,8 @@ const contact = {
       email: 'email',
       submittedAt: 'submittedAt'
     },
-    prepare(selection: {title: string, subtitle: string, email: string, submittedAt: string}) {
-      const { title, subtitle, email, submittedAt } = selection;
+    prepare(value: any) {
+      const { title, subtitle, email, submittedAt } = value;
       const date = submittedAt ? new Date(submittedAt).toLocaleDateString() : 'No date';
       return {
         title: `${title} (${subtitle})`,
