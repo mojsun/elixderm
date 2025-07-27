@@ -170,7 +170,7 @@ const createEmailTemplate = (formData: ContactFormData): string => {
         .visit-button {
             display: inline-block;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
+            color: white !important;
             text-decoration: none;
             padding: 12px 24px;
             border-radius: 10px;
@@ -297,9 +297,9 @@ const createEmailTemplate = (formData: ContactFormData): string => {
         
         <div class="footer">
             <p class="footer-text">Sent from the Elixderm Manufacturing Platform</p>
-            <a href="https://elixderm-second.vercel.app" class="visit-button">
-                Visit Elixderm
-            </a>
+                         <a href="https://elixderm-second.vercel.app" class="visit-button" style="color: white !important; text-decoration: none;">
+                 Visit Elixderm
+             </a>
         </div>
     </div>
 </body>
@@ -372,14 +372,17 @@ Please respond within 2-3 business days as promised on the website.
     const htmlTemplate = createEmailTemplate(formData);
 
     // Send email using Resend with TypeScript template
+    console.log('Attempting to send email to:', 'm.khorashahi7@gmail.com');
     const emailData = await resend.emails.send({
-      from: 'Elixderm Contact Form <noreply@elixderm.com>',
+      from: 'Elixderm Contact Form <onboarding@resend.dev>',
       to: ['m.khorashahi7@gmail.com'],
       subject: `New Manufacturing Inquiry from ${formData.company}`,
       html: htmlTemplate,
       text: textContent,
       replyTo: formData.email,
     });
+
+    console.log('Email sent successfully:', emailData);
 
     return NextResponse.json(
       { 
