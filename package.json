@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/table": "^1.1.4",
     "next": "15.4.1",
     "next-sanity": "^10.0.0",
     "postcss": "^8.5.6",

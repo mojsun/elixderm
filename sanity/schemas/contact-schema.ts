@@ -74,6 +74,47 @@ const contact = {
       initialValue: "new",
     },
   ],
+  // Custom preview for list view
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'company',
+      media: 'status',
+      email: 'email',
+      submittedAt: 'submittedAt'
+    },
+    prepare(selection: any) {
+      const { title, subtitle, email, submittedAt } = selection;
+      const date = submittedAt ? new Date(submittedAt).toLocaleDateString() : 'No date';
+      return {
+        title: `${title} (${subtitle})`,
+        subtitle: `${email} • ${date}`,
+      };
+    },
+  },
+  // Custom list view configuration
+  orderings: [
+    {
+      title: 'Newest First',
+      name: 'submittedAtDesc',
+      by: [{ field: 'submittedAt', direction: 'desc' }]
+    },
+    {
+      title: 'Oldest First', 
+      name: 'submittedAtAsc',
+      by: [{ field: 'submittedAt', direction: 'asc' }]
+    },
+    {
+      title: 'Status',
+      name: 'status',
+      by: [{ field: 'status', direction: 'asc' }]
+    },
+    {
+      title: 'Company Name',
+      name: 'company',
+      by: [{ field: 'company', direction: 'asc' }]
+    }
+  ]
 };
 
 export default contact; 
