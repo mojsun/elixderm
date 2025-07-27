@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Allow all web crawlers access to all content
+# This allows search engines like Google, Bing, etc. to index the entire site 

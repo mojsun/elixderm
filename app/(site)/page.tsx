@@ -22,7 +22,8 @@ export default async function Home() {
       <Partner />
       <Testimonials />
       
-      {/* Projects Section */}
+      {/* Projects Section - HIDDEN FOR NOW */}
+      {/* 
       <section className="projects-section">
         <div className="projects-container">
           <div className="projects-header">
@@ -59,6 +60,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      */}
       
       <ContactSection />
     </main>
