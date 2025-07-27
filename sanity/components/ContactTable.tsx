@@ -28,6 +28,56 @@ export default function ContactTable() {
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const downloadCSV = () => {
+    // Create CSV header
+    const header = [
+      '#',
+      'Name',
+      'Email', 
+      'Company',
+      'Phone',
+      'Product Type',
+      'Timeline',
+      'Quantity', 
+      'Formulation',
+      'Vision',
+      'Budget',
+      'Submitted Date',
+      'Status'
+    ].join(',');
+
+    // Create CSV rows
+    const rows = contacts.map((contact, index) => [
+      index + 1,
+      `"${contact.name}"`,
+      `"${contact.email}"`,
+      `"${contact.company}"`,
+      `"${contact.phone || ''}"`,
+      `"${contact.productType}"`,
+      `"${contact.timeline}"`,
+      `"${contact.quantity}"`,
+      `"${contact.formulation}"`,
+      `"${contact.vision?.replace(/"/g, '""') || ''}"`, // Escape quotes in vision
+      `"${contact.budget}"`,
+      `"${contact.submittedAt ? new Date(contact.submittedAt).toLocaleDateString() : ''}"`,
+      `"${contact.status}"`
+    ].join(','));
+
+    // Combine header and rows
+    const csvContent = [header, ...rows].join('\n');
+
+    // Create download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `contact-submissions-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   useEffect(() => {
     const fetchContacts = async () => {
       try {
@@ -50,9 +100,36 @@ export default function ContactTable() {
 
   return (
     <div style={{ padding: '20px', overflowX: 'auto' }}>
-      <h2 style={{ marginBottom: '20px', fontSize: '24px', fontWeight: 'bold' }}>
-        Contact Submissions Table
-      </h2>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginBottom: '20px' 
+      }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 'bold', margin: 0 }}>
+          Contact Submissions Table
+        </h2>
+        <button
+          onClick={downloadCSV}
+          style={{
+            backgroundColor: '#007cba',
+            color: 'white',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: '500',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+          onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#005a87'}
+          onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007cba'}
+        >
+          📥 Download CSV
+        </button>
+      </div>
       
       <table style={{ 
         width: '100%', 
