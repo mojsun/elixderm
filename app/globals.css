@@ -2491,6 +2491,28 @@ body.loaded .animate-fade-in {
   line-height: 1.4;
 }
 
+.submit-message {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.submit-message.success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.submit-message.error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .contact-form-content {
