@@ -111,118 +111,95 @@ export default function WhyElixderm(): React.JSX.Element {
   return (
     <section 
       ref={sectionRef}
-      className="why-different-section relative overflow-hidden w-full"
-      style={{
-        padding: '6rem 0',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
-      }}
+      className="relative overflow-hidden w-full py-24 md:py-16 sm:py-12 bg-gradient-to-br from-white to-light-DEFAULT"
     >
-            <div className="why-different-container mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-8 md:px-6 sm:px-4">
         <div className="w-full max-w-full">
-          <div className="why-different-content grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] md:grid-cols-1 gap-16 md:gap-12 sm:gap-8 items-start">
           
-          {/* Left Content */}
-          <div className="why-different-left lg:sticky lg:top-24">
-            <h2 className="why-different-title font-heading font-bold mb-8 leading-tight"
-                style={{
-                  fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                  letterSpacing: '-0.02em',
-                  background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-              Why Elixderm is Different
-            </h2>
-            <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal">
-              While other manufacturers focus on volume and standardization, we&apos;ve built our entire operation around flexibility, transparency, and genuine partnership. Here&apos;s what sets us apart in the beauty manufacturing landscape.
-            </p>
-          </div>
-          
-          {/* Right Content */}
-          <div className="why-different-right w-full">
+            {/* Left Content */}
+            <div className="lg:sticky lg:top-24 md:static">
+              <h2 className="font-heading font-bold mb-8 md:mb-6 sm:mb-4 leading-tight text-[clamp(2.5rem,4vw,3.5rem)] md:text-[clamp(2rem,5vw,3rem)] sm:text-[clamp(1.8rem,6vw,2.5rem)] tracking-[-0.02em] bg-gradient-to-br from-dark-DEFAULT to-dark-light bg-clip-text text-transparent">
+                Why Elixderm is Different
+              </h2>
+              <p className="text-grayish text-xl md:text-lg sm:text-base leading-relaxed max-w-lg font-normal">
+                While other manufacturers focus on volume and standardization, we&apos;ve built our entire operation around flexibility, transparency, and genuine partnership. Here&apos;s what sets us apart in the beauty manufacturing landscape.
+              </p>
+            </div>
             
-            {/* Features Container */}
-            <div className="features-container relative overflow-hidden mt-8"
-                 style={{ height: '600px' }}>
-              <div className={`features-grid grid grid-cols-2 gap-8 relative transition-transform duration-800 ease-out ${
-                isScrolled ? 'features-scrolled' : ''
-              }`}
-                   style={{ 
-                     height: '820px',
-                     transform: isScrolled ? 'translateY(-272px)' : 'translateY(0)'
-                   }}>
-                
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className={`feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out opacity-0 translate-y-8 ${
-                      index >= 4 ? 'feature-card-hidden' : ''
-                    }`}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(16, 185, 129, 0.1)',
-                      height: '240px',
-                      gridColumn: index % 2 === 0 ? '1' : '2',
-                      gridRow: Math.floor(index / 2) + 1
-                    }}
-                  >
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none"
-                         style={{
-                           background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(5, 150, 105, 0.02) 100%)'
-                         }} />
-                    
-                    {/* Feature Icon */}
-                    <div className="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center text-white transition-all duration-300 ease-out"
-                         style={{
-                           background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
-                           marginBottom: '2rem'
-                         }}>
-                      {feature.icon}
+            {/* Right Content */}
+            <div className="w-full">
+              
+              {/* Features Container */}
+              <div className="relative overflow-hidden mt-8 md:mt-6 sm:mt-4 h-[600px] md:h-auto sm:h-auto">
+                <div className={`grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 md:gap-6 sm:gap-4 relative transition-transform duration-[800ms] ease-out h-[820px] md:h-auto sm:h-auto ${
+                  isScrolled ? '' : ''
+                }`}
+                     style={{ 
+                       transform: isScrolled ? 'translateY(-272px)' : 'translateY(0)'
+                     }}>
+                  
+                  {features.map((feature, index) => (
+                    <div
+                      key={index}
+                      className={`feature-card relative overflow-hidden rounded-2xl p-8 md:p-6 sm:p-4 transition-all duration-[600ms] cubic-bezier(0.4, 0, 0.2, 1) opacity-0 translate-y-8 bg-white/80 backdrop-blur-[10px] border border-primary-100/50 h-[240px] md:h-auto sm:h-auto shadow-lg hover:shadow-xl hover:-translate-y-2 hover:border-primary-200 hover:bg-white/95 group ${
+                        index >= 4 ? 'md:block sm:block' : ''
+                      }`}
+                                             style={{
+                         gridColumn: index % 2 === 0 ? '1' : '2',
+                         gridRow: Math.floor(index / 2) + 1
+                       }}
+                    >
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-br from-primary-50/50 to-primary-100/50" />
+                      
+                      {/* Feature Icon */}
+                      <div className="relative z-10 w-16 h-16 md:w-14 md:h-14 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-white transition-all duration-300 ease-out bg-gradient-to-br from-primary-500 to-primary-400 mb-8 md:mb-6 sm:mb-4 group-hover:scale-105 group-hover:rotate-2">
+                        <div className="transition-transform duration-300 group-hover:scale-105">
+                          {feature.icon}
+                        </div>
+                      </div>
+                      
+                      {/* Feature Title */}
+                      <h3 className="relative z-10 font-heading font-bold text-xl md:text-lg sm:text-base text-dark mb-3 md:mb-2 sm:mb-2 leading-tight transition-colors duration-300 group-hover:text-primary-500">
+                        {feature.title}
+                      </h3>
+                      
+                      {/* Feature Description */}
+                      <p className="relative z-10 text-grayish text-base md:text-sm sm:text-sm leading-relaxed font-medium transition-colors duration-300 group-hover:text-dark-light">
+                        {feature.description}
+                      </p>
                     </div>
-                    
-                    {/* Feature Title */}
-                    <h3 className="feature-title font-heading font-bold text-xl text-dark mb-3 leading-tight transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    
-                    {/* Feature Description */}
-                    <p className="feature-description text-grayish text-base leading-relaxed font-medium transition-colors duration-300">
-                      {feature.description}
-                    </p>
-                  </div>
-                ))}
-                
+                  ))}
+                  
+                </div>
               </div>
-            </div>
-            
-            {/* Show More Button */}
-            <div className="show-more-container mt-6 text-center">
-              <button 
-                onClick={handleShowMore}
-                className="show-more-btn inline-flex items-center gap-2 py-2 bg-transparent text-grayish border-none text-sm font-normal cursor-pointer transition-colors duration-200 hover:text-primary active:text-secondary"
-              >
-                <span className="show-more-text">
-                  {isScrolled ? 'See Our Core Features' : 'Discover What Makes Us Different'}
-                </span>
-                <svg 
-                  className={`show-more-icon w-4 h-4 transition-transform duration-200 ${
-                    isScrolled ? 'rotate-180' : ''
-                  }`} 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2"
+              
+              {/* Show More Button */}
+              <div className="mt-6 md:hidden sm:hidden text-center">
+                <button 
+                  onClick={handleShowMore}
+                  className="inline-flex items-center gap-2 py-2 bg-transparent text-grayish border-none text-sm font-normal cursor-pointer transition-colors duration-200 hover:text-primary-500 active:text-primary-600"
                 >
-                  <polyline points="6,9 12,15 18,9"></polyline>
-                </svg>
-              </button>
+                  <span>
+                    {isScrolled ? 'See Our Core Features' : 'Discover What Makes Us Different'}
+                  </span>
+                  <svg 
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      isScrolled ? 'rotate-180' : ''
+                    }`} 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2"
+                  >
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </button>
+              </div>
+              
             </div>
-            
           </div>
-        </div>
         </div>
       </div>
     </section>
