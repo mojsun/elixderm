@@ -6,39 +6,67 @@ const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | ''>('');
+  
+  // Controlled form inputs
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    projectDescription: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitMessage('');
-
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      projectDescription: formData.get('projectDescription') as string,
-    };
+    setSubmitStatus('');
 
     try {
+      console.log('Submitting form data:', formData);
+      
       const response = await fetch('/api/home-contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       const result = await response.json();
+      console.log('Response data:', result);
 
       if (response.ok) {
         setSubmitStatus('success');
-        setSubmitMessage(result.message);
-        (e.currentTarget as HTMLFormElement).reset();
+        setSubmitMessage(result.message || 'Your project inquiry has been submitted successfully!');
+        
+        // Clear the form inputs
+        setFormData({
+          name: '',
+          email: '',
+          projectDescription: ''
+        });
+        
+        // Clear the success message after 5 seconds
+        setTimeout(() => {
+          setSubmitMessage('');
+          setSubmitStatus('');
+        }, 5000);
       } else {
         setSubmitStatus('error');
         setSubmitMessage(result.error || 'Failed to submit form. Please try again.');
       }
     } catch (error) {
+      console.error('Fetch error:', error);
       setSubmitStatus('error');
       setSubmitMessage('Network error. Please check your connection and try again.');
     } finally {
@@ -71,6 +99,8 @@ const ContactSection: React.FC = () => {
                     <input 
                       type="text" 
                       name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       className="contact-input" 
                       placeholder="Your Name" 
                       required 
@@ -79,6 +109,8 @@ const ContactSection: React.FC = () => {
                     <input 
                       type="email" 
                       name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="contact-input" 
                       placeholder="Your Email Address" 
                       required 
@@ -86,6 +118,8 @@ const ContactSection: React.FC = () => {
                     />
                     <textarea 
                       name="projectDescription"
+                      value={formData.projectDescription}
+                      onChange={handleInputChange}
                       className="contact-textarea" 
                       placeholder="Tell us about your project..." 
                       rows={4} 
