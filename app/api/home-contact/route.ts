@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from 'next-sanity';
 import clientConfig from '@/sanity/config/client-config';
 
-console.log('SANITY + EMAIL: Saving to Sanity CMS AND sending email to hello@elixderm.com');
+console.log('HOME CONTACT: Saving to Sanity CMS AND sending email to hello@elixderm.com');
 
 // Create Sanity client for writing data
 const sanityClient = createClient({
@@ -11,28 +11,20 @@ const sanityClient = createClient({
   token: process.env.SANITY_WRITE_TOKEN,
 });
 
-// TypeScript interface for form data
-interface ContactFormData {
+// TypeScript interface for home contact form data
+interface HomeContactFormData {
   name: string;
   email: string;
-  company: string;
-  phone?: string;
-  productType: string;
-  timeline: string;
-  quantity: string;
-  formulation: string;
-  vision: string;
-  budget: string;
+  projectDescription: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const formData: ContactFormData = await request.json();
+    const formData: HomeContactFormData = await request.json();
 
-    // Validate required fields with TypeScript enforcement
-    const requiredFields: (keyof ContactFormData)[] = [
-      'name', 'email', 'company', 'productType', 'timeline',
-      'quantity', 'formulation', 'vision', 'budget'
+    // Validate required fields
+    const requiredFields: (keyof HomeContactFormData)[] = [
+      'name', 'email', 'projectDescription'
     ];
 
     for (const field of requiredFields) {
@@ -44,36 +36,29 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log('Saving contact form submission to Sanity...');
+    console.log('Saving home contact form submission to Sanity...');
 
     // Save to Sanity CMS
     const sanityDoc = await sanityClient.create({
-      _type: 'contact',
+      _type: 'homeContact',
       name: formData.name,
       email: formData.email,
-      company: formData.company,
-      phone: formData.phone || '',
-      productType: formData.productType,
-      timeline: formData.timeline,
-      quantity: formData.quantity,
-      formulation: formData.formulation,
-      vision: formData.vision,
-      budget: formData.budget,
+      projectDescription: formData.projectDescription,
       submittedAt: new Date().toISOString(),
       status: 'new',
     });
 
-    console.log('Successfully saved to Sanity with ID:', sanityDoc._id);
+    console.log('Successfully saved home contact to Sanity with ID:', sanityDoc._id);
 
     // Now send email notification using the working Resend setup
     console.log('Sending email notification to hello@elixderm.com...');
-    
+
     try {
       // Import and use Resend with the working API key
       const { Resend } = await import('resend');
       const resend = new Resend('re_5FdsgfvF_MgbSnqo5bLGEMZcdfAqqV7pN'); // Working API key
-      
-      // Create the email template (same as the beautiful one you received)
+
+      // Create the email template for home contact form
       const submissionDate = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -89,21 +74,21 @@ export async function POST(request: NextRequest) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Contact Form Submission - Elixderm</title>
+    <title>New Project Inquiry - Elixderm</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 20px;
         }
-        
+
         .email-container {
             max-width: 600px;
             margin: 0 auto;
@@ -112,39 +97,39 @@ export async function POST(request: NextRequest) {
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        
+
         .header {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             padding: 40px 30px;
             text-align: center;
             color: white;
         }
-        
+
         .header h1 {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: -0.02em;
         }
-        
+
         .header p {
             font-size: 16px;
             opacity: 0.9;
             font-weight: 500;
         }
-        
+
         .content {
             padding: 40px 30px;
         }
-        
+
         .section {
             margin-bottom: 32px;
         }
-        
+
         .section:last-child {
             margin-bottom: 0;
         }
-        
+
         .section-title {
             font-size: 20px;
             font-weight: 700;
@@ -154,12 +139,12 @@ export async function POST(request: NextRequest) {
             border-bottom: 2px solid #10b981;
             display: inline-block;
         }
-        
+
         .info-grid {
             display: grid;
             gap: 12px;
         }
-        
+
         .info-item {
             display: flex;
             align-items: flex-start;
@@ -167,24 +152,24 @@ export async function POST(request: NextRequest) {
             padding: 12px 0;
             border-bottom: 1px solid #f1f5f9;
         }
-        
+
         .info-item:last-child {
             border-bottom: none;
         }
-        
+
         .info-label {
             font-weight: 600;
             color: #374151;
-            min-width: 140px;
+            min-width: 100px;
             font-size: 14px;
         }
-        
+
         .info-value {
             color: #1f2937;
             font-size: 14px;
             flex: 1;
         }
-        
+
         .message-box {
             background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
             border: 1px solid #d1fae5;
@@ -192,27 +177,27 @@ export async function POST(request: NextRequest) {
             padding: 20px;
             margin-top: 16px;
         }
-        
+
         .message-text {
             color: #1f2937;
             font-size: 15px;
             line-height: 1.6;
             white-space: pre-wrap;
         }
-        
+
         .footer {
             background: #f8fafc;
             padding: 30px;
             text-align: center;
             border-top: 1px solid #e2e8f0;
         }
-        
+
         .footer-text {
             color: #6b7280;
             font-size: 14px;
             margin-bottom: 16px;
         }
-        
+
         .visit-button {
             display: inline-block;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -224,11 +209,11 @@ export async function POST(request: NextRequest) {
             font-size: 14px;
             transition: transform 0.2s ease;
         }
-        
+
         .visit-button:hover {
             transform: translateY(-1px);
         }
-        
+
         .timestamp {
             color: #9ca3af;
             font-size: 12px;
@@ -236,30 +221,30 @@ export async function POST(request: NextRequest) {
             margin-top: 20px;
             text-align: center;
         }
-        
+
         @media (max-width: 600px) {
             .email-container {
                 margin: 10px;
                 border-radius: 16px;
             }
-            
+
             .header {
                 padding: 30px 20px;
             }
-            
+
             .content {
                 padding: 30px 20px;
             }
-            
+
             .footer {
                 padding: 20px;
             }
-            
+
             .info-item {
                 flex-direction: column;
                 gap: 4px;
             }
-            
+
             .info-label {
                 min-width: auto;
                 font-weight: 700;
@@ -271,9 +256,9 @@ export async function POST(request: NextRequest) {
     <div class="email-container">
         <div class="header">
             <h1>Elixderm</h1>
-            <p>New Contact Form Submission</p>
+            <p>New Project Inquiry</p>
         </div>
-        
+
         <div class="content">
             <div class="section">
                 <h2 class="section-title">Contact Details</h2>
@@ -290,57 +275,21 @@ export async function POST(request: NextRequest) {
                             </a>
                         </span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Company:</span>
-                        <span class="info-value">${formData.company}</span>
-                    </div>
-                    ${formData.phone ? `
-                    <div class="info-item">
-                        <span class="info-label">Phone:</span>
-                        <span class="info-value">${formData.phone}</span>
-                    </div>
-                    ` : ''}
                 </div>
             </div>
-            
+
             <div class="section">
-                <h2 class="section-title">Project Details</h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Product Type:</span>
-                        <span class="info-value">${formData.productType}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Launch Timeline:</span>
-                        <span class="info-value">${formData.timeline}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Order Quantity:</span>
-                        <span class="info-value">${formData.quantity}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Formulation:</span>
-                        <span class="info-value">${formData.formulation}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Budget Range:</span>
-                        <span class="info-value">${formData.budget}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Project Vision</h2>
+                <h2 class="section-title">Project Description</h2>
                 <div class="message-box">
-                    <div class="message-text">${formData.vision}</div>
+                    <div class="message-text">${formData.projectDescription}</div>
                 </div>
             </div>
-            
+
             <div class="timestamp">
                 Submitted on ${submissionDate}
             </div>
         </div>
-        
+
         <div class="footer">
             <p class="footer-text">Sent from the Elixderm Manufacturing Platform</p>
             <a href="https://elixderm-second.vercel.app" class="visit-button" style="color: white !important; text-decoration: none;">
@@ -352,25 +301,25 @@ export async function POST(request: NextRequest) {
 </html>
       `;
 
-      // Send the email to hello@elixderm.com (using verified sender until domain is ready)
+      // Send the email to hello@elixderm.com
       const emailResult = await resend.emails.send({
-        from: 'Elixderm Contact Form <onboarding@resend.dev>',
+        from: 'Elixderm Project Inquiry <onboarding@resend.dev>',
         to: ['hello@elixderm.com'],
-        subject: `New Manufacturing Inquiry from ${formData.company}`,
+        subject: `New Project Inquiry from ${formData.name}`,
         html: htmlTemplate,
         replyTo: formData.email,
       });
 
       console.log('Email sent successfully to hello@elixderm.com:', emailResult);
-      
+
     } catch (emailError) {
       console.error('Error sending email (but form was saved to Sanity):', emailError);
       // Don't fail the entire request if email fails - Sanity data is still saved
     }
 
     return NextResponse.json(
-      { 
-        message: 'Contact form submitted successfully! We will review your inquiry and get back to you soon.',
+      {
+        message: 'Your project inquiry has been submitted successfully! We will review your request and get back to you soon.',
         sanityId: sanityDoc._id,
         status: 'saved_and_emailed',
         note: 'Form data saved to Sanity CMS and email sent to hello@elixderm.com'
@@ -379,9 +328,9 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Error saving contact to Sanity:', error);
+    console.error('Error saving home contact to Sanity:', error);
     return NextResponse.json(
-      { error: 'Failed to save contact submission. Please try again.' },
+      { error: 'Failed to submit project inquiry. Please try again.' },
       { status: 500 }
     );
   }
