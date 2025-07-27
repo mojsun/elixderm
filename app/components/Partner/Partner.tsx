@@ -2,45 +2,85 @@ import React from "react";
 
 const partners = [
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2025/03/sel-logo-1.webp",
-    alt: "SEL",
+    src: "/images/logos/casf-logo.png",
+    alt: "BASF",
+    url: "https://www.basf.com/ca/en"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2023/12/nissanusa-logo-1.png",
-    alt: "Nissan USA",
+    src: "/images/logos/croda-logo.png",
+    alt: "Croda",
+    url: "https://www.croda.com/en-gb"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2024/04/infiniti-logo.png",
-    alt: "Infiniti",
+    src: "/images/logos/evonik-logo.png",
+    alt: "Evonik",
+    url: "https://www.evonik.com/en.html"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2023/12/moz-logo.png",
-    alt: "Moz",
+    src: "/images/logos/ashland-logo.png",
+    alt: "Ashland",
+    url: "https://www.ashland.com/"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2024/04/jnj-logo.png",
-    alt: "Johnson & Johnson",
+    src: "/images/logos/tri-k-logo.png",
+    alt: "Tri-K Industries",
+    url: "https://www.tri-k.com/"
+  },
+  {
+    src: "/images/logos/seppic-logo.png",
+    alt: "Seppic",
+    url: "https://www.seppic.com/en-US/"
+  },
+  {
+    src: "/images/logos/selco-logo.png",
+    alt: "GFN-Selco",
+    url: "https://www.gfn-selco.de/EN"
+  },
+  {
+    src: "/images/logos/biocogent-logo.png",
+    alt: "Biocogent",
+    url: "https://www.biocogent.com/"
   },
   // Duplicate logos for seamless loop
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2025/03/sel-logo-1.webp",
-    alt: "SEL",
+    src: "/images/logos/casf-logo.png",
+    alt: "BASF",
+    url: "https://www.basf.com/ca/en"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2023/12/nissanusa-logo-1.png",
-    alt: "Nissan USA",
+    src: "/images/logos/croda-logo.png",
+    alt: "Croda",
+    url: "https://www.croda.com/en-gb"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2024/04/infiniti-logo.png",
-    alt: "Infiniti",
+    src: "/images/logos/evonik-logo.png",
+    alt: "Evonik",
+    url: "https://www.evonik.com/en.html"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2023/12/moz-logo.png",
-    alt: "Moz",
+    src: "/images/logos/ashland-logo.png",
+    alt: "Ashland",
+    url: "https://www.ashland.com/"
   },
   {
-    src: "https://aminforoutan.com/wp-content/uploads/2024/04/jnj-logo.png",
-    alt: "Johnson & Johnson",
+    src: "/images/logos/tri-k-logo.png",
+    alt: "Tri-K Industries",
+    url: "https://www.tri-k.com/"
+  },
+  {
+    src: "/images/logos/seppic-logo.png",
+    alt: "Seppic",
+    url: "https://www.seppic.com/en-US/"
+  },
+  {
+    src: "/images/logos/selco-logo.png",
+    alt: "GFN-Selco",
+    url: "https://www.gfn-selco.de/EN"
+  },
+  {
+    src: "/images/logos/biocogent-logo.png",
+    alt: "Biocogent",
+    url: "https://www.biocogent.com/"
   },
 ];
 
@@ -49,20 +89,22 @@ export default function PartnersSection(): React.JSX.Element {
     <section className="partners-section">
       <div className="partners-container">
         <div className="partners-content">
-          <h2 className="partners-title">Powered by Premium Partners</h2>
+          <h2 className="partners-title">Premium Ingredient Partners</h2>
           <p className="partners-subtitle">
-            Quality ingredients from trusted suppliers for superior formulations
+          Trusted suppliers providing world-class raw materials for exceptional formulations
           </p>
           
           <div className="partners-logos-wrapper">
             <div className="partners-logos-track">
               {partners.map((partner, index) => (
                 <div key={index} className="partner-logo">
-                  <img 
-                    src={partner.src} 
-                    alt={partner.alt} 
-                    loading="lazy"
-                  />
+                  <a href={partner.url} target="_blank" rel="noopener noreferrer">
+                    <img 
+                      src={partner.src} 
+                      alt={partner.alt} 
+                      loading="lazy"
+                    />
+                  </a>
                 </div>
               ))}
             </div>
