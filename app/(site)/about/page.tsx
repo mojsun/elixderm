@@ -27,7 +27,7 @@ export default function About() {
           <div className="contact-hero-wrapper">
             <h1 className="contact-page-title">Where Science Meets Entrepreneurial Vision</h1>
             <p className="contact-page-subtitle">
-              Founded by scientists who understand both complex formulation and business success. We're not just manufacturers—we're partners in turning beauty visions into reality.
+              Founded by scientists who understand both complex formulation and business success. We&apos;re not just manufacturers—we&apos;re partners in turning beauty visions into reality.
             </p>
           </div>
         </div>

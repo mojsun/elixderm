@@ -72,7 +72,7 @@ const TeamSection: React.FC = () => {
             <div className="card-content">
               <p className="member-description">
                 Chemical & Biochemical Engineer with 15+ years in pharmaceutical and cosmetic development. 
-                Founded ELAN Healthcare and now leads ElixDerm's scientific innovation with a focus on 
+                Founded ELAN Healthcare and now leads ElixDerm&apos;s scientific innovation with a focus on 
                 natural, high-performance formulations backed by rigorous research.
               </p>
             </div>
