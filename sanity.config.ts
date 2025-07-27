@@ -20,23 +20,13 @@ const config = defineConfig({
               .title('Contact Submissions Table')
               .child(S.component(ContactTable).title('Contact Submissions Table')),
             // Contact Submissions with list view
-            S.listItem()
-              .title('Contact Submissions (List)')
-              .child(
-                S.documentTypeList('contact')
-                  .title('Contact Submissions')
-                  .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }])
-                  .child((documentId) => S.document().documentId(documentId))
-              ),
+            S.documentTypeListItem('contact')
+              .title('Contact Submissions (List)'),
             // Separator
             S.divider(),
             // Other content types
-            S.listItem()
-              .title('Pages')
-              .child(S.documentTypeList('page').title('Pages')),
-            S.listItem()
-              .title('Projects')
-              .child(S.documentTypeList('project').title('Projects')),
+            S.documentTypeListItem('page'),
+            S.documentTypeListItem('project'),
           ])
     })
   ],
