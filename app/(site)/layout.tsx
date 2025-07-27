@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
 import "../globals.css";
 import Link from "next/link";
-import { getPages } from "@/sanity/sanity-utils";
 import Footer from "../components/Footer/Footer";
 
 const geistSans = Geist({
@@ -39,13 +38,11 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  //get all our pages
-  const pages = await getPages();
   return (
     <html lang="en">
       <body
@@ -66,55 +63,9 @@ export default async function RootLayout({
               
               <ul className="nav-menu" id="nav-menu">
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    Services 
-                    <span className="dropdown-arrow">⌄</span>
-                  </a>
-                </li>
-                
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    Products 
-                    <span className="dropdown-arrow">⌄</span>
-                  </a>
-                </li>
-                
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    Who We Help 
-                    <span className="dropdown-arrow">⌄</span>
-                  </a>
-                </li>
-                
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    Resources 
-                    <span className="dropdown-arrow">⌄</span>
-                  </a>
-                </li>
-                
-                {pages.map((page) => (
-                  <li key={page._id} className="nav-item">
-                    <Link
-                      href={`/${page.slug}`}
-                      className="nav-link"
-                    >
-                      {page.title}
-                    </Link>
-                  </li>
-                ))}
-                
-                <li className="nav-item search-container">
-                  <button className="search-button" id="search-button">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                  </button>
-                  <div className="search-input-container" id="search-input-container">
-                    <input type="text" className="search-input" placeholder="Search..." id="search-input" />
-                    <button className="search-close" id="search-close">×</button>
-                  </div>
+                  <Link href="/about" className="nav-link">
+                    About Us
+                  </Link>
                 </li>
                 
                 <li className="nav-item">
