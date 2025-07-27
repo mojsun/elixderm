@@ -1,5 +1,4 @@
 @import "tailwindcss";
-/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@100..900&family=Saira+Stencil+One&display=swap'); */
 
 :root {
   /* Theme Colors */
@@ -595,10 +594,13 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  overscroll-behavior: none;
 }
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -607,13 +609,16 @@ body {
   line-height: 1.6;
   background: var(--color-light);
   overflow-x: hidden;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
   padding: 0;
   margin: 0;
+  position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -2808,7 +2813,7 @@ body.loaded .animate-fade-in {
 }
 
 .footer-brand {
-  font-family: var(--font-heading);
+  font-family: var(--font-logo);
   font-size: 1.75rem;
   font-weight: 400;
   color: white;
