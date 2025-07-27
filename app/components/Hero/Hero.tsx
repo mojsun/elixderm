@@ -100,7 +100,7 @@ const HeroSection: React.FC = () => {
                fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
                lineHeight: '1.6',
                color: '#e5e7eb',
-               marginBottom: '2.5rem',
+               margin: '0 auto 2.5rem auto',
                textShadow: '0 1px 4px rgba(0, 0, 0, 0.6)',
                fontWeight: '500',
                textAlign: 'center'
