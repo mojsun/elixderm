@@ -28,6 +28,37 @@ export default function ContactTable() {
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const updateStatus = async (contactId: string, newStatus: string) => {
+    try {
+      const response = await fetch('/api/update-contact-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: contactId,
+          status: newStatus,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to update status');
+      }
+
+      // Update local state
+      setContacts(prev => prev.map(contact => 
+        contact._id === contactId 
+          ? { ...contact, status: newStatus }
+          : contact
+      ));
+    } catch (err) {
+      console.error('Error updating status:', err);
+      alert('Failed to update status. Please try again.');
+    }
+  };
+
   const downloadCSV = () => {
     // Create CSV header
     const header = [
@@ -107,16 +138,16 @@ export default function ContactTable() {
         marginBottom: '20px' 
       }}>
         <h2 style={{ fontSize: '24px', fontWeight: 'bold', margin: 0 }}>
-          Contact Submissions Table
+          Contact Submissions ({contacts.length})
         </h2>
         <button
           onClick={downloadCSV}
           style={{
-            backgroundColor: '#007cba',
+            backgroundColor: '#10b981',
             color: 'white',
             border: 'none',
             padding: '10px 20px',
-            borderRadius: '4px',
+            borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '14px',
             fontWeight: '500',
@@ -124,130 +155,160 @@ export default function ContactTable() {
             alignItems: 'center',
             gap: '8px'
           }}
-          onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#005a87'}
-          onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007cba'}
+          onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#059669'}
+          onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#10b981'}
         >
           📥 Download CSV
         </button>
       </div>
       
-      <table style={{ 
-        width: '100%', 
-        borderCollapse: 'collapse', 
-        border: '1px solid #ddd',
-        fontSize: '14px'
-      }}>
-        <thead>
-          <tr style={{ backgroundColor: '#f5f5f5' }}>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              #
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Name
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Email
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Company
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Phone
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Product Type
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Timeline
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Quantity
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Formulation
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Vision
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Budget
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Submitted
-            </th>
-            <th style={{ border: '1px solid #ddd', padding: '12px', textAlign: 'left', fontWeight: 'bold' }}>
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {contacts.map((contact, index) => (
-            <tr key={contact._id} style={{ 
-              backgroundColor: index % 2 === 0 ? 'white' : '#f9f9f9'
-            }}>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {index + 1}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.name}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.email}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.company}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.phone || '-'}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.productType}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.timeline}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.quantity}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.formulation}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px', maxWidth: '200px' }}>
-                <div style={{ 
-                  maxHeight: '60px', 
-                  overflow: 'hidden', 
-                  textOverflow: 'ellipsis',
-                  wordBreak: 'break-word'
-                }}>
-                  {contact.vision}
-                </div>
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.budget}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {contact.submittedAt ? new Date(contact.submittedAt).toLocaleDateString() : '-'}
-              </td>
-              <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                <span style={{
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  backgroundColor: contact.status === 'new' ? '#e3f2fd' : 
-                                 contact.status === 'contacted' ? '#fff3e0' :
-                                 contact.status === 'in-progress' ? '#f3e5f5' : '#e8f5e8',
-                  color: contact.status === 'new' ? '#1976d2' : 
-                         contact.status === 'contacted' ? '#f57c00' :
-                         contact.status === 'in-progress' ? '#7b1fa2' : '#388e3c',
-                  fontSize: '12px',
-                  fontWeight: '500'
-                }}>
-                  {contact.status}
-                </span>
-              </td>
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ 
+          width: '100%', 
+          borderCollapse: 'collapse', 
+          border: '1px solid #e2e8f0',
+          fontSize: '14px'
+        }}>
+          <thead>
+            <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                #
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Name
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Email
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Company
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Phone
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Product Type
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Timeline
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Quantity
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Formulation
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Vision
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Budget
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Status
+              </th>
+              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
+                Submitted
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {contacts.map((contact, index) => (
+              <tr 
+                key={contact._id} 
+                style={{ 
+                  backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
+                  borderBottom: '1px solid #e2e8f0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f1f5f9';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8fafc';
+                }}
+              >
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px', fontWeight: '500' }}>
+                  {index + 1}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px', fontWeight: '500' }}>
+                  {contact.name}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  <a href={`mailto:${contact.email}`} style={{ color: '#10b981', textDecoration: 'none' }}>
+                    {contact.email}
+                  </a>
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.company}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.phone || '-'}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.productType}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.timeline}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.quantity}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.formulation}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px', maxWidth: '200px' }}>
+                  <div style={{ 
+                    maxHeight: '60px', 
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis',
+                    wordBreak: 'break-word',
+                    lineHeight: '1.4'
+                  }}>
+                    {contact.vision}
+                  </div>
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  {contact.budget}
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
+                  <select
+                    value={contact.status}
+                    onChange={(e) => updateStatus(contact._id, e.target.value)}
+                    style={{
+                      padding: '4px 8px',
+                      borderRadius: '8px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      border: '1px solid #d1d5db',
+                      backgroundColor: contact.status === 'new' ? '#fef3c7' : 
+                                     contact.status === 'contacted' ? '#fff3e0' :
+                                     contact.status === 'in-progress' ? '#dbeafe' : '#d1fae5',
+                      color: contact.status === 'new' ? '#92400e' :
+                             contact.status === 'contacted' ? '#f57c00' :
+                             contact.status === 'in-progress' ? '#1e40af' : '#065f46',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value="new">New</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </td>
+                <td style={{ border: '1px solid #e2e8f0', padding: '12px', color: '#6b7280' }}>
+                  {contact.submittedAt ? new Date(contact.submittedAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) : '-'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       
       {contacts.length === 0 && (
         <div style={{ 

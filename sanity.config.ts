@@ -26,9 +26,6 @@ const config = defineConfig({
             S.listItem()
               .title('Contact Submissions Table')
               .child(S.component(ContactTable).title('Contact Submissions Table')),
-            // Contact Submissions with list view
-            S.documentTypeListItem('contact')
-              .title('Contact Submissions (List)'),
             // Separator
             S.divider(),
             // Other content types
