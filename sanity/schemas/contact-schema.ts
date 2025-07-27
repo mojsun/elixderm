@@ -1,6 +1,8 @@
-const contact = {
+import { defineType } from 'sanity'
+
+const contact = defineType({
   name: "contact",
-  title: "Contact Submissions",
+  title: "Contact Submissions", 
   type: "document",
   fields: [
     {
@@ -112,8 +114,8 @@ const contact = {
       title: 'Company Name',
       name: 'company',
       by: [{ field: 'company', direction: 'asc' }]
-    }
-  ]
-};
+         }
+   ]
+});
 
 export default contact; 
