@@ -5,7 +5,7 @@ export default function QuoteCTA(): React.JSX.Element {
     <section className="cta-quote-section">
       <div className="cta-quote-container">
         <Link 
-          href="/contact" 
+          href="/contact-us" 
           className="cta-quote-link"
         >
           <div className="cta-quote-content">
