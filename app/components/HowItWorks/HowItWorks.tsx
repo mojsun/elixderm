@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 export default function HowItWorks(): React.JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   
   const steps = [
@@ -59,7 +60,7 @@ export default function HowItWorks(): React.JSX.Element {
   const maxStepIndex = steps.length - 1;
 
   const updateActiveStep = useCallback((newIndex: number) => {
-    if (newIndex < 0 || newIndex > maxStepIndex || newIndex === currentStepIndex) {
+    if (newIndex < 0 || newIndex > maxStepIndex || newIndex === currentStepIndex || isTransitioning) {
       if (newIndex < 0 || newIndex > maxStepIndex) {
         setIsScrolling(false);
         document.body.style.overflow = 'auto';
@@ -71,12 +72,37 @@ export default function HowItWorks(): React.JSX.Element {
       return false;
     }
     
-    setCurrentStepIndex(newIndex);
+    setIsTransitioning(true);
+    
+    // Add fade out effect
+    const stepContainer = document.querySelector('.step-item');
+    if (stepContainer) {
+      (stepContainer as HTMLElement).style.opacity = '0.5';
+    }
+    
+    // Wait for fade out, then change content
+    setTimeout(() => {
+      setCurrentStepIndex(newIndex);
+      // Add slide-in class
+      const sc = stepContainer as HTMLElement | null;
+      if (sc) {
+        sc.classList.add('slide-in');
+      }
+      // Fade back in & clean class after animation
+      setTimeout(() => {
+        if (sc) {
+          sc.style.opacity = '1';
+          sc.classList.remove('slide-in');
+        }
+        setIsTransitioning(false);
+      }, 1000);
+    }, 500);  // end of outer setTimeout
+    
     return true;
-  }, [maxStepIndex, currentStepIndex]);
+  }, [maxStepIndex, currentStepIndex, isTransitioning]);
 
   const handleHowItWorksScroll = useCallback((event: WheelEvent) => {
-    if (!isScrolling) return;
+    if (!isScrolling || isTransitioning) return;
     
     const delta = event.deltaY;
     let success = false;
@@ -115,7 +141,7 @@ export default function HowItWorks(): React.JSX.Element {
       event.preventDefault();
       event.stopPropagation();
     }
-  }, [isScrolling, updateActiveStep, currentStepIndex, maxStepIndex]);
+  }, [isScrolling, isTransitioning, updateActiveStep, currentStepIndex, maxStepIndex]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -214,18 +240,21 @@ export default function HowItWorks(): React.JSX.Element {
         </div>
 
                 {/* Steps Container */}
-        <div className="how-it-works-steps relative mt-25" style={{ minHeight: '60vh' }}>
+        <div className="how-it-works-steps relative mt-25">
           
           {/* Show only current step */}
-          <div className="step-item w-full h-full">
+          <div className="step-item w-full h-full" style={{ 
+            transition: 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            opacity: isTransitioning ? 0.5 : 1
+          }}>
             <div className="step-content grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center">
               
               {/* Step Info */}
               <div className="step-info p-8">
-                                                                <div className="step-number w-10 h-10 flex items-center justify-center font-bold text-lg rounded-full mb-4 flex-shrink-0"
-                        style={{
-                          background: 'rgba(16, 185, 129, 0.1)',
-                          color: '#10b981',
+                <div className="step-number w-10 h-10 flex items-center justify-center font-bold text-lg rounded-full mb-4 flex-shrink-0"
+                     style={{
+                       background: 'rgba(16, 185, 129, 0.1)',
+                       color: '#10b981',
                        letterSpacing: '0.1em'
                      }}>
                   {steps[currentStepIndex].number}
@@ -243,36 +272,32 @@ export default function HowItWorks(): React.JSX.Element {
 
               {/* Step Visual */}
               <div className="step-visual flex items-center justify-center h-full p-8">
-                <div className="step-image-container w-full h-auto flex items-center justify-center transition-transform duration-300 hover:scale-105 bg-gray-50 rounded-3xl" style={{ minHeight: '300px' }}>
+                <div className="step-image-container">
                   {steps[currentStepIndex].media.type === 'video' ? (
                     <video 
-                      className="step-image w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white"
-                      style={{
-                        maxHeight: '400px',
-                        objectFit: 'cover'
-                      }}
+                      key={steps[currentStepIndex].media.src}
+                      className="step-image"
                       autoPlay 
                       muted 
                       loop 
                       playsInline
+                      style={{ transition: 'opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}
                       onError={(e) => console.error('Video failed to load:', steps[currentStepIndex].media.src, e)}
                       onLoadStart={() => console.log('Video loading started:', steps[currentStepIndex].media.src)}
                     >
                       <source src={steps[currentStepIndex].media.src} type="video/mp4" />
-                      <div className="flex items-center justify-center h-64 bg-gray-200 rounded-3xl">
+                      <div className="flex items-center justify-center h-full bg-gray-200">
                         <p className="text-gray-500">Video: {steps[currentStepIndex].title}</p>
                       </div>
                     </video>
                   ) : (
                     <img 
+                      key={steps[currentStepIndex].media.src}
                       src={steps[currentStepIndex].media.src} 
                       alt={steps[currentStepIndex].media.alt || steps[currentStepIndex].title} 
-                      className="step-image w-full h-auto rounded-3xl transition-all duration-300 shadow-lg bg-white"
-                      style={{
-                        maxHeight: '400px',
-                        objectFit: 'cover'
-                      }}
+                      className="step-image"
                       loading="lazy"
+                      style={{ transition: 'opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}
                       onError={(e) => console.error('Image failed to load:', steps[currentStepIndex].media.src, e)}
                       onLoad={() => console.log('Image loaded:', steps[currentStepIndex].media.src)}
                     />
