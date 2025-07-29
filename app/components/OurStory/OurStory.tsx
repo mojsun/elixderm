@@ -1,34 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 
 const OurStorySection: React.FC = () => {
-  useEffect(() => {
-    const storyFeatureCards = document.querySelectorAll('.story-feature-card');
-    
-    const storyObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          // Add staggered animation delay
-          setTimeout(() => {
-            (entry.target as HTMLElement).style.opacity = '1';
-            (entry.target as HTMLElement).style.transform = 'translateY(0)';
-          }, index * 150);
-        }
-      });
-    }, {
-      threshold: 0.2,
-      rootMargin: '0px 0px -10% 0px'
-    });
-    
-    storyFeatureCards.forEach(card => {
-      storyObserver.observe(card);
-    });
-
-    return () => {
-      storyObserver.disconnect();
-    };
-  }, []);
   const storyFeatures = [
     {
       icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -80,6 +54,7 @@ const OurStorySection: React.FC = () => {
                   style={{
                     fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
                     letterSpacing: '-0.02em',
+                    color: '#1f2937', // Safari fallback
                     background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
@@ -87,7 +62,8 @@ const OurStorySection: React.FC = () => {
                   }}>
                 Our Story
               </h2>
-              <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal">
+              <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal"
+                 style={{ color: '#6b7280' }}>
                 Elixderm was born from a simple observation: most beauty manufacturers operate like factories, 
                 prioritizing volume over vision. As scientists and entrepreneurs ourselves, we knew there was a better way 
                 to bridge the gap between complex chemistry and market success.
@@ -101,8 +77,10 @@ const OurStorySection: React.FC = () => {
                   {storyFeatures.map((feature, index) => (
                     <div
                       key={index}
-                      className="feature-card story-feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out opacity-0 translate-y-8"
+                      className="feature-card story-feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out"
                       style={{
+                        opacity: 1,
+                        transform: 'translateY(0)',
                         background: 'rgba(255, 255, 255, 0.8)',
                         backdropFilter: 'blur(10px)',
                         border: '1px solid rgba(16, 185, 129, 0.1)',
@@ -126,10 +104,12 @@ const OurStorySection: React.FC = () => {
                       
                       {/* Content */}
                       <div className="feature-content relative z-10">
-                        <h3 className="feature-title font-heading font-semibold text-lg text-grayish-dark mb-3 leading-tight">
+                        <h3 className="feature-title font-heading font-semibold text-lg text-grayish-dark mb-3 leading-tight"
+                            style={{ color: '#1f2937' }}>
                           {feature.title}
                         </h3>
-                        <p className="feature-description text-grayish text-sm leading-relaxed">
+                        <p className="feature-description text-grayish text-sm leading-relaxed"
+                           style={{ color: '#6b7280' }}>
                           {feature.description}
                         </p>
                       </div>
