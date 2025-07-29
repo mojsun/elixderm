@@ -304,9 +304,9 @@ export async function POST(request: NextRequest) {
       // Send the email to hello@elixderm.com (using verified domain)
       const emailResult = await resend.emails.send({
         from: 'Elixderm Project Inquiry <hello@elixderm.com>',
-        to: ['hello@elixderm.com', 'aminforout@gmail.com'], // Adding test email to verify delivery
-        subject: `TEST: Simple Email from ${formData.name}`,
-        text: `Simple test email from ${formData.name} (${formData.email}): ${formData.projectDescription}`,
+        to: ['hello@elixderm.com'],
+        subject: `New Project Inquiry from ${formData.name}`,
+        html: htmlTemplate,
         replyTo: formData.email,
       });
 
