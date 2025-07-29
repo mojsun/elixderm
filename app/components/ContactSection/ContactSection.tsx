@@ -77,7 +77,7 @@ const ContactSection: React.FC = () => {
   return (
     <section className="contact-section">
       <div className="contact-container">
-        <h2 className="contact-main-title">Bring Your Vision to Life</h2>
+        <h2 className="contact-main-title" style={{ color: '#1f2937' }}>Bring Your Vision to Life</h2>
         
         <div className="contact-content">
           <div className="contact-visual">
@@ -91,7 +91,7 @@ const ContactSection: React.FC = () => {
           
           <div className="contact-form-content">
             <div className="contact-form-inner">
-              <h3 className="contact-title">Tell Us About Your Project</h3>
+              <h3 className="contact-title" style={{ color: '#1f2937' }}>Tell Us About Your Project</h3>
               
               <div className="contact-form-wrapper">
                 <form className="contact-quick-form" onSubmit={handleSubmit}>
