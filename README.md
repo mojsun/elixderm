@@ -90,21 +90,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the website.
 
-## ⚙️ Environment Variables
 
-Create a `.env.local` file in the root directory:
-
-```env
-# Sanity Configuration
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_WRITE_TOKEN=your_write_token
-
-# Email Configuration
-RESEND_API_KEY=your_resend_api_key
-
-# Optional: Custom Domain
-NEXT_PUBLIC_SITE_URL=https://elixderm.com
 ```
 
 ## 🗂️ Project Structure
@@ -213,8 +199,6 @@ npm run start
 
 ## 📊 Content Management
 
-### Sanity Studio Access
-Visit `/admin` to access the content management system.
 
 ### Content Types
 - **Pages** - Website pages and content
