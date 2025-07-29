@@ -3890,9 +3890,17 @@ body.loaded .animate-fade-in {
 /* ABOUT PAGE STYLES */
 /* =================================================================== */
 
+/* Our Story Section - Mobile Height Fix */
+@media (max-width: 768px) {
+  .our-story-section {
+    padding-bottom: calc(8rem + 100px) !important;
+  }
+}
+
 /* Team Section */
 .team-section {
   padding: 8rem 0;
+  margin-top: 4rem;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
