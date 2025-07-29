@@ -10,14 +10,14 @@ const OurStorySection: React.FC = () => {
         <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
       </svg>,
       title: "Science-First Foundation",
-      description: "Founded by PhD scientists with 15+ years in pharmaceutical development, bringing clinical precision to beauty"
+      description: "PhD scientists bringing clinical precision to beauty"
     },
     {
       icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>,
       title: "Boutique Approach",
-      description: "Personalized manufacturing partnerships, not mass production. Every client gets dedicated attention and custom solutions"
+      description: "Personalized partnerships with dedicated attention"
     },
     {
       icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -25,22 +25,22 @@ const OurStorySection: React.FC = () => {
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
       </svg>,
       title: "Transparency First",
-      description: "Clear processes, honest pricing, and open communication. No hidden fees, no surprises—just genuine partnership"
+      description: "Clear processes and honest pricing, no surprises"
     },
     {
       icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 2L13.09 8.26L22 9L17 14L18.18 23L12 19.77L5.82 23L7 14L2 9L10.91 8.26L12 2Z"/>
       </svg>,
       title: "Innovation-Driven",
-      description: "Combining cutting-edge formulation science with entrepreneurial flexibility to create breakthrough beauty products"
+      description: "Cutting-edge science with entrepreneurial flexibility"
     }
   ];
 
   return (
     <section 
-      className="why-different-section section-padding"
+      className="why-different-section our-story-section section-padding"
       style={{
-        padding: '6rem 0',
+        padding: '6rem 0 8rem 0',
         background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
       }}
     >
@@ -49,7 +49,7 @@ const OurStorySection: React.FC = () => {
           <div className="why-different-content grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
           
             {/* Left Content */}
-            <div className="why-different-left lg:sticky lg:top-24">
+            <div className="why-different-left">
               <h2 className="why-different-title font-heading font-bold mb-8 leading-tight"
                   style={{
                     fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
@@ -72,8 +72,8 @@ const OurStorySection: React.FC = () => {
             
                          {/* Right Content */}
              <div className="why-different-right w-full">
-               <div className="features-container relative mt-8" style={{ height: 'auto', overflow: 'visible' }}>
-                 <div className="features-grid grid grid-cols-2 gap-8 relative">
+               <div className="features-container mt-8 mb-8">
+                 <div className="features-grid grid grid-cols-2 gap-8 auto-rows-auto">
                   {storyFeatures.map((feature, index) => (
                     <div
                       key={index}
@@ -84,7 +84,7 @@ const OurStorySection: React.FC = () => {
                         background: 'rgba(255, 255, 255, 0.8)',
                         backdropFilter: 'blur(10px)',
                         border: '1px solid rgba(16, 185, 129, 0.1)',
-                        height: '240px'
+                        minHeight: '200px'
                       }}
                     >
                       {/* Hover overlay */}
