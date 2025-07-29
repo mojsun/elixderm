@@ -1,45 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 export default function WhyElixderm(): React.JSX.Element {
   const [isScrolled, setIsScrolled] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
 
   const handleShowMore = () => {
     setIsScrolled(!isScrolled);
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const cards = entry.target.querySelectorAll('.feature-card');
-            cards.forEach((card, index) => {
-              setTimeout(() => {
-                card.classList.add('animate');
-              }, index * 100);
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '0px 0px -10% 0px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
 
   const features = [
     {
@@ -110,7 +78,6 @@ export default function WhyElixderm(): React.JSX.Element {
 
   return (
     <section 
-      ref={sectionRef}
       className="why-different-section relative overflow-hidden w-full"
       style={{
         padding: '6rem 0',
@@ -127,6 +94,7 @@ export default function WhyElixderm(): React.JSX.Element {
                 style={{
                   fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
                   letterSpacing: '-0.02em',
+                  color: '#1f2937', // Safari fallback
                   background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -134,7 +102,8 @@ export default function WhyElixderm(): React.JSX.Element {
                 }}>
               Why Elixderm is Different
             </h2>
-            <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal">
+            <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal"
+               style={{ color: '#6b7280' }}>
               While other manufacturers focus on volume and standardization, we&apos;ve built our entire operation around flexibility, transparency, and genuine partnership. Here&apos;s what sets us apart in the beauty manufacturing landscape.
             </p>
           </div>
@@ -156,10 +125,12 @@ export default function WhyElixderm(): React.JSX.Element {
                 {features.map((feature, index) => (
                   <div
                     key={index}
-                    className={`feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out opacity-0 translate-y-8 ${
+                    className={`feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out ${
                       index >= 4 ? 'feature-card-hidden' : ''
                     }`}
                     style={{
+                      opacity: 1,
+                      transform: 'translateY(0)',
                       background: 'rgba(255, 255, 255, 0.8)',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(16, 185, 129, 0.1)',
@@ -184,12 +155,14 @@ export default function WhyElixderm(): React.JSX.Element {
                     </div>
                     
                     {/* Feature Title */}
-                    <h3 className="feature-title font-heading font-bold text-xl text-dark mb-3 leading-tight transition-colors duration-300">
+                    <h3 className="feature-title font-heading font-bold text-xl text-dark mb-3 leading-tight transition-colors duration-300"
+                        style={{ color: '#1f2937' }}>
                       {feature.title}
                     </h3>
                     
                     {/* Feature Description */}
-                    <p className="feature-description text-grayish text-base leading-relaxed font-medium transition-colors duration-300">
+                    <p className="feature-description text-grayish text-base leading-relaxed font-medium transition-colors duration-300"
+                       style={{ color: '#6b7280' }}>
                       {feature.description}
                     </p>
                   </div>
@@ -203,6 +176,7 @@ export default function WhyElixderm(): React.JSX.Element {
               <button 
                 onClick={handleShowMore}
                 className="show-more-btn inline-flex items-center gap-2 py-2 bg-transparent text-grayish border-none text-sm font-normal cursor-pointer transition-colors duration-200 hover:text-primary active:text-secondary"
+                style={{ color: '#6b7280' }}
               >
                 <span className="show-more-text">
                   {isScrolled ? 'See Our Core Features' : 'Discover What Makes Us Different'}
