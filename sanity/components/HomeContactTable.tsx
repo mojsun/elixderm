@@ -24,6 +24,7 @@ const HomeContactTable: React.FC = () => {
   const [submissions, setSubmissions] = useState<HomeContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchSubmissions = async () => {
@@ -82,6 +83,37 @@ const HomeContactTable: React.FC = () => {
     }
   };
 
+  const deleteContact = async (id: string, name: string) => {
+    // Confirmation dialog
+    if (!window.confirm(`Are you sure you want to delete the submission from "${name}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    setDeleting(id);
+    try {
+      const response = await fetch('/api/delete-home-contact', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        setSubmissions(prev => prev.filter(submission => submission._id !== id));
+        console.log('Home contact deleted successfully');
+      } else {
+        console.error('Failed to delete home contact');
+        alert('Failed to delete contact. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error deleting home contact:', error);
+      alert('Error deleting contact. Please try again.');
+    } finally {
+      setDeleting(null);
+    }
+  };
+
   const downloadCSV = () => {
     const headers = ['Name', 'Email', 'Project Description', 'Status', 'Submitted At'];
     const csvContent = [
@@ -135,6 +167,7 @@ const HomeContactTable: React.FC = () => {
               <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', width: '300px' }}>Project Description</th>
               <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Status</th>
               <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Submitted</th>
+              <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -199,6 +232,36 @@ const HomeContactTable: React.FC = () => {
                     hour: '2-digit',
                     minute: '2-digit'
                   })}
+                </td>
+                <td style={{ padding: '12px' }}>
+                  <button
+                    onClick={() => deleteContact(submission._id, submission.name)}
+                    disabled={deleting === submission._id}
+                    style={{
+                      backgroundColor: deleting === submission._id ? '#f3f4f6' : '#ef4444',
+                      color: deleting === submission._id ? '#9ca3af' : 'white',
+                      padding: '4px 8px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: deleting === submission._id ? 'not-allowed' : 'pointer',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      transition: 'all 0.2s ease',
+                      opacity: deleting === submission._id ? 0.5 : 1
+                    }}
+                    onMouseEnter={(e) => {
+                      if (deleting !== submission._id) {
+                        e.currentTarget.style.backgroundColor = '#dc2626';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (deleting !== submission._id) {
+                        e.currentTarget.style.backgroundColor = '#ef4444';
+                      }
+                    }}
+                  >
+                    {deleting === submission._id ? 'Deleting...' : 'Delete'}
+                  </button>
                 </td>
               </tr>
             ))}

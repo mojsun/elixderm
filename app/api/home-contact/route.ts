@@ -305,8 +305,8 @@ export async function POST(request: NextRequest) {
       const emailResult = await resend.emails.send({
         from: 'Elixderm Project Inquiry <hello@elixderm.com>',
         to: ['hello@elixderm.com', 'aminforout@gmail.com'], // Adding test email to verify delivery
-        subject: `New Project Inquiry from ${formData.name}`,
-        html: htmlTemplate,
+        subject: `TEST: Simple Email from ${formData.name}`,
+        text: `Simple test email from ${formData.name} (${formData.email}): ${formData.projectDescription}`,
         replyTo: formData.email,
       });
 

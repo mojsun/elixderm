@@ -27,117 +27,145 @@ interface ContactSubmission {
 export default function ContactTable() {
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
-  const updateStatus = async (contactId: string, newStatus: string) => {
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  const fetchContacts = async () => {
+    try {
+      const query = `*[_type == "contact"] | order(submittedAt desc) {
+        _id,
+        name,
+        email,
+        company,
+        phone,
+        productType,
+        timeline,
+        quantity,
+        formulation,
+        vision,
+        budget,
+        submittedAt,
+        status
+      }`;
+      
+      const data = await client.fetch(query);
+      setContacts(data);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateStatus = async (id: string, newStatus: string) => {
     try {
       const response = await fetch('/api/update-contact-status', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          id: contactId,
-          status: newStatus,
-        }),
+        body: JSON.stringify({ id, status: newStatus }),
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to update status');
+      if (response.ok) {
+        setContacts(prev => 
+          prev.map(contact => 
+            contact._id === id ? { ...contact, status: newStatus } : contact
+          )
+        );
+      } else {
+        console.error('Failed to update status');
       }
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
 
-      // Update local state
-      setContacts(prev => prev.map(contact => 
-        contact._id === contactId 
-          ? { ...contact, status: newStatus }
-          : contact
-      ));
-    } catch (err) {
-      console.error('Error updating status:', err);
-      alert('Failed to update status. Please try again.');
+  const deleteContact = async (id: string, name: string) => {
+    // Confirmation dialog
+    if (!window.confirm(`Are you sure you want to delete the submission from "${name}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    setDeleting(id);
+    try {
+      const response = await fetch('/api/delete-contact', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        setContacts(prev => prev.filter(contact => contact._id !== id));
+        console.log('Contact deleted successfully');
+      } else {
+        console.error('Failed to delete contact');
+        alert('Failed to delete contact. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      alert('Error deleting contact. Please try again.');
+    } finally {
+      setDeleting(null);
     }
   };
 
   const downloadCSV = () => {
-    // Create CSV header
-    const header = [
-      '#',
-      'Name',
-      'Email', 
-      'Company',
-      'Phone',
-      'Product Type',
-      'Timeline',
-      'Quantity', 
-      'Formulation',
-      'Vision',
-      'Budget',
-      'Submitted Date',
-      'Status'
-    ].join(',');
+    const headers = ['Name', 'Email', 'Company', 'Phone', 'Product Type', 'Timeline', 'Quantity', 'Formulation', 'Vision', 'Budget', 'Status', 'Submitted At'];
+    const csvContent = [
+      headers.join(','),
+      ...contacts.map(contact => [
+        contact.name,
+        contact.email,
+        contact.company,
+        contact.phone || 'N/A',
+        contact.productType,
+        contact.timeline,
+        contact.quantity,
+        contact.formulation,
+        `"${contact.vision.replace(/"/g, '""')}"`,
+        contact.budget,
+        contact.status,
+        new Date(contact.submittedAt).toLocaleDateString()
+      ].join(','))
+    ].join('\n');
 
-    // Create CSV rows
-    const rows = contacts.map((contact, index) => [
-      index + 1,
-      `"${contact.name}"`,
-      `"${contact.email}"`,
-      `"${contact.company}"`,
-      `"${contact.phone || ''}"`,
-      `"${contact.productType}"`,
-      `"${contact.timeline}"`,
-      `"${contact.quantity}"`,
-      `"${contact.formulation}"`,
-      `"${contact.vision?.replace(/"/g, '""') || ''}"`, // Escape quotes in vision
-      `"${contact.budget}"`,
-      `"${contact.submittedAt ? new Date(contact.submittedAt).toLocaleDateString() : ''}"`,
-      `"${contact.status}"`
-    ].join(','));
-
-    // Combine header and rows
-    const csvContent = [header, ...rows].join('\n');
-
-    // Create download
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `contact-submissions-${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'contact-submissions.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const query = `*[_type == "contact"] | order(submittedAt desc)`;
-        const data = await client.fetch(query);
-        setContacts(data);
-      } catch (error) {
-        console.error('Error fetching contacts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchContacts();
-  }, []);
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'new': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'contacted': return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'in-progress': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
 
   if (loading) {
-    return <div style={{ padding: '20px' }}>Loading contact submissions...</div>;
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div>Loading contact submissions...</div>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: '20px', overflowX: 'auto' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '20px' 
-      }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 'bold', margin: 0 }}>
+    <div style={{ padding: '1.5rem', fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
           Contact Submissions ({contacts.length})
         </h2>
         <button
@@ -145,179 +173,97 @@ export default function ContactTable() {
           style={{
             backgroundColor: '#10b981',
             color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '0.5rem',
             border: 'none',
-            padding: '10px 20px',
-            borderRadius: '5px',
             cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '500',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
+            fontSize: '0.875rem',
+            fontWeight: '500'
           }}
-          onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#059669'}
-          onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#10b981'}
         >
-          📥 Download CSV
+          Download CSV
         </button>
       </div>
-      
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ 
-          width: '100%', 
-          borderCollapse: 'collapse', 
-          border: '1px solid #e2e8f0',
-          fontSize: '14px'
-        }}>
-          <thead>
-            <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                #
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Name
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Email
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Company
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Phone
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Product Type
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Timeline
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Quantity
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Formulation
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Vision
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Budget
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Status
-              </th>
-              <th style={{ border: '1px solid #e2e8f0', padding: '12px', textAlign: 'left', fontWeight: '600' }}>
-                Submitted
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {contacts.map((contact, index) => (
-              <tr 
-                key={contact._id} 
-                style={{ 
-                  backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
-                  borderBottom: '1px solid #e2e8f0'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f1f5f9';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8fafc';
-                }}
-              >
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px', fontWeight: '500' }}>
-                  {index + 1}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px', fontWeight: '500' }}>
-                  {contact.name}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  <a href={`mailto:${contact.email}`} style={{ color: '#10b981', textDecoration: 'none' }}>
-                    {contact.email}
-                  </a>
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.company}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.phone || '-'}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.productType}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.timeline}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.quantity}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.formulation}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px', maxWidth: '200px' }}>
-                  <div style={{ 
-                    maxHeight: '60px', 
-                    overflow: 'hidden', 
-                    textOverflow: 'ellipsis',
-                    wordBreak: 'break-word',
-                    lineHeight: '1.4'
-                  }}>
-                    {contact.vision}
-                  </div>
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  {contact.budget}
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px' }}>
-                  <select
-                    value={contact.status}
-                    onChange={(e) => updateStatus(contact._id, e.target.value)}
-                    style={{
-                      padding: '4px 8px',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      border: '1px solid #d1d5db',
-                      backgroundColor: contact.status === 'new' ? '#fef3c7' : 
-                                     contact.status === 'contacted' ? '#fff3e0' :
-                                     contact.status === 'in-progress' ? '#dbeafe' : '#d1fae5',
-                      color: contact.status === 'new' ? '#92400e' :
-                             contact.status === 'contacted' ? '#f57c00' :
-                             contact.status === 'in-progress' ? '#1e40af' : '#065f46',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <option value="new">New</option>
-                    <option value="contacted">Contacted</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </td>
-                <td style={{ border: '1px solid #e2e8f0', padding: '12px', color: '#6b7280' }}>
-                  {contact.submittedAt ? new Date(contact.submittedAt).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  }) : '-'}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      
-      {contacts.length === 0 && (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: '40px', 
-          color: '#666',
-          fontSize: '16px'
-        }}>
+
+      {contacts.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
           No contact submissions yet.
+        </div>
+      ) : (
+        <div style={{ backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead style={{ backgroundColor: '#f9fafb' }}>
+                <tr>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Name</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Email</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Company</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Product</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Timeline</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Status</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Date</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'center', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody style={{ backgroundColor: 'white' }}>
+                {contacts.map((contact, index) => (
+                  <tr key={contact._id} style={{ borderBottom: index < contacts.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.name}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.email}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.company}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.productType}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.timeline}</td>
+                    <td style={{ padding: '1rem 0.75rem' }}>
+                      <select
+                        value={contact.status}
+                        onChange={(e) => updateStatus(contact._id, e.target.value)}
+                        className={`px-3 py-1 text-xs font-medium rounded-full border cursor-pointer ${getStatusColor(contact.status)}`}
+                        style={{ fontSize: '0.75rem' }}
+                      >
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                      </select>
+                    </td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#6b7280' }}>
+                      {new Date(contact.submittedAt).toLocaleDateString()}
+                    </td>
+                    <td style={{ padding: '1rem 0.75rem', textAlign: 'center' }}>
+                      <button
+                        onClick={() => deleteContact(contact._id, contact.name)}
+                        disabled={deleting === contact._id}
+                        style={{
+                          backgroundColor: deleting === contact._id ? '#f3f4f6' : '#ef4444',
+                          color: deleting === contact._id ? '#9ca3af' : 'white',
+                          padding: '0.375rem 0.75rem',
+                          borderRadius: '0.375rem',
+                          border: 'none',
+                          cursor: deleting === contact._id ? 'not-allowed' : 'pointer',
+                          fontSize: '0.75rem',
+                          fontWeight: '500',
+                          transition: 'all 0.2s ease',
+                          opacity: deleting === contact._id ? 0.5 : 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (deleting !== contact._id) {
+                            e.currentTarget.style.backgroundColor = '#dc2626';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (deleting !== contact._id) {
+                            e.currentTarget.style.backgroundColor = '#ef4444';
+                          }
+                        }}
+                      >
+                        {deleting === contact._id ? 'Deleting...' : 'Delete'}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
