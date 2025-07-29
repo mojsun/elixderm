@@ -69,9 +69,9 @@ export async function POST(request: NextRequest) {
     console.log('Sending email notification to hello@elixderm.com...');
     
     try {
-      // Import and use Resend with the working API key
+      // Import and use Resend with the verified domain API key
       const { Resend } = await import('resend');
-      const resend = new Resend('re_5FdsgfvF_MgbSnqo5bLGEMZcdfAqqV7pN'); // Working API key
+      const resend = new Resend(process.env.RESEND_API_KEY);
       
       // Create the email template (same as the beautiful one you received)
       const submissionDate = new Date().toLocaleDateString('en-US', {
@@ -343,7 +343,7 @@ export async function POST(request: NextRequest) {
         
         <div class="footer">
             <p class="footer-text">Sent from the Elixderm Manufacturing Platform</p>
-            <a href="https://elixderm-second.vercel.app" class="visit-button" style="color: white !important; text-decoration: none;">
+            <a href="https://elixderm.com" class="visit-button" style="color: white !important; text-decoration: none;">
                 Visit Elixderm
             </a>
         </div>
@@ -352,9 +352,9 @@ export async function POST(request: NextRequest) {
 </html>
       `;
 
-      // Send the email to hello@elixderm.com (using verified sender until domain is ready)
+      // Send the email to hello@elixderm.com (using verified domain)
       const emailResult = await resend.emails.send({
-        from: 'Elixderm Contact Form <onboarding@resend.dev>',
+        from: 'Elixderm Contact Form <hello@elixderm.com>',
         to: ['hello@elixderm.com'],
         subject: `New Manufacturing Inquiry from ${formData.company}`,
         html: htmlTemplate,
