@@ -32,7 +32,7 @@ export default function Footer() {
             <h3 className="footer-heading">Connect</h3>
             <ul className="footer-links">
               <li>
-                <Link href="/contact" className="footer-link">
+                <Link href="/contact-us" className="footer-link">
                   Contact Us
                 </Link>
               </li>
