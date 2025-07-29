@@ -91,41 +91,7 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) to view the website.
 
 
-```
 
-## 🗂️ Project Structure
-
-```
-elixderm/
-├── app/                          # Next.js App Router
-│   ├── (site)/                   # Public website
-│   │   ├── about/               # About page
-│   │   ├── contact-us/          # Contact form page
-│   │   ├── projects/            # Projects showcase
-│   │   └── page.tsx             # Homepage
-│   ├── (studio)/                # Sanity Studio
-│   │   └── admin/               # CMS admin interface
-│   ├── api/                     # API Routes
-│   │   ├── contact/             # Contact form handler
-│   │   ├── home-contact/        # Home form handler
-│   │   ├── delete-contact/      # Delete submissions
-│   │   └── update-*-status/     # Status updates
-│   ├── components/              # React Components
-│   │   ├── Hero/                # Hero section
-│   │   ├── ContactSection/      # Contact forms
-│   │   ├── Footer/              # Site footer
-│   │   ├── Nav/                 # Navigation
-│   │   └── ...                  # Other components
-│   └── globals.css              # Global styles
-├── sanity/                      # Sanity CMS Configuration
-│   ├── components/              # Custom CMS components
-│   ├── schemas/                 # Content schemas
-│   └── config/                  # CMS configuration
-├── public/                      # Static assets
-│   ├── images/                  # Image assets
-│   └── videos/                  # Video assets
-└── types/                       # TypeScript definitions
-```
 
 ## 🎯 Available Scripts
 
