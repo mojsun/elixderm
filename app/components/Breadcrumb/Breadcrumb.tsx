@@ -17,23 +17,20 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-export default function Breadcrumb({ items, baseUrl }: BreadcrumbProps) {
+export default function Breadcrumb({ items, baseUrl = 'https://elixderm.com' }: BreadcrumbProps) {
   // Generate structured data for SEO
   const generateStructuredData = () => {
-    const siteBaseUrl = baseUrl || 
-      (typeof window !== 'undefined' ? window.location.origin : 'https://elixderm.com');
-    
-          const itemListElement = items.map((item, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "name": item.label,
-        ...(item.href && {
-          "item": {
-            "@type": "WebPage",
-            "@id": `${siteBaseUrl}${item.href}`
-          }
-        })
-      }));
+    const itemListElement = items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.label,
+      ...(item.href && {
+        "item": {
+          "@type": "WebPage",
+          "@id": `${baseUrl}${item.href}`
+        }
+      })
+    }));
 
     return {
       "@context": "https://schema.org",
