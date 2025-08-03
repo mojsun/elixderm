@@ -3594,7 +3594,8 @@ body.loaded .animate-fade-in {
 /* Contact Page Responsive Design */
 @media (max-width: 1024px) {
   .contact-layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column-reverse; /* Form first on mobile */
     gap: 3rem;
   }
   
@@ -3661,6 +3662,38 @@ body.loaded .animate-fade-in {
   .form-submit-btn {
     padding: 1rem 1.5rem;
     font-size: 1rem;
+  }
+}
+
+/* Safari iPhone Visibility Fixes */
+/* Override dark mode variables that make text invisible on Safari iPhone */
+.contact-process h3,
+.timeline-details h4,
+.form-field label,
+.form-heading h2 {
+  color: #1f2937 !important;
+  -webkit-text-fill-color: #1f2937 !important;
+}
+
+/* Enhanced Safari iPhone text visibility on mobile */
+@media (max-width: 768px) {
+  /* Ensure text is visible on Safari iPhone */
+  .contact-process h3,
+  .timeline-details h4,
+  .form-field label {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: 700 !important;
+  }
+  
+  .timeline-details p {
+    color: #4a5568 !important;
+    -webkit-text-fill-color: #4a5568 !important;
+  }
+  
+  .form-heading h2 {
+    color: #1f2937 !important;
+    -webkit-text-fill-color: #1f2937 !important;
   }
 }
 
