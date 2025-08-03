@@ -1,30 +1,23 @@
 import Link from "next/link";
+import Breadcrumb from "@/app/components/Breadcrumb";
+import PageHero from "@/app/components/PageHero";
 
 export default function Sitemap() {
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Sitemap" }
+  ];
+
   return (
     <main className="w-full">
       {/* Breadcrumb Navigation */}
-      <div className="page-breadcrumb">
-        <div className="breadcrumb-wrapper">
-          <nav className="breadcrumb-nav">
-            <Link href="/" className="breadcrumb-item">Home</Link>
-            <span className="breadcrumb-divider">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9,18 15,12 9,6"></polyline>
-              </svg>
-            </span>
-            <span className="breadcrumb-active">Sitemap</span>
-          </nav>
-        </div>
-      </div>
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* Hero Section */}
-      <div className="contact-hero-section">
-        <div className="contact-hero-wrapper">
-          <h1 className="contact-page-title">Sitemap</h1>
-          <p className="contact-page-subtitle">Navigate through all pages on our website</p>
-        </div>
-      </div>
+      <PageHero 
+        title="Sitemap"
+        subtitle="Navigate through all pages on our website"
+      />
 
       {/* Sitemap Content */}
       <section className="py-20 mb-10">

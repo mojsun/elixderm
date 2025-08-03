@@ -1,0 +1,65 @@
+/* Page Breadcrumb */
+.pageBreadcrumb {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 0;
+}
+
+.breadcrumbWrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.breadcrumbLink {
+  color: var(--color-gray);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumbDivider {
+  color: var(--color-gray);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbActive {
+  color: #111827 !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #111827 !important;
+  text-shadow: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .breadcrumbWrapper {
+    padding: 0 1rem;
+  }
+  
+  .breadcrumbActive {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: 700 !important;
+  }
+} 

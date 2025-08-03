@@ -1,6 +1,5 @@
-"use client";
-
 import React from "react";
+import FeatureSection from "@/app/components/FeatureSection";
 
 const OurStorySection: React.FC = () => {
   const storyFeatures = [
@@ -37,91 +36,13 @@ const OurStorySection: React.FC = () => {
   ];
 
   return (
-    <section 
-      className="why-different-section our-story-section section-padding"
-      style={{
-        padding: '6rem 0 8rem 0',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
-      }}
-    >
-      <div className="why-different-container mx-auto px-8">
-        <div className="w-full max-w-full">
-          <div className="why-different-content grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
-          
-            {/* Left Content */}
-            <div className="why-different-left">
-              <h2 className="why-different-title font-heading font-bold mb-8 leading-tight"
-                  style={{
-                    fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                    letterSpacing: '-0.02em',
-                    color: '#1f2937', // Safari fallback
-                    background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}>
-                Our Story
-              </h2>
-              <p className="why-different-intro text-grayish text-xl leading-relaxed max-w-lg font-normal"
-                 style={{ color: '#6b7280' }}>
-                Elixderm was born from a simple observation: most beauty manufacturers operate like factories, 
-                prioritizing volume over vision. As scientists and entrepreneurs ourselves, we knew there was a better way 
-                to bridge the gap between complex chemistry and market success.
-              </p>
-            </div>
-            
-                         {/* Right Content */}
-             <div className="why-different-right w-full">
-               <div className="features-container mt-8 mb-8">
-                 <div className="features-grid grid grid-cols-2 gap-8 auto-rows-auto">
-                  {storyFeatures.map((feature, index) => (
-                    <div
-                      key={index}
-                      className="feature-card story-feature-card relative overflow-hidden rounded-2xl p-8 transition-all duration-600 ease-out"
-                      style={{
-                        opacity: 1,
-                        transform: 'translateY(0)',
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(16, 185, 129, 0.1)',
-                        minHeight: '200px'
-                      }}
-                    >
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none"
-                           style={{
-                             background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(5, 150, 105, 0.02) 100%)'
-                           }} />
-                      
-                                             {/* Feature Icon */}
-                       <div className="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center text-white transition-all duration-300 ease-out"
-                            style={{
-                              background: 'linear-gradient(135deg, rgb(16, 185, 129) 0%, rgb(52, 211, 153) 100%)',
-                              marginBottom: '2rem'
-                            }}>
-                         {feature.icon}
-                       </div>
-                      
-                      {/* Content */}
-                      <div className="feature-content relative z-10">
-                        <h3 className="feature-title font-heading font-semibold text-lg text-grayish-dark mb-3 leading-tight"
-                            style={{ color: '#1f2937' }}>
-                          {feature.title}
-                        </h3>
-                        <p className="feature-description text-grayish text-sm leading-relaxed"
-                           style={{ color: '#6b7280' }}>
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <FeatureSection
+      title="Our Story"
+      description="Elixderm was born from a simple observation: most beauty manufacturers operate like factories, prioritizing volume over vision. As scientists and entrepreneurs ourselves, we knew there was a better way to bridge the gap between complex chemistry and market success."
+      features={storyFeatures}
+      enableAnimation={false}
+      className="our-story-section"
+    />
   );
 };
 
