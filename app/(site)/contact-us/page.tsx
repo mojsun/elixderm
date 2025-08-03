@@ -2,8 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
+import PageHero from "@/app/components/PageHero";
 
 export default function ContactUs() {
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Contact" }
+  ];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -71,30 +78,14 @@ export default function ContactUs() {
   return (
     <div className="contact-page">
       {/* Breadcrumb Navigation */}
-      <div className="page-breadcrumb">
-        <div className="breadcrumb-wrapper">
-          <nav className="breadcrumb-nav">
-            <Link href="/" className="breadcrumb-item">Home</Link>
-            <span className="breadcrumb-divider">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9,18 15,12 9,6"></polyline>
-              </svg>
-            </span>
-            <span className="breadcrumb-active">Contact</span>
-          </nav>
-        </div>
-      </div>
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* Contact Page Content */}
       <main className="contact-page-main">
-        <div className="contact-hero-section">
-          <div className="contact-hero-wrapper">
-            <h1 className="contact-page-title">Get Your Custom Beauty Manufacturing Quote</h1>
-            <p className="contact-page-subtitle">
-              Ready to launch your beauty brand? Fill out our form below and our manufacturing experts will help you understand your options for private label products, formulations, and packaging needs.
-            </p>
-          </div>
-        </div>
+        <PageHero 
+          title="Get Your Custom Beauty Manufacturing Quote"
+          subtitle="Ready to launch your beauty brand? Fill out our form below and our manufacturing experts will help you understand your options for private label products, formulations, and packaging needs."
+        />
 
         <div className="contact-main-section">
           <div className="contact-main-wrapper">

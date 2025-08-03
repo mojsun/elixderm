@@ -1044,129 +1044,8 @@ body.loaded .animate-fade-in {
   }
 }
 
-/* WhyElixderm container centering */
-.why-different-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: auto;
-}
 
-.why-different-container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1400px;
-  display: flex;
-  justify-content: center;
-}
 
-/* WhyElixderm responsive design */
-@media (max-width: 1200px) {
-  .why-different-content {
-    gap: 3rem !important;
-  }
-  
-  .features-grid {
-    gap: 1.5rem !important;
-  }
-  
-  .feature-card {
-    padding: 1.5rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .why-different-section {
-    padding: 4rem 0 !important;
-  }
-  
-  .why-different-container {
-    padding: 0 1.5rem !important;
-  }
-  
-  .why-different-content {
-    grid-template-columns: 1fr !important;
-    gap: 3rem !important;
-  }
-  
-  .why-different-left {
-    position: static !important;
-    text-align: center;
-  }
-  
-  .why-different-intro {
-    max-width: none !important;
-  }
-  
-  .features-container {
-    height: 780px !important;
-  }
-  
-  .features-grid {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: repeat(6, 1fr) !important;
-    gap: 1.5rem !important;
-    height: 1560px !important;
-    transform: translateY(0) !important;
-  }
-  
-  .features-scrolled .features-grid {
-    transform: translateY(-792px) !important;
-  }
-  
-  .feature-card {
-    padding: 1.5rem !important;
-    text-align: center;
-    height: 240px !important;
-    grid-column: 1 !important;
-  }
-  
-  .feature-icon {
-    margin: 0 auto 2rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .why-different-section {
-    padding: 3rem 0 !important;
-  }
-  
-  .why-different-container {
-    padding: 0 1rem !important;
-  }
-  
-  .why-different-content {
-    gap: 2rem !important;
-  }
-  
-  .feature-card {
-    padding: 1.25rem !important;
-    height: 200px !important;
-  }
-  
-  .feature-icon {
-    width: 56px !important;
-    height: 56px !important;
-    border-radius: 12px !important;
-  }
-  
-  .feature-icon svg {
-    width: 28px !important;
-    height: 28px !important;
-  }
-  
-  .features-container {
-    height: 660px !important;
-  }
-  
-  .features-grid {
-    height: 1320px !important;
-  }
-  
-  .features-scrolled .features-grid {
-    transform: translateY(-672px) !important;
-  }
-}
 
 /* WhyElixderm reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -2031,6 +1910,14 @@ body.loaded .animate-fade-in {
   min-height: 350px;
   max-width: 1000px;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .testimonial-showcase {
+    touch-action: pan-y;
+    user-select: none;
+  }
 }
 
 .testimonial-active-card {
@@ -2042,14 +1929,14 @@ body.loaded .animate-fade-in {
   grid-template-columns: 2fr 1fr;
   gap: 40px;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0) scale(1);
 }
 
 .testimonial-active-card.hidden {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateX(30px) scale(0.95);
   position: absolute;
   top: 0;
   left: 0;
@@ -2153,6 +2040,12 @@ body.loaded .animate-fade-in {
 .stat-trend {
   font-size: 1.5rem;
   color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
 }
 
 .stat-label {
@@ -2200,15 +2093,7 @@ body.loaded .animate-fade-in {
   }
   
   .persona-selector {
-    gap: 0.4rem;
-    margin-bottom: 40px;
-    padding: 6px;
-  }
-
-  .persona-btn {
-    padding: 12px 22px;
-    font-size: 0.9rem;
-    min-width: 100px;
+    display: none !important;
   }
   
   .testimonial-showcase {
@@ -2247,6 +2132,39 @@ body.loaded .animate-fade-in {
   .stat-label {
     font-size: 0.8rem;
   }
+  
+  /* Mobile Slider Indicators */
+  .slider-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  
+  .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #d1d5db;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  
+  .slider-dot.active {
+    background: var(--color-primary);
+    transform: scale(1.2);
+  }
+  
+  .slider-dot:hover {
+    background: #9ca3af;
+  }
+  
+  .slider-dot.active:hover {
+    background: var(--color-primary);
+  }
+
 }
 
 @media (max-width: 480px) {
@@ -2255,16 +2173,7 @@ body.loaded .animate-fade-in {
   }
   
   .persona-selector {
-    gap: 0.3rem;
-    padding: 4px;
-    flex-direction: column;
-  }
-
-  .persona-btn {
-    padding: 10px 18px;
-    font-size: 0.85rem;
-    min-width: auto;
-    width: 100%;
+    display: none !important;
   }
   
   .testimonial-active-card {
@@ -3452,47 +3361,7 @@ body.loaded .animate-fade-in {
 /* CONTACT PAGE STYLES */
 /* =================================================================== */
 
-/* Page Breadcrumb */
-.page-breadcrumb {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 1rem 0;
-}
 
-.breadcrumb-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.breadcrumb-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.breadcrumb-item {
-  color: var(--color-gray);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.breadcrumb-item:hover {
-  color: var(--color-primary);
-}
-
-.breadcrumb-divider {
-  color: var(--color-gray);
-  opacity: 0.6;
-}
-
-.breadcrumb-active {
-  color: var(--color-dark);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
 
 /* Contact Page Main */
 .contact-page {
@@ -3503,36 +3372,7 @@ body.loaded .animate-fade-in {
   padding-bottom: 0;
 }
 
-/* Contact Hero Section */
-.contact-hero-section {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  color: white;
-  padding: 4rem 0;
-  text-align: center;
-}
 
-.contact-hero-wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.contact-page-title {
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
-}
-
-.contact-page-subtitle {
-  font-size: 1.25rem;
-  font-weight: 400;
-  opacity: 0.95;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
-}
 
 /* Contact Main Section */
 .contact-main-section {
@@ -3758,13 +3598,7 @@ body.loaded .animate-fade-in {
     gap: 3rem;
   }
   
-  .contact-hero-section {
-    padding: 3rem 0;
-  }
-  
-  .contact-page-title {
-    font-size: 2.75rem;
-  }
+
   
   .contact-form-area {
     padding: 2.5rem;
@@ -3772,22 +3606,6 @@ body.loaded .animate-fade-in {
 }
 
 @media (max-width: 768px) {
-  .breadcrumb-wrapper {
-    padding: 0 1rem;
-  }
-  
-  .contact-hero-wrapper {
-    padding: 0 1rem;
-  }
-  
-  .contact-page-title {
-    font-size: 2.25rem;
-  }
-  
-  .contact-page-subtitle {
-    font-size: 1.1rem;
-  }
-  
   .contact-main-wrapper {
     padding: 0 1rem;
   }
@@ -4099,4 +3917,27 @@ body.loaded .animate-fade-in {
 
 .step-item.slide-in {
   animation: fadeSlideIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Material Symbols Outlined Font */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
 }

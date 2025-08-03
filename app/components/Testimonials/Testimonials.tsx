@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { TrendingUpIcon, StarIcon } from "../icons/MaterialIcons";
 
 type Persona = "influencer" | "doctor" | "amazon-seller" | "startup";
 
@@ -9,7 +10,7 @@ const personas: Record<
     quote: string;
     avatar: string;
     title: string;
-    stats: { number: string; trend: string; label: string }[];
+    stats: { number: string; trend: "up" | "down" | "stable"; label: string }[];
   }
 > = {
   influencer: {
@@ -18,8 +19,8 @@ const personas: Record<
     avatar: "BI",
     title: "Beauty Influencer, 500K followers",
     stats: [
-      { number: "92%", trend: "↗", label: "Follower engagement" },
-      { number: "45%", trend: "↗", label: "Product sales increase" },
+      { number: "92%", trend: "up", label: "Follower engagement" },
+      { number: "45%", trend: "up", label: "Product sales increase" },
     ],
   },
   doctor: {
@@ -28,8 +29,8 @@ const personas: Record<
     avatar: "MD",
     title: "Dermatologist, Private Practice",
     stats: [
-      { number: "98%", trend: "↗", label: "Patient satisfaction" },
-      { number: "15+", trend: "↗", label: "Years partnership" },
+      { number: "98%", trend: "up", label: "Patient satisfaction" },
+      { number: "15+", trend: "up", label: "Years partnership" },
     ],
   },
   "amazon-seller": {
@@ -38,8 +39,8 @@ const personas: Record<
     avatar: "AS",
     title: "Amazon FBA Seller, Beauty Category",
     stats: [
-      { number: "3x", trend: "↗", label: "Revenue growth" },
-      { number: "4.8★", trend: "↗", label: "Amazon rating" },
+      { number: "3x", trend: "up", label: "Revenue growth" },
+      { number: "4.8★", trend: "up", label: "Amazon rating" },
     ],
   },
   startup: {
@@ -48,20 +49,138 @@ const personas: Record<
     avatar: "SU",
     title: "Startup Founder, Beauty Brand",
     stats: [
-      { number: "6 mo", trend: "↗", label: "Time to market" },
-      { number: "150%", trend: "↗", label: "First year growth" },
+      { number: "6 mo", trend: "up", label: "Time to market" },
+      { number: "150%", trend: "up", label: "First year growth" },
     ],
   },
 };
 
-const StarIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-  </svg>
-);
+
+
+
 
 export default function Testimonials() {
   const [active, setActive] = useState<Persona>("influencer");
+  const [isMobile, setIsMobile] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const resetTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Memoize the personas array to prevent dependency issues
+  const personas_array = useMemo(() => 
+    ["influencer", "doctor", "amazon-seller", "startup"] as Persona[], 
+    []
+  );
+  
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileView = window.innerWidth <= 768;
+      setIsMobile(isMobileView);
+      
+
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-play functionality for desktop
+  useEffect(() => {
+    const startAutoPlay = () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+      
+      autoPlayRef.current = setInterval(() => {
+        setActive(current => {
+          const currentIndex = personas_array.indexOf(current);
+          const nextIndex = (currentIndex + 1) % personas_array.length;
+          return personas_array[nextIndex];
+        });
+      }, 3000); // Auto-switch every 3 seconds
+    };
+    
+    startAutoPlay();
+    
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current);
+      }
+    };
+  }, [personas_array]);
+
+  // Reset auto-play timer when user interacts
+  const resetAutoPlay = () => {
+    // Clear existing timers
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      autoPlayRef.current = null;
+    }
+    
+    if (resetTimeoutRef.current) {
+      clearTimeout(resetTimeoutRef.current);
+      resetTimeoutRef.current = null;
+    }
+    
+    // Restart after a delay
+    resetTimeoutRef.current = setTimeout(() => {
+      autoPlayRef.current = setInterval(() => {
+        setActive(current => {
+          const currentIndex = personas_array.indexOf(current);
+          const nextIndex = (currentIndex + 1) % personas_array.length;
+          return personas_array[nextIndex];
+        });
+      }, 3000); // Auto-switch every 3 seconds
+    }, 5000); // Wait 5 seconds before restarting auto-play
+  };
+
+  // Swipe detection
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile || !touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe || isRightSwipe) {
+      const currentIndex = personas_array.indexOf(active);
+      let nextIndex;
+      
+      if (isLeftSwipe) {
+        // Swipe left - go to next
+        nextIndex = (currentIndex + 1) % personas_array.length;
+      } else {
+        // Swipe right - go to previous
+        nextIndex = currentIndex === 0 ? personas_array.length - 1 : currentIndex - 1;
+      }
+      
+      setActive(personas_array[nextIndex]);
+      resetAutoPlay();
+    }
+  };
+
+  const handlePersonaClick = (persona: Persona) => {
+    setActive(persona);
+    resetAutoPlay();
+  };
 
   const getPersonaLabel = (persona: Persona) => {
     switch (persona) {
@@ -78,15 +197,15 @@ export default function Testimonials() {
         <div className="testimonials-header">
           <h2 className="testimonials-title">Hear From People Just Like You</h2>
           <p className="testimonials-subtitle">
-                          Real feedback from entrepreneurs, creators, and business owners who&apos;ve worked with us
+            Real feedback from entrepreneurs, creators, and business owners who&apos;ve worked with us
           </p>
         </div>
         
         <div className="persona-selector">
-          {(["influencer", "doctor", "amazon-seller", "startup"] as Persona[]).map((persona) => (
+          {personas_array.map((persona) => (
             <button
               key={persona}
-              onClick={() => setActive(persona)}
+              onClick={() => handlePersonaClick(persona)}
               className={`persona-btn ${active === persona ? "active" : ""}`}
               data-persona={persona}
             >
@@ -95,8 +214,13 @@ export default function Testimonials() {
           ))}
         </div>
         
-        <div className="testimonial-showcase">
-          {(["influencer", "doctor", "amazon-seller", "startup"] as Persona[]).map((persona) => {
+        <div 
+          className="testimonial-showcase"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {personas_array.map((persona) => {
             const testimonial = personas[persona];
             const isActive = active === persona;
             
@@ -128,7 +252,12 @@ export default function Testimonials() {
                   {testimonial.stats.map((stat, index) => (
                     <div key={index} className="stat-item">
                       <div className="stat-number">
-                        {stat.number} <span className="stat-trend">{stat.trend}</span>
+                        {stat.number} 
+                        <span className="stat-trend">
+                          {stat.trend === "up" && <TrendingUpIcon size={20} />}
+                          {stat.trend === "down" && <TrendingUpIcon size={20} className="rotate-180" />}
+                          {stat.trend === "stable" && <span>→</span>}
+                        </span>
                       </div>
                       <div className="stat-label">{stat.label}</div>
                     </div>
@@ -138,6 +267,23 @@ export default function Testimonials() {
             );
           })}
         </div>
+        
+        {isMobile && (
+          <>
+            <div className="slider-indicators">
+              {personas_array.map((persona, index) => (
+                <button
+                  key={persona}
+                  className={`slider-dot ${active === persona ? "active" : ""}`}
+                  onClick={() => handlePersonaClick(persona)}
+                  aria-label={`Go to ${getPersonaLabel(persona)} testimonial`}
+                />
+              ))}
+            </div>
+            
+
+          </>
+        )}
       </div>
     </section>
   );

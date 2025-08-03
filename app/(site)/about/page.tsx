@@ -1,36 +1,26 @@
-import Link from "next/link";
 import OurStorySection from "@/app/components/OurStory/OurStory";
 import TeamSection from "@/app/components/Team/Team";
 import ContactSection from "@/app/components/ContactSection/ContactSection";
+import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
+import PageHero from "@/app/components/PageHero";
 
 export default function About() {
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "About Us" }
+  ];
+
   return (
     <div className="contact-page">
       {/* Breadcrumb Navigation */}
-      <div className="page-breadcrumb">
-        <div className="breadcrumb-wrapper">
-          <nav className="breadcrumb-nav">
-            <Link href="/" className="breadcrumb-item">Home</Link>
-            <span className="breadcrumb-divider">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9,18 15,12 9,6"></polyline>
-              </svg>
-            </span>
-            <span className="breadcrumb-active">About Us</span>
-          </nav>
-        </div>
-      </div>
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* About Page Content */}
       <main className="contact-page-main">
-        <div className="contact-hero-section">
-          <div className="contact-hero-wrapper">
-            <h1 className="contact-page-title">Where Science Meets Entrepreneurial Vision</h1>
-            <p className="contact-page-subtitle">
-              Founded by scientists who understand both complex formulation and business success. We&apos;re not just manufacturers—we&apos;re partners in turning beauty visions into reality.
-            </p>
-          </div>
-        </div>
+        <PageHero 
+          title="Where Science Meets Entrepreneurial Vision"
+          subtitle="Founded by scientists who understand both complex formulation and business success. We're not just manufacturers—we're partners in turning beauty visions into reality."
+        />
 
         <OurStorySection />
         <TeamSection />
