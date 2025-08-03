@@ -1,0 +1,259 @@
+/* Footer Component Styles */
+.footer {
+  /* Fix Safari iPhone gradient - use explicit colors instead of CSS variables */
+  background: linear-gradient(135deg, #1f2937 0%, #2d3748 50%, #4a5568 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+}
+
+/* Container */
+.footerContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* Main Content */
+.footerContent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+  padding: 5rem 0 3rem;
+}
+
+.footerColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerHeading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footerHeading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  border-radius: 1px;
+}
+
+/* Links */
+.footerLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footerLink {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border-radius: 4px;
+  position: relative;
+}
+
+.footerLink:hover {
+  color: white;
+  transform: translateX(3px);
+}
+
+/* Address */
+.footerAddress {
+  margin-top: 1rem;
+}
+
+.addressContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.locationIcon {
+  color: #10b981;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.addressText {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Bottom Section */
+.footerBottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2.5rem 0;
+  margin-top: 1rem;
+}
+
+.footerBottomContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerLogo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footerBrand {
+  font-family: var(--font-logo);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footerTagline {
+  color: #cbd5e0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.footerLegal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.footerCopyright {
+  color: #cbd5e0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.footerLegalLinks {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.footerLegalLink {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.footerLegalLink:hover {
+  color: white;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footerContent {
+    gap: 3rem;
+    padding: 4rem 0 2.5rem;
+  }
+  
+  .footerBottomContent {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footerContent {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    padding: 3rem 0 2rem;
+  }
+  
+  .footerContainer {
+    padding: 0 1.5rem;
+  }
+  
+  .footerBottomContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  
+  .footerLegal {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .footerLegalLinks {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0 1.5rem;
+  }
+  
+  .footerContainer {
+    padding: 0 1rem;
+  }
+  
+  .footerHeading {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footerLegalLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Accessibility and Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .footerLink {
+    transition: none;
+  }
+  
+  .footerLink:hover {
+    transform: none;
+  }
+  
+  .footerLegalLink {
+    transition: none;
+  }
+} 
