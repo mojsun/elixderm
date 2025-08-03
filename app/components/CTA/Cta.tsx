@@ -12,11 +12,8 @@ export default function QuoteCTA(): React.JSX.Element {
             
             <div className="cta-quote-text">
               <h3 className="cta-quote-title">
-                Ready to bring your vision to life?
-              </h3>
-              <p className="cta-quote-subtitle">
                 Get a custom quote tailored to your project needs
-              </p>
+              </h3>
             </div>
 
             <div className="cta-quote-arrow">
