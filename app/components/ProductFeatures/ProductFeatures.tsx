@@ -45,8 +45,8 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
             className={styles.productCenter} 
             src={features.centerImage?.url} 
             alt={features.centerImage?.alt}
-            width={300}
-            height={300}
+            width={350}
+            height={350}
           />
         </div>
         <div className={styles.featuresContainer}>
@@ -71,8 +71,8 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
             className={styles.productCenter} 
             src={features.centerImage?.url} 
             alt={features.centerImage?.alt}
-            width={300}
-            height={300}
+            width={350}
+            height={350}
           />
         </div>
         <div className={styles.featureHolderMobile}>

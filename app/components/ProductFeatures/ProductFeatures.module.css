@@ -20,7 +20,11 @@
 }
 
 .productCenter {
-  height: 350px !important;
+  max-width: 350px;
+  max-height: 350px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .productFeatures {
