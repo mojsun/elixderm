@@ -1,10 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import styles from './ProductImageSlider.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductImageSliderProps {
-  product: any // Will be typed properly later
+  product: Product
+}
+
+interface SliderImage {
+  url: string
+  alt: string
 }
 
 export default function ProductImageSlider({ product }: ProductImageSliderProps) {
@@ -25,9 +32,9 @@ export default function ProductImageSlider({ product }: ProductImageSliderProps)
         className={styles.slides}
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
-        {images.map((image: any, index: number) => (
+        {images.map((image: SliderImage, index: number) => (
           <div key={index} className={styles.slide}>
-            <img src={image.url} alt={image.alt} />
+            <Image src={image.url} alt={image.alt} width={600} height={400} />
           </div>
         ))}
       </div>

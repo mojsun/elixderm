@@ -1,12 +1,14 @@
+import Link from 'next/link'
 import styles from './ProductTopCTA.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductTopCTAProps {
-  product: any // Will be typed properly later
+  product: Product
 }
 
 export default function ProductTopCTA({ product }: ProductTopCTAProps) {
   return (
-    <a href="/contact-us">
+    <Link href="/contact-us">
       <section className={styles.ctaRow}>
         <p>{product?.topCTA?.text || 'Loading...'}</p>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">
@@ -20,6 +22,6 @@ export default function ProductTopCTA({ product }: ProductTopCTAProps) {
           </defs>
         </svg>
       </section>
-    </a>
+    </Link>
   )
 } 

@@ -1,7 +1,10 @@
+import Link from 'next/link'
+import Image from 'next/image'
 import styles from './ProductMiddleCTA.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductMiddleCTAProps {
-  product: any // Will be typed properly later
+  product: Product
 }
 
 export default function ProductMiddleCTA({ product }: ProductMiddleCTAProps) {
@@ -19,13 +22,13 @@ export default function ProductMiddleCTA({ product }: ProductMiddleCTAProps) {
             />
           </svg>
         </div>
-        <img src={middleCTA.image} alt={middleCTA.imageAlt} />
+        <Image src={middleCTA.image} alt={middleCTA.imageAlt} width={300} height={250} />
       </div>
       <div className={styles.mctaText}>
         <p>{middleCTA.subheading}</p>
         <h2>{middleCTA.heading}</h2>
 
-        <a href="/contact-us">
+        <Link href="/contact-us">
           <button>
             <span>{middleCTA.ctaText}</span>
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1422 800">
@@ -39,7 +42,7 @@ export default function ProductMiddleCTA({ product }: ProductMiddleCTAProps) {
               </defs>
             </svg>
           </button>
-        </a>
+        </Link>
       </div>
     </section>
   )

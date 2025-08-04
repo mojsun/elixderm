@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import Image from 'next/image'
 import styles from './ProductHero.module.css'
 import { Product } from '@/types/Product'
 
@@ -16,18 +18,21 @@ export default function ProductHero({ product }: ProductHeroProps) {
             <p>{product?.hero?.description || 'Loading...'}</p>
             
             <div className={styles.buttonsHolder}>
-              <a href="/contact-us">
+              <Link href="/contact-us">
                 <button className={styles.heroCTAButton}>Get a Quote</button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
         <div className={styles.right}>
           <div className={styles.rightB}>
             {product?.hero?.image && (
-              <img 
+              <Image 
                 src={product.hero.image} 
-                alt={product?.hero?.imageAlt || 'Product image'} 
+                alt={product?.hero?.imageAlt || 'Product image'}
+                width={400}
+                height={300}
+                priority
               />
             )}
           </div>

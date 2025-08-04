@@ -1,7 +1,15 @@
+import Image from 'next/image'
 import styles from './ProductValue.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductValueProps {
-  product: any // Will be typed properly later
+  product: Product
+}
+
+interface ValueImage {
+  url: string
+  alt: string
+  heading: string
 }
 
 export default function ProductValue({ product }: ProductValueProps) {
@@ -16,17 +24,17 @@ export default function ProductValue({ product }: ProductValueProps) {
         </div>
         <div className={styles.valueRight}>
           <div className={styles.valueBox}>
-            {product?.value?.images?.slice(0, 2)?.map((image: any, index: number) => (
+            {product?.value?.images?.slice(0, 2)?.map((image: ValueImage, index: number) => (
               <div key={index} className={styles.valueHolder}>
-                <img src={image.url} alt={image.alt} />
+                <Image src={image.url} alt={image.alt} width={200} height={150} />
                 <h4>{image.heading}</h4>
               </div>
             ))}
           </div>
           <div className={styles.valueBox}>
-            {product?.value?.images?.slice(2, 4)?.map((image: any, index: number) => (
+            {product?.value?.images?.slice(2, 4)?.map((image: ValueImage, index: number) => (
               <div key={index + 2} className={styles.valueHolder}>
-                <img src={image.url} alt={image.alt} />
+                <Image src={image.url} alt={image.alt} width={200} height={150} />
                 <h4>{image.heading}</h4>
               </div>
             ))}

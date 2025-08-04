@@ -1,7 +1,16 @@
+import Image from 'next/image'
 import styles from './ProductFeatures.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductFeaturesProps {
-  product: any // Will be typed properly later
+  product: Product
+}
+
+interface Feature {
+  image: string
+  imageAlt: string
+  heading: string
+  subheading: string
 }
 
 export default function ProductFeatures({ product }: ProductFeaturesProps) {
@@ -19,10 +28,10 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
       {/* Desktop Layout */}
       <section className={styles.productFeatures}>
         <div className={styles.featuresContainer}>
-          {leftFeatures.map((feature: any, index: number) => (
+          {leftFeatures.map((feature: Feature, index: number) => (
             <div key={index}>
               <div className={styles.featureHolder}>
-                <img src={feature.image} alt={feature.imageAlt} />
+                <Image src={feature.image} alt={feature.imageAlt} width={120} height={120} />
                 <div>
                   <h3>{feature.heading}</h3>
                   <p>{feature.subheading}</p>
@@ -32,17 +41,19 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
           ))}
         </div>
         <div className={styles.productCenterContainer}>
-          <img 
+          <Image 
             className={styles.productCenter} 
             src={features.centerImage?.url} 
-            alt={features.centerImage?.alt} 
+            alt={features.centerImage?.alt}
+            width={300}
+            height={300}
           />
         </div>
         <div className={styles.featuresContainer}>
-          {rightFeatures.map((feature: any, index: number) => (
+          {rightFeatures.map((feature: Feature, index: number) => (
             <div key={index + 3}>
               <div className={styles.featureHolder}>
-                <img src={feature.image} alt={feature.imageAlt} />
+                <Image src={feature.image} alt={feature.imageAlt} width={120} height={120} />
                 <div>
                   <h3>{feature.heading}</h3>
                   <p>{feature.subheading}</p>
@@ -56,18 +67,20 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
       {/* Mobile Layout */}
       <section className={styles.productFeaturesMobile}>
         <div className={styles.productCenterContainer}>
-          <img 
+          <Image 
             className={styles.productCenter} 
             src={features.centerImage?.url} 
-            alt={features.centerImage?.alt} 
+            alt={features.centerImage?.alt}
+            width={300}
+            height={300}
           />
         </div>
         <div className={styles.featureHolderMobile}>
           <div className={styles.featuresContainer}>
-            {leftFeatures.map((feature: any, index: number) => (
+            {leftFeatures.map((feature: Feature, index: number) => (
               <div key={index}>
                 <div className={styles.featureHolder}>
-                  <img src={feature.image} alt={feature.imageAlt} />
+                  <Image src={feature.image} alt={feature.imageAlt} width={120} height={120} />
                   <div>
                     <h3>{feature.heading}</h3>
                     <p>{feature.subheading}</p>
@@ -77,10 +90,10 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
             ))}
           </div>
           <div className={styles.featuresContainer}>
-            {rightFeatures.map((feature: any, index: number) => (
+            {rightFeatures.map((feature: Feature, index: number) => (
               <div key={index + 3}>
                 <div className={styles.featureHolder}>
-                  <img src={feature.image} alt={feature.imageAlt} />
+                  <Image src={feature.image} alt={feature.imageAlt} width={120} height={120} />
                   <div>
                     <h3>{feature.heading}</h3>
                     <p>{feature.subheading}</p>

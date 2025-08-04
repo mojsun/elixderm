@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import styles from './ProductFAQ.module.css'
+import { Product } from '@/types/Product'
 
 interface ProductFAQProps {
-  product: any // Will be typed properly later
+  product: Product
+}
+
+interface FAQItem {
+  question: string
+  answer: string
 }
 
 export default function ProductFAQ({ product }: ProductFAQProps) {
@@ -25,7 +31,7 @@ export default function ProductFAQ({ product }: ProductFAQProps) {
       const faqSchema = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": faqs.items.map((faq: any) => ({
+        "mainEntity": faqs.items.map((faq: FAQItem) => ({
           "@type": "Question",
           "name": faq.question,
           "acceptedAnswer": {
@@ -66,7 +72,7 @@ export default function ProductFAQ({ product }: ProductFAQProps) {
           <p>{faqs.subtitle || 'Loading...'}</p>
         </div>
         <div className={styles.faqAccordion}>
-          {faqs.items?.map((faq: any, index: number) => (
+          {faqs.items?.map((faq: FAQItem, index: number) => (
             <div 
               key={index} 
               className={`${styles.faqItem} ${activeItems.includes(index) ? styles.active : ''}`}
