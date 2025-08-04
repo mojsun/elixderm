@@ -1,12 +1,21 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import styles from './HowItWorks.module.css';
 
 export default function HowItWorks(): React.JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
+  const [isContentReady, setIsContentReady] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastScrollTime = useRef(0);
+  const wheelAccumulator = useRef(0);
+  const isScrollLocked = useRef(false);
   
   const steps = [
     {
@@ -57,92 +66,192 @@ export default function HowItWorks(): React.JSX.Element {
     }
   ];
 
-  const maxStepIndex = steps.length - 1;
-
-  const updateActiveStep = useCallback((newIndex: number) => {
-    if (newIndex < 0 || newIndex > maxStepIndex || newIndex === currentStepIndex || isTransitioning) {
-      if (newIndex < 0 || newIndex > maxStepIndex) {
-        setIsScrolling(false);
-        document.body.style.overflow = 'auto';
-        if (sectionRef.current) {
-          sectionRef.current.classList.remove('scroll-active');
-        }
-        return false;
-      }
-      return false;
+  const handleStepChange = useCallback((newIndex: number) => {
+    if (newIndex === currentStepIndex || isScrollLocked.current) return;
+    
+    isScrollLocked.current = true;
+    setIsScrolling(true);
+    setCurrentStepIndex(newIndex);
+    
+    // Clear existing timeout
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
     }
     
-    setIsTransitioning(true);
-    
-    // Add fade out effect
-    const stepContainer = document.querySelector('.step-item');
-    if (stepContainer) {
-      (stepContainer as HTMLElement).style.opacity = '0.5';
-    }
-    
-    // Wait for fade out, then change content
-    setTimeout(() => {
-      setCurrentStepIndex(newIndex);
-      // Add slide-in class
-      const sc = stepContainer as HTMLElement | null;
-      if (sc) {
-        sc.classList.add('slide-in');
-      }
-      // Fade back in & clean class after animation
-      setTimeout(() => {
-        if (sc) {
-          sc.style.opacity = '1';
-          sc.classList.remove('slide-in');
-        }
-        setIsTransitioning(false);
-      }, 1000);
-    }, 500);  // end of outer setTimeout
-    
-    return true;
-  }, [maxStepIndex, currentStepIndex, isTransitioning]);
+    // Set scrolling to false after animation completes
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsScrolling(false);
+      isScrollLocked.current = false;
+      wheelAccumulator.current = 0;
+    }, 1200);
+  }, [currentStepIndex]);
 
-  const handleHowItWorksScroll = useCallback((event: WheelEvent) => {
-    if (!isScrolling || isTransitioning) return;
-    
-    const delta = event.deltaY;
-    let success = false;
-    
-    if (delta > 0) {
-      // Scroll down - next step
-      success = updateActiveStep(currentStepIndex + 1);
+  // Handle wheel events for desktop
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!sectionRef.current || !isInView) return;
       
-      if (!success && currentStepIndex === maxStepIndex) {
-        setIsScrolling(false);
-        document.body.style.overflow = 'auto';
-        if (sectionRef.current) {
-          sectionRef.current.classList.remove('scroll-active');
-        }
-        setTimeout(() => {
-          window.scrollBy(0, 100);
-        }, 50);
-      }
-    } else {
-      // Scroll up - previous step
-      success = updateActiveStep(currentStepIndex - 1);
+      const rect = sectionRef.current.getBoundingClientRect();
+      const threshold = window.innerHeight * 0.2;
+      const isInSection = rect.top < threshold && rect.bottom > window.innerHeight - threshold;
       
-      if (!success && currentStepIndex === 0) {
-        setIsScrolling(false);
-        document.body.style.overflow = 'auto';
-        if (sectionRef.current) {
-          sectionRef.current.classList.remove('scroll-active');
-        }
+      if (!isInSection) return;
+      
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Accumulate wheel delta for better detection of user intent
+      wheelAccumulator.current += e.deltaY;
+      
+      // Require minimum scroll amount to trigger change
+      const scrollThreshold = 50;
+      if (Math.abs(wheelAccumulator.current) < scrollThreshold) return;
+      
+      if (isScrollLocked.current) return;
+      
+      const direction = wheelAccumulator.current > 0 ? 1 : -1;
+      const newIndex = currentStepIndex + direction;
+      
+      if (newIndex >= 0 && newIndex < steps.length) {
+        handleStepChange(newIndex);
+        setScrollDirection(direction > 0 ? 'down' : 'up');
+      } else if (newIndex >= steps.length || newIndex < 0) {
+        // Exit the section
+        isScrollLocked.current = true;
         setTimeout(() => {
-          window.scrollBy(0, -100);
-        }, 50);
+          if (newIndex >= steps.length) {
+            const nextSection = sectionRef.current?.nextElementSibling;
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          } else {
+            const prevSection = sectionRef.current?.previousElementSibling;
+            if (prevSection) {
+              prevSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+          }
+          setTimeout(() => {
+            isScrollLocked.current = false;
+            wheelAccumulator.current = 0;
+          }, 800);
+        }, 100);
       }
-    }
-    
-    if (success) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }, [isScrolling, isTransitioning, updateActiveStep, currentStepIndex, maxStepIndex]);
+    };
 
+    // Add listener to window to catch all wheel events
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, [currentStepIndex, isInView, handleStepChange, steps.length]);
+
+  // Handle touch events for mobile with better tap detection
+  useEffect(() => {
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let lastTouchEnd = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!sectionRef.current || !isInView) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      const threshold = window.innerHeight * 0.2;
+      const isInSection = rect.top < threshold && rect.bottom > window.innerHeight - threshold;
+      
+      if (isInSection) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!sectionRef.current || !isInView) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      const threshold = window.innerHeight * 0.2;
+      const isInSection = rect.top < threshold && rect.bottom > window.innerHeight - threshold;
+      
+      if (!isInSection) return;
+      
+      const touchEndY = e.changedTouches[0].clientY;
+      const diff = touchStartY - touchEndY;
+      const touchDuration = Date.now() - touchStartTime;
+      const now = Date.now();
+      
+      // Prevent double tap issues
+      if (now - lastTouchEnd < 300) return;
+      lastTouchEnd = now;
+      
+      // For tap-like scrolls (quick, small movements)
+      const isTap = touchDuration < 300 && Math.abs(diff) < 30;
+      
+      // For swipe gestures
+      const velocity = Math.abs(diff) / touchDuration;
+      const isSwipe = Math.abs(diff) > 50 && velocity > 0.3;
+      
+      if (!isTap && !isSwipe) return;
+      
+      if (isScrollLocked.current) return;
+      
+      e.preventDefault();
+      
+      // Determine direction
+      let direction = 0;
+      if (isTap) {
+        // For taps, check which half of screen was tapped
+        const screenMidpoint = window.innerHeight / 2;
+        direction = touchEndY > screenMidpoint ? 1 : -1;
+      } else {
+        // For swipes, use the swipe direction
+        direction = diff > 0 ? 1 : -1;
+      }
+      
+      const newIndex = currentStepIndex + direction;
+      
+      if (newIndex >= 0 && newIndex < steps.length) {
+        handleStepChange(newIndex);
+        setScrollDirection(direction > 0 ? 'down' : 'up');
+      } else if (newIndex >= steps.length || newIndex < 0) {
+        // Allow exit from section
+        isScrollLocked.current = true;
+        setTimeout(() => {
+          if (newIndex >= steps.length) {
+            const nextSection = sectionRef.current?.nextElementSibling;
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          } else {
+            const prevSection = sectionRef.current?.previousElementSibling;
+            if (prevSection) {
+              prevSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+          }
+          setTimeout(() => {
+            isScrollLocked.current = false;
+          }, 800);
+        }, 100);
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [currentStepIndex, isInView, handleStepChange, steps.length]);
+
+  // Track if the section is in viewport
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -150,57 +259,28 @@ export default function HowItWorks(): React.JSX.Element {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.8) {
-            setIsScrolling(true);
-            document.body.style.overflow = 'hidden';
-            section.classList.add('scroll-active');
-            window.addEventListener('wheel', handleHowItWorksScroll, { passive: false });
-          } else if (!entry.isIntersecting || entry.intersectionRatio < 0.7) {
-            setIsScrolling(false);
-            document.body.style.overflow = 'auto';
-            section.classList.remove('scroll-active');
-            window.removeEventListener('wheel', handleHowItWorksScroll);
+          const inView = entry.isIntersecting && entry.intersectionRatio > 0.1;
+          setIsInView(inView);
+          if (inView && !isContentReady) {
+            // Delay interaction to ensure content is loaded
+            setTimeout(() => setIsContentReady(true), 500);
+          } else if (!inView) {
+            setIsContentReady(false);
           }
         });
       },
       {
-        threshold: [0.3, 0.6, 0.7, 0.8, 0.9],
+        threshold: [0, 0.1, 0.2, 0.5],
         rootMargin: '-10% 0px -10% 0px',
       }
     );
 
     observer.observe(section);
 
-    // Keyboard navigation
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isScrolling) return;
-      
-      let success = false;
-      
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        success = updateActiveStep(currentStepIndex + 1);
-        if (success) e.preventDefault();
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        success = updateActiveStep(currentStepIndex - 1);
-        if (success) e.preventDefault();
-      }
-      
-      if (!success) {
-        setIsScrolling(false);
-        document.body.style.overflow = 'auto';
-        section.classList.remove('scroll-active');
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
     return () => {
       observer.disconnect();
-      window.removeEventListener('wheel', handleHowItWorksScroll);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
     };
-  }, [currentStepIndex, isScrolling, maxStepIndex, handleHowItWorksScroll, updateActiveStep]);
+  }, [isContentReady]);
 
   const progressPercentage = ((currentStepIndex + 1) / steps.length) * 100;
 
@@ -208,18 +288,18 @@ export default function HowItWorks(): React.JSX.Element {
     <section 
       ref={sectionRef}
       id="how-it-works-section" 
-      className="how-it-works-section relative w-full overflow-hidden py-32"
+      className={`${styles.section} relative w-full overflow-hidden py-32`}
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
       }}
     >
-      <div className="how-it-works-container mx-auto px-8" style={{ maxWidth: '1400px' }}>
+      <div className={`${styles.container} mx-auto px-8`} style={{ maxWidth: '1400px' }}>
         
         {/* Header */}
-        <div className="how-it-works-header grid grid-cols-1 lg:grid-cols-2 gap-16 mb-4 items-start">
+        <div className={`${styles.header} grid grid-cols-1 lg:grid-cols-2 gap-16 mb-4 items-start`}>
           <div className="how-it-works-left">
-            <h2 className="how-it-works-title font-heading font-extrabold leading-tight"
+            <h2 className={`${styles.title} font-heading font-extrabold leading-tight`}
                 style={{
                   fontSize: '4rem',
                   background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
@@ -232,99 +312,86 @@ export default function HowItWorks(): React.JSX.Element {
           </div>
           
           <div className="how-it-works-right">
-            <p className="how-it-works-subtitle text-xl text-grayish leading-relaxed font-medium">
+            <p className={`${styles.subtitle} text-xl text-grayish leading-relaxed font-medium`}>
               Our streamlined process takes you from concept to market-ready product in just 5 simple steps. 
               Each phase is designed to maximize quality while minimizing complexity and timeline.
             </p>
           </div>
         </div>
 
-                {/* Steps Container */}
-        <div className="how-it-works-steps relative mt-25">
-          
-          {/* Show only current step */}
-          <div className="step-item w-full h-full" style={{ 
-            transition: 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            opacity: isTransitioning ? 0.5 : 1
-          }}>
-            <div className="step-content grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center">
-              
-              {/* Step Info */}
-              <div className="step-info p-8">
-                <div className="step-number w-10 h-10 flex items-center justify-center font-bold text-lg rounded-full mb-4 flex-shrink-0"
-                     style={{
-                       background: 'rgba(16, 185, 129, 0.1)',
-                       color: '#10b981',
-                       letterSpacing: '0.1em'
-                     }}>
-                  {steps[currentStepIndex].number}
-                </div>
-                
-                <h3 className="step-title font-heading font-bold text-dark leading-tight mb-6"
-                    style={{ fontSize: '2.5rem' }}>
-                  {steps[currentStepIndex].title}
-                </h3>
-                
-                <p className="step-description text-lg text-grayish leading-relaxed font-medium mb-8">
-                  {steps[currentStepIndex].description}
-                </p>
-              </div>
+        {/* Minimalist Progress Bar */}
+        <div className={styles.progressBar}>
+          <div 
+            className={styles.progressFill}
+            style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
+          />
+        </div>
 
-              {/* Step Visual */}
-              <div className="step-visual flex items-center justify-center h-full p-8">
-                <div className="step-image-container">
-                  {steps[currentStepIndex].media.type === 'video' ? (
-                    <video 
-                      key={steps[currentStepIndex].media.src}
-                      className="step-image"
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      style={{ transition: 'opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}
-                      onError={(e) => console.error('Video failed to load:', steps[currentStepIndex].media.src, e)}
-                      onLoadStart={() => console.log('Video loading started:', steps[currentStepIndex].media.src)}
-                    >
-                      <source src={steps[currentStepIndex].media.src} type="video/mp4" />
-                      <div className="flex items-center justify-center h-full bg-gray-200">
-                        <p className="text-gray-500">Video: {steps[currentStepIndex].title}</p>
-                      </div>
-                    </video>
-                  ) : (
-                    <img 
-                      key={steps[currentStepIndex].media.src}
-                      src={steps[currentStepIndex].media.src} 
-                      alt={steps[currentStepIndex].media.alt || steps[currentStepIndex].title} 
-                      className="step-image"
-                      loading="lazy"
-                      style={{ transition: 'opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}
-                      onError={(e) => console.error('Image failed to load:', steps[currentStepIndex].media.src, e)}
-                      onLoad={() => console.log('Image loaded:', steps[currentStepIndex].media.src)}
-                    />
-                  )}
+        {/* Steps Container */}
+        <div ref={containerRef} className={styles.stepsContainer}>
+          <div className={styles.stepsWrapper}>
+            {steps.map((step, index) => (
+              <div 
+                key={index} 
+                className={`${styles.step} ${index === currentStepIndex ? styles.stepActive : ''} ${scrollDirection ? styles[`step${scrollDirection === 'down' ? 'Next' : 'Prev'}`] : ''}`}
+                style={{
+                  transform: `translateY(${(index - currentStepIndex) * 100}%)`,
+                  opacity: index === currentStepIndex ? 1 : 0,
+                  pointerEvents: index === currentStepIndex ? 'auto' : 'none'
+                }}
+              >
+                <div className={`${styles.stepContent} grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center`}>
+                
+                {/* Step Info */}
+                <div className={`${styles.stepInfo}`}>
+                  <div className={styles.stepNumber}>
+                    {step.number}
+                  </div>
+                  
+                  <h3 className={styles.stepTitle}>
+                    {step.title}
+                  </h3>
+                  
+                  <p className={styles.stepDescription}>
+                    {step.description}
+                  </p>
                 </div>
+
+                {/* Step Visual */}
+                <div className={styles.stepVisual}>
+                  <div className={styles.stepImageContainer}>
+                    {step.media.type === 'video' ? (
+                      <video 
+                        key={step.media.src}
+                        className={styles.stepImage}
+                        autoPlay 
+                        muted 
+                        loop 
+                        playsInline
+                      >
+                        <source src={step.media.src} type="video/mp4" />
+                        <div className="flex items-center justify-center h-full bg-gray-200">
+                          <p className="text-gray-500">Video: {step.title}</p>
+                        </div>
+                      </video>
+                    ) : (
+                      <img 
+                        key={step.media.src}
+                        src={step.media.src} 
+                        alt={step.media.alt || step.title} 
+                        className={styles.stepImage}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                </div>
+                
               </div>
-              
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Scroll Instruction */}
-        <div className="scroll-instruction fixed bottom-8 left-1/2 transform -translate-x-1/2 text-center text-grayish text-sm font-medium z-50 opacity-0 invisible transition-all duration-300 px-8 py-4 rounded-full"
-             style={{
-               background: 'rgba(255, 255, 255, 0.9)',
-               backdropFilter: 'blur(10px)',
-               border: '1px solid rgba(0, 0, 0, 0.1)'
-             }}>
-          <span>Scroll to explore each step</span>
-          <div className="scroll-progress w-25 h-1 mx-auto mt-2 rounded-full overflow-hidden"
-               style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
-            <div 
-              className="scroll-progress-bar h-full bg-primary rounded-full transition-all duration-300"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-        </div>
 
       </div>
     </section>

@@ -1,0 +1,545 @@
+/* Modern HowItWorks section with smooth scroll hijacking */
+.section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.container {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.header {
+  position: absolute;
+  top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  z-index: 20;
+  margin: 0 auto;
+  max-width: 1400px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1.1;
+  margin: 0;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Minimalist Progress Bar */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Steps Container */
+.stepsContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stepsWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.stepActive {
+  z-index: 10;
+}
+
+/* Animation classes for scroll direction */
+.stepNext .stepInfo {
+  animation: slideInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.stepPrev .stepInfo {
+  animation: slideInDown 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stepContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  height: 100%;
+  align-items: center;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.stepInfo {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: fadeInScale 0.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stepTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.stepDescription {
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0 0 2rem 0;
+  font-weight: 500;
+}
+
+.stepVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  opacity: 0;
+  animation: fadeInRotate 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInRotate {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.stepImageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  contain: layout size;
+}
+
+.stepActive .stepImageContainer {
+  transform: scale(1);
+}
+
+.step:not(.stepActive) .stepImageContainer {
+  transform: scale(0.85);
+}
+
+.stepImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Scroll hint - desktop only */
+.section::after {
+  content: '';
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 30px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  opacity: 0.5;
+  animation: scrollHint 2s ease infinite;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  animation: scrollHintDot 2s ease infinite;
+}
+
+/* Mobile tap zones indicator */
+@media (max-width: 768px) {
+  .section::after {
+    content: 'Tap to navigate';
+    width: auto;
+    height: auto;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 500;
+    bottom: 1.5rem;
+    animation: fadeInOut 3s ease forwards;
+  }
+  
+  .section::before {
+    display: none;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  20% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(0);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+}
+
+@keyframes scrollHint {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(5px);
+  }
+}
+
+@keyframes scrollHintDot {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .header {
+    position: relative;
+    top: 0;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+  }
+  
+  .stepContent {
+    gap: 3rem;
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .section {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+  
+  .container {
+    padding: 0 1rem;
+    height: 100vh;
+    height: 100dvh; /* Safari mobile support */
+  }
+  
+  .header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    position: relative;
+    top: auto;
+  }
+  
+  .stepsContainer {
+    height: calc(100vh - 120px);
+    height: calc(100dvh - 120px); /* Account for header */
+  }
+  
+  .step {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .stepContent {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: left;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+  }
+  
+  .stepInfo {
+    padding: 1rem 0;
+    order: 1;
+    flex-shrink: 0;
+  }
+  
+  .stepVisual {
+    padding: 0.5rem 0 1rem;
+    order: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    overflow: visible;
+  }
+  
+  .stepImageContainer {
+    max-width: 320px;
+    width: 100%;
+    height: 100%;
+    max-height: 320px;
+    aspect-ratio: 1;
+  }
+  
+  
+  .section::after,
+  .section::before {
+    display: none;
+  }
+}
+
+/* Ensure images don't get cut off */
+@media (max-width: 768px) {
+  .stepImage {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .stepImageContainer {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1.5rem 1rem 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .stepsContainer {
+    height: calc(100vh - 100px);
+    height: calc(100dvh - 100px);
+  }
+  
+  .stepContent {
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .stepInfo {
+    padding: 0.5rem 0;
+  }
+  
+  .stepImageContainer {
+    max-width: 280px;
+    max-height: 280px;
+  }
+  
+  .stepNumber {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .stepTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  
+  .stepDescription {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .progressBar {
+    height: 2px;
+  }
+  
+  /* Ensure proper stacking on small screens */
+  .stepVisual {
+    min-height: 200px;
+  }
+}
+
+/* iPhone Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .section {
+    min-height: -webkit-fill-available;
+  }
+  
+  .container {
+    height: -webkit-fill-available;
+  }
+  
+  .stepsContainer {
+    height: calc(-webkit-fill-available - 120px);
+  }
+  
+  @media (max-width: 480px) {
+    .stepsContainer {
+      height: calc(-webkit-fill-available - 100px);
+    }
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .stepInfo,
+  .stepVisual,
+  .stepNumber,
+  .stepImageContainer,
+  .progressFill {
+    transition: none;
+    animation: none;
+  }
+}
