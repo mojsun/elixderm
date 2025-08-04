@@ -13,11 +13,12 @@ import ProductFAQ from '@/app/components/ProductFAQ/ProductFAQ'
 import ProductBottomCTA from '@/app/components/ProductBottomCTA/ProductBottomCTA'
 
 type Props = {
-  params: { product: string }
+  params: Promise<{ product: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = await getProduct(params.product)
+  const { product: productSlug } = await params
+  const product = await getProduct(productSlug)
   
   if (!product) {
     return {
@@ -54,7 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProduct(params.product)
+  const { product: productSlug } = await params
+  const product = await getProduct(productSlug)
 
   if (!product) {
     return notFound()
