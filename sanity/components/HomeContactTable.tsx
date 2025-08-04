@@ -42,7 +42,7 @@ const HomeContactTable: React.FC = () => {
         const data = await sanityClient.fetch(query);
         setSubmissions(data);
       } catch (err) {
-        setError('Failed to fetch home contact submissions');
+        setError('Failed to fetch short contact form submissions');
         console.error('Error fetching submissions:', err);
       } finally {
         setLoading(false);
@@ -134,24 +134,33 @@ const HomeContactTable: React.FC = () => {
     link.click();
   };
 
-  if (loading) return <div>Loading home contact submissions...</div>;
+  if (loading) return <div>Loading short contact form submissions...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2>Home Contact Submissions ({submissions.length})</h2>
+        <h2>Short Contact Form ({submissions.length})</h2>
         <button
           onClick={downloadCSV}
           style={{
-            backgroundColor: '#10b981',
-            color: 'white',
-            border: 'none',
+            backgroundColor: 'transparent',
+            color: '#10b981',
+            border: '1px solid #10b981',
             padding: '10px 20px',
             borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '14px',
-            fontWeight: '500'
+            fontWeight: '500',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#10b981';
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
+            e.currentTarget.style.color = '#10b981';
           }}
         >
           Download CSV
@@ -212,10 +221,10 @@ const HomeContactTable: React.FC = () => {
                       fontSize: '12px',
                       fontWeight: '500',
                       border: '1px solid #d1d5db',
-                      backgroundColor: submission.status === 'new' ? '#fef3c7' : 
-                                     submission.status === 'in_progress' ? '#dbeafe' : '#d1fae5',
-                      color: submission.status === 'new' ? '#92400e' :
-                             submission.status === 'in_progress' ? '#1e40af' : '#065f46',
+                      backgroundColor: submission.status === 'new' ? '#f8fafc' : 
+                                     submission.status === 'in_progress' ? '#eff6ff' : '#ecfdf5',
+                      color: submission.status === 'new' ? '#475569' :
+                             submission.status === 'in_progress' ? '#1d4ed8' : '#059669',
                       cursor: 'pointer'
                     }}
                   >
@@ -238,29 +247,49 @@ const HomeContactTable: React.FC = () => {
                     onClick={() => deleteContact(submission._id, submission.name)}
                     disabled={deleting === submission._id}
                     style={{
-                      backgroundColor: deleting === submission._id ? '#f3f4f6' : '#ef4444',
-                      color: deleting === submission._id ? '#9ca3af' : 'white',
-                      padding: '4px 8px',
+                      backgroundColor: deleting === submission._id ? '#f8fafc' : 'transparent',
+                      color: deleting === submission._id ? '#94a3b8' : '#ef4444',
+                      padding: '8px',
                       borderRadius: '8px',
-                      border: 'none',
+                      border: deleting === submission._id ? '1px solid #e2e8f0' : '1px solid #fecaca',
                       cursor: deleting === submission._id ? 'not-allowed' : 'pointer',
-                      fontSize: '12px',
-                      fontWeight: '500',
+                      fontSize: '14px',
                       transition: 'all 0.2s ease',
-                      opacity: deleting === submission._id ? 0.5 : 1
+                      opacity: deleting === submission._id ? 0.6 : 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '36px',
+                      height: '36px'
                     }}
                     onMouseEnter={(e) => {
                       if (deleting !== submission._id) {
-                        e.currentTarget.style.backgroundColor = '#dc2626';
+                        e.currentTarget.style.backgroundColor = '#fef2f2';
+                        e.currentTarget.style.borderColor = '#ef4444';
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (deleting !== submission._id) {
-                        e.currentTarget.style.backgroundColor = '#ef4444';
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.borderColor = '#fecaca';
                       }
                     }}
                   >
-                    {deleting === submission._id ? 'Deleting...' : 'Delete'}
+                    {deleting === submission._id ? (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                      </svg>
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3,6 5,6 21,6"></polyline>
+                        <path d="m5,6 1,14c0,1.1 0.9,2 2,2h8c1.1,0 2-0.9 2-2l1-14"></path>
+                        <path d="m9,6V4c0-1.1 0.9-2 2-2h2c1.1,0 2,0.9 2,2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    )}
                   </button>
                 </td>
               </tr>
@@ -271,7 +300,7 @@ const HomeContactTable: React.FC = () => {
       
       {submissions.length === 0 && (
         <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
-          No home contact submissions yet.
+          No short contact form submissions yet.
         </div>
       )}
     </div>

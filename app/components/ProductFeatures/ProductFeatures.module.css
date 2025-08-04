@@ -1,0 +1,146 @@
+.featuresParent {
+  margin-top: 50px;
+}
+
+.hitTitles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 15%;
+}
+
+.hitTitles h2 {
+  font-size: 2.5rem; /* 40px */
+  margin-bottom: 15px;
+}
+
+.hitTitles p {
+  font-size: 1.125rem; /* 18px */
+}
+
+.productCenter {
+  height: 350px !important;
+}
+
+.productFeatures {
+  margin-top: 70px;
+  margin-bottom: 70px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.productFeaturesMobile {
+  display: none;
+}
+
+.featureHolder {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 20px;
+  gap: 10px;
+  align-items: center;
+  transition: 0.3s;
+  margin-bottom: 1px;
+  border-bottom: 3px solid transparent;
+  border-radius: 5px;
+  gap: 30px;
+}
+
+.featureHolder:hover {
+  transition: 0.3s;
+}
+
+.featureHolder img {
+  width: 75px;
+  height: 75px;
+}
+
+.featureHolder h3 {
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+}
+
+.featureHolder p {
+  margin: 0;
+  font-size: 1.125rem; /* 18px */
+}
+
+.featuresContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productCenterContainer {
+  text-align: center;
+}
+
+.featureHolderMobile {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 600px) {
+  .productFeatures {
+    display: none;
+  }
+  
+  .productFeaturesMobile {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .featureHolderMobile {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .featureHolder img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .featureHolder {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    padding-bottom: 0;
+  }
+  
+  .productCenterContainer {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 25px 0 0 0;
+    margin: 0 auto 35px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .featuresContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .featureHolder h3 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+  
+  .featureHolder p {
+    font-size: 0.875rem; /* 14px on mobile */
+  }
+  
+  .hitTitles h2 {
+    font-size: 1.5625rem; /* 25px */
+  }
+  
+  .hitTitles p {
+    font-size: 0.875rem; /* 14px on mobile */
+  }
+} 
