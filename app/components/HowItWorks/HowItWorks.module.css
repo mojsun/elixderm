@@ -23,7 +23,7 @@
 
 .header {
   position: absolute;
-  top: 4rem;
+  top: 6rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -42,7 +42,7 @@
 
 .title {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: 5rem;
   font-weight: 800;
   color: #1f2937;
   line-height: 1.1;
@@ -349,7 +349,6 @@
     position: relative;
     top: 0;
     padding: 2rem 0;
-    margin-bottom: 2rem;
   }
   
   .stepContent {
@@ -372,11 +371,15 @@
   
   .header {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 0.5rem;
     text-align: center;
     padding: 2rem 1rem 1rem;
     position: relative;
     top: auto;
+  }
+  
+  .title {
+    font-size: 4rem;
   }
   
   .stepsContainer {
@@ -438,8 +441,9 @@
 @media (max-width: 768px) {
   .stepImage {
     object-fit: contain;
-    width: 100%;
+    width: auto;
     height: 100%;
+    border-radius: 0;
   }
   
   .stepImageContainer {
@@ -454,7 +458,7 @@
   }
   
   .title {
-    font-size: 2rem;
+    font-size: 3rem;
   }
   
   .subtitle {
@@ -468,7 +472,7 @@
   }
   
   .stepContent {
-    gap: 1rem;
+    gap: 0rem;
     padding: 0.75rem;
   }
   
