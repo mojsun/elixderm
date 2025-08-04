@@ -299,14 +299,7 @@ export default function HowItWorks(): React.JSX.Element {
         {/* Header */}
         <div className={`${styles.header} grid grid-cols-1 lg:grid-cols-2 gap-16 mb-4 items-start`}>
           <div className="how-it-works-left">
-            <h2 className={`${styles.title} font-heading font-extrabold leading-tight`}
-                style={{
-                  fontSize: '4rem',
-                  background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
+            <h2 className={`${styles.title} font-heading font-extrabold leading-tight`}>
               How it Works
             </h2>
           </div>
@@ -344,13 +337,14 @@ export default function HowItWorks(): React.JSX.Element {
                 
                 {/* Step Info */}
                 <div className={`${styles.stepInfo}`}>
-                  <div className={styles.stepNumber}>
-                    {step.number}
+                  <div className={styles.stepHeader}>
+                    <div className={styles.stepNumber}>
+                      {step.number}
+                    </div>
+                    <h3 className={styles.stepTitle}>
+                      {step.title}
+                    </h3>
                   </div>
-                  
-                  <h3 className={styles.stepTitle}>
-                    {step.title}
-                  </h3>
                   
                   <p className={styles.stepDescription}>
                     {step.description}
@@ -358,32 +352,30 @@ export default function HowItWorks(): React.JSX.Element {
                 </div>
 
                 {/* Step Visual */}
-                <div className={styles.stepVisual}>
-                  <div className={styles.stepImageContainer}>
-                    {step.media.type === 'video' ? (
-                      <video 
-                        key={step.media.src}
-                        className={styles.stepImage}
-                        autoPlay 
-                        muted 
-                        loop 
-                        playsInline
-                      >
-                        <source src={step.media.src} type="video/mp4" />
-                        <div className="flex items-center justify-center h-full bg-gray-200">
-                          <p className="text-gray-500">Video: {step.title}</p>
-                        </div>
-                      </video>
-                    ) : (
-                      <img 
-                        key={step.media.src}
-                        src={step.media.src} 
-                        alt={step.media.alt || step.title} 
-                        className={styles.stepImage}
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
+                <div className={styles.stepImageContainer}>
+                  {step.media.type === 'video' ? (
+                    <video 
+                      key={step.media.src}
+                      className={styles.stepImage}
+                      autoPlay 
+                      muted 
+                      loop 
+                      playsInline
+                    >
+                      <source src={step.media.src} type="video/mp4" />
+                      <div className="flex items-center justify-center h-full bg-gray-200">
+                        <p className="text-gray-500">Video: {step.title}</p>
+                      </div>
+                    </video>
+                  ) : (
+                    <img 
+                      key={step.media.src}
+                      src={step.media.src} 
+                      alt={step.media.alt || step.title} 
+                      className={styles.stepImage}
+                      loading="lazy"
+                    />
+                  )}
                 </div>
                 
               </div>
