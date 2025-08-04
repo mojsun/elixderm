@@ -16,21 +16,22 @@ const config = defineConfig({
         S.list()
           .title('Content')
           .items([
-            // Home Contact Submissions with custom table view
+            // Short Contact Form with custom table view
             S.listItem()
-              .title('Home Contact Submissions Table')
-              .child(S.component(HomeContactTable).title('Home Contact Submissions Table')),
+              .title('Short Contact Form')
+              .child(S.component(HomeContactTable).title('Short Contact Form')),
             // Separator
             S.divider(),
-            // Contact Submissions with custom table view
+            // Main Contact Form with custom table view
             S.listItem()
-              .title('Contact Submissions Table')
-              .child(S.component(ContactTable).title('Contact Submissions Table')),
+              .title('Main Contact Form')
+              .child(S.component(ContactTable).title('Main Contact Form')),
             // Separator
             S.divider(),
             // Other content types
             S.documentTypeListItem('page'),
             S.documentTypeListItem('project'),
+            S.documentTypeListItem('product'),
           ])
     })
   ],

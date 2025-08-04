@@ -1,6 +1,7 @@
 import { createClient, groq } from "next-sanity";
 import { Project } from "@/types/project";
 import { Page } from "@/types/Page";
+import { Product } from "@/types/Product";
 import clientConfig from "./config/client-config";
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
@@ -50,6 +51,100 @@ export async function getPage(slug: string): Promise<Page> {
     content
   }`,
 
+    { slug }
+  );
+}
+
+export async function getProducts(): Promise<Product[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "product"]{
+    _id,
+    _createdAt,
+    name,
+    "slug": slug.current
+  }`);
+}
+
+export async function getProduct(slug: string): Promise<Product> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "product" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      name,
+      "slug": slug.current,
+      seo {
+        metaTitle,
+        metaDescription,
+        noIndex
+      },
+      hero {
+        subheading,
+        heading,
+        description,
+        "image": image.asset->url,
+        imageAlt
+      },
+      value {
+        heading,
+        description,
+        images[] {
+          "url": image.asset->url,
+          alt,
+          heading
+        }
+      },
+      slider {
+        images[] {
+          "url": image.asset->url,
+          alt
+        }
+      },
+      howItWorks {
+        title,
+        description,
+        steps[] {
+          "imageUrl": image.asset->url,
+          imageAlt,
+          title,
+          description
+        }
+      },
+      topCTA {
+        text
+      },
+      features {
+        heading,
+        subheading,
+        centerImage {
+          "url": image.asset->url,
+          alt
+        },
+        items[] {
+          "image": image.asset->url,
+          imageAlt,
+          heading,
+          subheading
+        }
+      },
+      middleCTA {
+        subheading,
+        heading,
+        ctaText,
+        "image": image.asset->url,
+        imageAlt
+      },
+      faq {
+        title,
+        subtitle,
+        items[] {
+          question,
+          answer
+        }
+      },
+      bottomCTA {
+        text,
+        buttonText
+      }
+    }`,
     { slug }
   );
 }

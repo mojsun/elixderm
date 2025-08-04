@@ -146,18 +146,18 @@ export default function ContactTable() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'contacted': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'in-progress': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'new': return 'bg-slate-100 text-slate-700 border-slate-200';
+      case 'contacted': return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'in-progress': return 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'completed': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      default: return 'bg-gray-50 text-gray-600 border-gray-200';
     }
   };
 
   if (loading) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <div>Loading contact submissions...</div>
+        <div>Loading main contact form submissions...</div>
       </div>
     );
   }
@@ -166,19 +166,28 @@ export default function ContactTable() {
     <div style={{ padding: '1.5rem', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-          Contact Submissions ({contacts.length})
+          Main Contact Form ({contacts.length})
         </h2>
         <button
           onClick={downloadCSV}
           style={{
-            backgroundColor: '#10b981',
-            color: 'white',
+            backgroundColor: 'transparent',
+            color: '#10b981',
             padding: '0.5rem 1rem',
             borderRadius: '0.5rem',
-            border: 'none',
+            border: '1px solid #10b981',
             cursor: 'pointer',
             fontSize: '0.875rem',
-            fontWeight: '500'
+            fontWeight: '500',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#10b981';
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
+            e.currentTarget.style.color = '#10b981';
           }}
         >
           Download CSV
@@ -187,7 +196,7 @@ export default function ContactTable() {
 
       {contacts.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
-          No contact submissions yet.
+          No contact form submissions yet.
         </div>
       ) : (
         <div style={{ backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
@@ -207,7 +216,20 @@ export default function ContactTable() {
               </thead>
               <tbody style={{ backgroundColor: 'white' }}>
                 {contacts.map((contact, index) => (
-                  <tr key={contact._id} style={{ borderBottom: index < contacts.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
+                  <tr 
+                    key={contact._id} 
+                    style={{ 
+                      backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
+                      borderBottom: index < contacts.length - 1 ? '1px solid #f3f4f6' : 'none',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#f1f5f9';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8fafc';
+                    }}
+                  >
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.name}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.email}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.company}</td>
@@ -229,34 +251,54 @@ export default function ContactTable() {
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#6b7280' }}>
                       {new Date(contact.submittedAt).toLocaleDateString()}
                     </td>
-                    <td style={{ padding: '1rem 0.75rem', textAlign: 'center' }}>
+                    <td style={{ padding: '1rem 0.75rem', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <button
                         onClick={() => deleteContact(contact._id, contact.name)}
                         disabled={deleting === contact._id}
                         style={{
-                          backgroundColor: deleting === contact._id ? '#f3f4f6' : '#ef4444',
-                          color: deleting === contact._id ? '#9ca3af' : 'white',
-                          padding: '0.375rem 0.75rem',
+                          backgroundColor: deleting === contact._id ? '#f8fafc' : 'transparent',
+                          color: deleting === contact._id ? '#94a3b8' : '#ef4444',
+                          padding: '0.5rem',
                           borderRadius: '0.375rem',
-                          border: 'none',
+                          border: deleting === contact._id ? '1px solid #e2e8f0' : '1px solid #fecaca',
                           cursor: deleting === contact._id ? 'not-allowed' : 'pointer',
-                          fontSize: '0.75rem',
-                          fontWeight: '500',
+                          fontSize: '0.875rem',
                           transition: 'all 0.2s ease',
-                          opacity: deleting === contact._id ? 0.5 : 1
+                          opacity: deleting === contact._id ? 0.6 : 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '36px',
+                          height: '36px'
                         }}
                         onMouseEnter={(e) => {
                           if (deleting !== contact._id) {
-                            e.currentTarget.style.backgroundColor = '#dc2626';
+                            e.currentTarget.style.backgroundColor = '#fef2f2';
+                            e.currentTarget.style.borderColor = '#ef4444';
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (deleting !== contact._id) {
-                            e.currentTarget.style.backgroundColor = '#ef4444';
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.borderColor = '#fecaca';
                           }
                         }}
                       >
-                        {deleting === contact._id ? 'Deleting...' : 'Delete'}
+                        {deleting === contact._id ? (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                          </svg>
+                        ) : (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="3,6 5,6 21,6"></polyline>
+                            <path d="m5,6 1,14c0,1.1 0.9,2 2,2h8c1.1,0 2-0.9 2-2l1-14"></path>
+                            <path d="m9,6V4c0-1.1 0.9-2 2-2h2c1.1,0 2,0.9 2,2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                          </svg>
+                        )}
                       </button>
                     </td>
                   </tr>
