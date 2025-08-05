@@ -77,6 +77,10 @@ export default async function ProductPage({ params }: Props) {
   )
 }
 
+// Enable Incremental Static Regeneration (ISR)
+// Pages will be regenerated every 60 seconds if there's a request
+export const revalidate = 60
+
 export async function generateStaticParams() {
   const products = await getProducts()
   return products.map((product) => ({
