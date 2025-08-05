@@ -3,6 +3,7 @@ import { deskTool } from "sanity/desk";
 import schemas from "./sanity/schemas";
 import ContactTable from "./sanity/components/ContactTable";
 import HomeContactTable from "./sanity/components/HomeContactTable";
+import MediaLibrary from "./sanity/components/MediaLibrary";
 
 const config = defineConfig({
   projectId: "7v67lu84", // New Sanity project  
@@ -16,6 +17,12 @@ const config = defineConfig({
         S.list()
           .title('Content')
           .items([
+            // Media Library (Custom)
+            S.listItem()
+              .title('📁 Media Library')
+              .child(S.component(MediaLibrary).title('Media Library')),
+            // Separator
+            S.divider(),
             // Short Contact Form with custom table view
             S.listItem()
               .title('Short Contact Form')
