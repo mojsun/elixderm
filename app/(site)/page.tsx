@@ -10,9 +10,6 @@ import Philosophy from "../components/Philosophy/Philosophy";
 import Testimonials from "../components/Testimonials/Testimonials";
 import WhyElixderm from "../components/WhyElixderm/WhyElixderm";
 
-// Enable ISR for home page content
-export const revalidate = 300; // 5 minutes
-
 export default async function Home() {
   const projects = await getProjects();
   return (
