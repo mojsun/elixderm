@@ -16,6 +16,13 @@ interface FAQItem {
 export default function ProductFAQ({ product }: ProductFAQProps) {
   const [activeItems, setActiveItems] = useState<number[]>([])
   const faqs = product?.faq || {}
+  
+  // Default FAQ title that appears on all product pages unless overridden in Sanity
+  const faqData = {
+    title: faqs.title || "Frequently Asked Questions",
+    subtitle: faqs.subtitle || null,
+    items: faqs.items || []
+  }
 
   const toggleFAQ = (index: number) => {
     setActiveItems(prev => 
@@ -27,11 +34,11 @@ export default function ProductFAQ({ product }: ProductFAQProps) {
 
   // Generate FAQ schema for SEO
   useEffect(() => {
-    if (faqs.items && faqs.items.length > 0) {
+    if (faqData.items && faqData.items.length > 0) {
       const faqSchema = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": faqs.items.map((faq: FAQItem) => ({
+        "mainEntity": faqData.items.map((faq: FAQItem) => ({
           "@type": "Question",
           "name": faq.question,
           "acceptedAnswer": {
@@ -62,17 +69,17 @@ export default function ProductFAQ({ product }: ProductFAQProps) {
         }
       }
     }
-  }, [faqs.items])
+  }, [faqData.items])
 
   return (
     <section className={styles.faq}>
       <div className={styles.faqContainer}>
         <div className={styles.faqTitle}>
-          <h2>{faqs.title || 'Loading...'}</h2>
-          <p>{faqs.subtitle || 'Loading...'}</p>
+          <h2>{faqData.title}</h2>
+          {faqData.subtitle && <p>{faqData.subtitle}</p>}
         </div>
         <div className={styles.faqAccordion}>
-          {faqs.items?.map((faq: FAQItem, index: number) => (
+          {faqData.items?.map((faq: FAQItem, index: number) => (
             <div 
               key={index} 
               className={`${styles.faqItem} ${activeItems.includes(index) ? styles.active : ''}`}
