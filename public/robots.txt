@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 
+# Sitemap location
+Sitemap: https://www.elixderm.com/sitemap.xml
+
 # Allow all web crawlers access to all content
 # This allows search engines like Google, Bing, etc. to index the entire site 
