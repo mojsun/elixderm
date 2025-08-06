@@ -15,6 +15,27 @@ interface SitemapURL {
   priority: number
 }
 
+type SitemapPage = {
+  _id: string
+  name: string
+  slug: string
+  _updatedAt: string
+}
+
+type SitemapProject = {
+  _id: string
+  name: string
+  slug: string
+  _updatedAt: string
+}
+
+type SitemapProduct = {
+  _id: string
+  name: string
+  slug: string
+  _updatedAt: string
+}
+
 export async function GET() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'
@@ -84,7 +105,7 @@ export async function GET() {
     ])
 
     // Add dynamic pages
-    pages.forEach((page: any) => {
+    pages.forEach((page: SitemapPage) => {
       sitemap.push({
         url: `${baseUrl}/${page.slug}`,
         lastModified: new Date(page._updatedAt).toISOString(),
@@ -94,7 +115,7 @@ export async function GET() {
     })
 
     // Add projects
-    projects.forEach((project: any) => {
+    projects.forEach((project: SitemapProject) => {
       sitemap.push({
         url: `${baseUrl}/projects/${project.slug}`,
         lastModified: new Date(project._updatedAt).toISOString(),
@@ -104,7 +125,7 @@ export async function GET() {
     })
 
     // Add products
-    products.forEach((product: any) => {
+    products.forEach((product: SitemapProduct) => {
       sitemap.push({
         url: `${baseUrl}/products/${product.slug}`,
         lastModified: new Date(product._updatedAt).toISOString(),
