@@ -288,16 +288,16 @@ export default function HowItWorks(): React.JSX.Element {
     <section 
       ref={sectionRef}
       id="how-it-works-section" 
-      className={`${styles.section} relative w-full overflow-hidden py-32`}
+      className={styles.section}
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
       }}
     >
-      <div className={`${styles.container} mx-auto px-8`} style={{ maxWidth: '1400px' }}>
+      <div className={styles.container}>
         
         {/* Header */}
-        <div className={`${styles.header} grid grid-cols-1 lg:grid-cols-2 gap-16 mb-4 items-start`}>
+        <div className={styles.header}>
           <div className="how-it-works-left">
             <h2 className={`${styles.title} font-heading font-extrabold leading-tight`}>
               How it Works
@@ -333,7 +333,7 @@ export default function HowItWorks(): React.JSX.Element {
                   pointerEvents: index === currentStepIndex ? 'auto' : 'none'
                 }}
               >
-                <div className={`${styles.stepContent} grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center`}>
+                <div className={styles.stepContent}>
                 
                 {/* Step Info */}
                 <div className={`${styles.stepInfo}`}>
