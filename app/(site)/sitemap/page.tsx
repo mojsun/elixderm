@@ -4,6 +4,14 @@ import PageHero from "@/app/components/PageHero";
 import { getProducts } from "@/sanity/sanity-utils";
 import { getProjects } from "@/sanity/sanity-utils";
 import { createClient } from "next-sanity";
+import { Product } from "@/types/Product";
+import { Project } from "@/types/project";
+
+type Page = {
+  _id: string;
+  title: string;
+  slug: string;
+};
 
 const client = createClient({
   projectId: '7v67lu84',
@@ -77,7 +85,7 @@ export default async function Sitemap() {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
-                {products.map((product) => (
+                {products.map((product: Product) => (
                   <Link 
                     key={product._id}
                     href={`/products/${product.slug}`} 
@@ -97,11 +105,11 @@ export default async function Sitemap() {
                 Projects
               </h2>
               <p className="text-gray-600 mb-8">
-                Real examples of products we've created for our clients.
+                Real examples of products we&apos;ve created for our clients.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
-                {projects.map((project) => (
+                {projects.map((project: Project) => (
                   <Link 
                     key={project._id}
                     href={`/projects/${project.slug}`} 
@@ -125,7 +133,7 @@ export default async function Sitemap() {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
-                {pages.map((page: any) => (
+                {pages.map((page: Page) => (
                   <Link 
                     key={page._id}
                     href={`/${page.slug}`} 
