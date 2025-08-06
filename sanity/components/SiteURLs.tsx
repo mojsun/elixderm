@@ -61,7 +61,7 @@ export default function SiteURLs() {
 
   const fetchAllUrls = async () => {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://elixderm.com'
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'
       const allUrls: URLItem[] = []
 
       // Static pages

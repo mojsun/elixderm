@@ -17,7 +17,7 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-export default function Breadcrumb({ items, baseUrl = 'https://elixderm.com' }: BreadcrumbProps) {
+export default function Breadcrumb({ items, baseUrl = 'https://www.elixderm.com' }: BreadcrumbProps) {
   // Generate structured data for SEO
   const generateStructuredData = () => {
     const itemListElement = items.map((item, index) => ({

@@ -292,7 +292,7 @@ export async function POST(request: NextRequest) {
 
         <div class="footer">
             <p class="footer-text">Sent from the Elixderm Manufacturing Platform</p>
-            <a href="https://elixderm.com" class="visit-button" style="color: white !important; text-decoration: none;">
+            <a href="https://www.elixderm.com" class="visit-button" style="color: white !important; text-decoration: none;">
                 Visit Elixderm
             </a>
         </div>

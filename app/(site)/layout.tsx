@@ -55,6 +55,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <meta name="theme-color" content="#10b981" />
         <meta name="msapplication-TileColor" content="#10b981" />
       </head>
