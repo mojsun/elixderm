@@ -8,7 +8,7 @@ interface ProductGridProps {
 }
 
 // Category titles mapping
-const categoryTitles = {
+const categoryTitles: Record<string, string> = {
   'hair-care': 'Hair Care',
   'body-care': 'Body Care & Wellness', 
   'specialized': 'Specialized Lines',
@@ -110,7 +110,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
           return (
             <div key={category} className={styles.categorySection}>
               <div className={styles.categoryHeader}>
-                <h2 className={styles.categoryTitle}>{categoryTitles[category]}</h2>
+                <h2 className={styles.categoryTitle}>{categoryTitles[category] || category}</h2>
                 <div className={styles.categoryDivider}></div>
               </div>
               
