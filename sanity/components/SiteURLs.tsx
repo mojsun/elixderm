@@ -68,6 +68,7 @@ export default function SiteURLs() {
       const staticPages = [
         { title: 'Home', url: '/', type: 'Static Page' },
         { title: 'About', url: '/about', type: 'Static Page' },
+        { title: 'Products', url: '/products', type: 'Static Page' },
         { title: 'Contact Us', url: '/contact-us', type: 'Static Page' },
         { title: 'Sitemap', url: '/sitemap', type: 'Static Page' },
       ]

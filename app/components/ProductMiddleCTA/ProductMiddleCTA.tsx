@@ -8,7 +8,7 @@ interface ProductMiddleCTAProps {
 }
 
 export default function ProductMiddleCTA({ product }: ProductMiddleCTAProps) {
-  const middleCTA = product?.middleCTA || {}
+  const middleCTA = product?.middleCTA || { subheading: '', heading: '', ctaText: '', image: '', imageAlt: '' }
 
   return (
     <section className={styles.middleCta}>

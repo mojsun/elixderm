@@ -60,7 +60,30 @@ export async function getProducts(): Promise<Product[]> {
     _id,
     _createdAt,
     name,
-    "slug": slug.current
+    "slug": slug.current,
+    menuName,
+    showInMenu,
+    category,
+    hero {
+      heading,
+      description
+    },
+    slider {
+      images[] {
+        "url": image.asset->url,
+        alt
+      }
+    }
+  }`);
+}
+
+export async function getMenuProducts(): Promise<Product[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "product" && showInMenu == true] | order(category asc, name asc){
+    _id,
+    name,
+    "slug": slug.current,
+    menuName,
+    category
   }`);
 }
 
@@ -71,6 +94,9 @@ export async function getProduct(slug: string): Promise<Product> {
       _createdAt,
       name,
       "slug": slug.current,
+      menuName,
+      showInMenu,
+      category,
       seo {
         metaTitle,
         metaDescription,

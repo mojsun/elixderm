@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
 import "../globals.css";
-import Link from "next/link";
 import Footer from "../components/Footer/Footer";
 import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollHandler";
+import Navigation from "../components/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,31 +63,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
       >
         <div className="page-layout">
-          <nav className="navbar" id="navbar">
-            <div className="nav-container">
-              <Link href="/" className="logo">
-                Elixderm
-              </Link>
-              
-              <div className="mobile-menu-toggle" id="mobile-menu-toggle">
-                <span className="hamburger-line"></span>
-                <span className="hamburger-line"></span>
-                <span className="hamburger-line"></span>
-              </div>
-              
-              <ul className="nav-menu" id="nav-menu">
-                <li className="nav-item">
-                  <Link href="/about" className="nav-link">
-                    About Us
-                  </Link>
-                </li>
-                
-                <li className="nav-item">
-                  <Link href="/contact-us" className="nav-link cta-button">Get a Quote</Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <Navigation />
 
           <main className="page-content">
             {children}

@@ -49,8 +49,8 @@ export default async function Sitemap() {
       />
 
       {/* Sitemap Content */}
-      <section className="py-20 mt-10 mb-10">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-20 !px-10 mt-10 mb-10">
+        <div className="max-w-4xl mx-auto px-4 md:px-6">
           
           {/* Main Pages */}
           <div className="mb-16">
@@ -84,14 +84,19 @@ export default async function Sitemap() {
                 Private Label Product types we can manufacture for your brand with custom formulations.
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 md:gap-y-4">
                 {products.map((product: Product) => (
                   <Link 
                     key={product._id}
                     href={`/products/${product.slug}`} 
-                    className="block text-emerald-600 hover:text-emerald-700 text-lg"
+                    className="flex items-start text-emerald-600 hover:text-emerald-700 text-lg group"
                   >
-                    {product.name}
+                    <span className="text-emerald-500 mr-3 mt-1 text-sm group-hover:text-emerald-600 transition-colors">
+                      •
+                    </span>
+                    <span className="flex-1">
+                      {product.name}
+                    </span>
                   </Link>
                 ))}
               </div>

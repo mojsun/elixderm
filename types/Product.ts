@@ -5,19 +5,22 @@ export type Product = {
   _createdAt: Date
   name: string
   slug: string
-  seo: {
+  menuName?: string
+  showInMenu?: boolean
+  category?: 'hair-care' | 'body-care' | 'specialized' | 'skin-care'
+  seo?: {
     metaTitle: string
     metaDescription: string
     noIndex: boolean
   }
-  hero: {
-    subheading: string
-    heading: string
-    description: string
-    image: string
-    imageAlt: string
+  hero?: {
+    subheading?: string
+    heading?: string
+    description?: string
+    image?: string
+    imageAlt?: string
   }
-  value: {
+  value?: {
     heading: string
     description: string
     images: Array<{
@@ -26,13 +29,13 @@ export type Product = {
       heading: string
     }>
   }
-  slider: {
+  slider?: {
     images: Array<{
       url: string
       alt: string
     }>
   }
-  howItWorks: {
+  howItWorks?: {
     title: string
     description: string
     steps: Array<{
@@ -42,10 +45,10 @@ export type Product = {
       description: string
     }>
   }
-  topCTA: {
+  topCTA?: {
     text: string
   }
-  features: {
+  features?: {
     heading: string
     subheading: string
     centerImage: {
@@ -59,14 +62,14 @@ export type Product = {
       subheading: string
     }>
   }
-  middleCTA: {
+  middleCTA?: {
     subheading: string
     heading: string
     ctaText: string
     image: string
     imageAlt: string
   }
-  faq: {
+  faq?: {
     title: string
     subtitle: string
     items: Array<{
@@ -74,7 +77,7 @@ export type Product = {
       answer: string
     }>
   }
-  bottomCTA: {
+  bottomCTA?: {
     text: string
     buttonText: string
   }
