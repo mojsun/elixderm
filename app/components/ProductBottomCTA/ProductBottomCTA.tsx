@@ -7,7 +7,7 @@ interface ProductBottomCTAProps {
 }
 
 export default function ProductBottomCTA({ product }: ProductBottomCTAProps) {
-  const bottomCTA = product?.bottomCTA || {}
+  const bottomCTA = product?.bottomCTA || { text: '', buttonText: '' }
 
   return (
     <Link href="/contact-us">
