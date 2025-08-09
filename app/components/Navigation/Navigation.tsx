@@ -12,7 +12,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [menuProducts, setMenuProducts] = useState<Product[]>([])
   const productsMenuRef = useRef<HTMLLIElement>(null)
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleProductsMenuEnter = () => {
     if (timeoutRef.current) {
