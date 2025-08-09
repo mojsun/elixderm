@@ -12,9 +12,25 @@ import WhyElixderm from "../components/WhyElixderm/WhyElixderm";
 
 export default async function Home() {
   const projects = await getProjects();
+  
+  // WebSite Schema markup
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Elixderm",
+    "url": process.env.NEXT_PUBLIC_BASE_URL || "https://www.elixderm.com"
+  };
+
   return (
-    <main className="w-full">
-      <Hero />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema),
+        }}
+      />
+      <main className="w-full">
+        <Hero />
       <Philosophy />
       <WhyElixderm />
       <HowItWorks />
@@ -63,6 +79,7 @@ export default async function Home() {
       */}
       
       <ContactSection />
-    </main>
+      </main>
+    </>
   );
 }

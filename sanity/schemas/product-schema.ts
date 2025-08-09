@@ -19,6 +19,34 @@ const product = {
       },
       validation: (Rule: any) => Rule.required()
     },
+    // Menu Settings
+    {
+      name: 'menuName',
+      title: 'Menu Display Name',
+      type: 'string',
+      description: 'Custom name to display in navigation menu (leave empty to use Product Name)'
+    },
+    {
+      name: 'showInMenu',
+      title: 'Show in Navigation Menu',
+      type: 'boolean',
+      description: 'Toggle to control if this product appears in the main navigation menu',
+      initialValue: true
+    },
+    {
+      name: 'category',
+      title: 'Product Category',
+      type: 'string',
+      description: 'Category/group for organizing products in the menu',
+      options: {
+        list: [
+          { title: 'Hair Care', value: 'hair-care' },
+          { title: 'Body Care & Wellness', value: 'body-care' },
+          { title: 'Specialized Lines', value: 'specialized' },
+          { title: 'Face & Skin Care', value: 'skin-care' }
+        ]
+      }
+    },
     // SEO Fields
     {
       name: 'seo',

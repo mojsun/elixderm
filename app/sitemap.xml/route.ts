@@ -56,6 +56,12 @@ export async function GET() {
         lastModified: new Date().toISOString()
       },
       { 
+        url: '/products', 
+        changeFreq: 'weekly' as const, 
+        priority: 0.9,
+        lastModified: new Date().toISOString()
+      },
+      { 
         url: '/contact-us', 
         changeFreq: 'monthly' as const, 
         priority: 0.9,
