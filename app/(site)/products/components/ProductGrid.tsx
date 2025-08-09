@@ -23,7 +23,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
         <div className={styles.gridContainer}>
           <div className={styles.emptyState}>
             <h3>No Products Available</h3>
-            <p>We're working on adding new private label products. Please check back soon or contact us for custom solutions.</p>
+            <p>We&apos;re working on adding new private label products. Please check back soon or contact us for custom solutions.</p>
           </div>
         </div>
       </section>
