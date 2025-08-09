@@ -15,7 +15,7 @@ interface FAQItem {
 
 export default function ProductFAQ({ product }: ProductFAQProps) {
   const [activeItems, setActiveItems] = useState<number[]>([])
-  const faqs = product?.faq || {}
+  const faqs = product?.faq || { title: '', subtitle: '', items: [] }
   
   // Default FAQ title that appears on all product pages unless overridden in Sanity
   const faqData = {

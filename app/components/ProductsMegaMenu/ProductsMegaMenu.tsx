@@ -26,9 +26,9 @@ const defaultProducts: Product[] = [
 ]
 
 // Category titles mapping
-const categoryTitles = {
+const categoryTitles: Record<string, string> = {
   'hair-care': 'Hair Care',
-  'body-care': 'Body Care & Wellness', 
+  'body-care': 'Body Care & Wellness',
   'specialized': 'Specialized Lines',
   'skin-care': 'Face & Skin Care'
 }

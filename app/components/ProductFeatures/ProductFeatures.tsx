@@ -14,7 +14,7 @@ interface Feature {
 }
 
 export default function ProductFeatures({ product }: ProductFeaturesProps) {
-  const features = product?.features || {}
+  const features = product?.features || { heading: '', subheading: '', centerImage: { url: '', alt: '' }, items: [] }
   const leftFeatures = features.items?.slice(0, 3) || []
   const rightFeatures = features.items?.slice(3, 6) || []
 
