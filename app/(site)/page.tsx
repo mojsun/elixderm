@@ -1,4 +1,5 @@
 import { getProjects } from "@/sanity/sanity-utils";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import ContactSection from "../components/ContactSection/ContactSection";
@@ -83,3 +84,9 @@ export default async function Home() {
     </>
   );
 }
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://www.elixderm.com/",
+  },
+};
