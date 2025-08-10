@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /site.webmanifest
 
 # Sitemap location
 Sitemap: https://www.elixderm.com/sitemap.xml
