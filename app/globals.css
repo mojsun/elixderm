@@ -30,10 +30,22 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-light: #1f2937;
-    --color-dark: #f8fafc;
+/* Disabled OS-level dark mode variable swap to ensure consistent light theme on iOS Safari */
+/* If dark mode is needed later, implement via a `.dark` class toggle instead of media query */
+
+/* Force light color scheme across the site to prevent iOS Safari auto-inversion */
+html,
+body {
+  color-scheme: light;
+}
+
+/* iOS Safari dark-mode visibility fix: keep light theme variables even when OS is dark */
+@supports (-webkit-touch-callout: none) {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-light: #f8fafc;
+      --color-dark: #1f2937;
+    }
   }
 }
 

@@ -2,16 +2,19 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import ProductsMegaMenu from '@/app/components/ProductsMegaMenu'
 import styles from './Navigation.module.css'
 import { getMenuProducts } from '@/sanity/sanity-utils'
 import { Product } from '@/types/Product'
 
 export default function Navigation() {
+  const pathname = usePathname()
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [menuProducts, setMenuProducts] = useState<Product[]>([])
   const productsMenuRef = useRef<HTMLLIElement>(null)
+  const navRef = useRef<HTMLElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleProductsMenuEnter = () => {
@@ -54,18 +57,26 @@ export default function Navigation() {
     fetchMenuProducts()
   }, [])
 
-  // Close mobile menu when clicking outside
+  // Close menus when clicking outside the navbar
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
+    const handleDocumentClick = (event: MouseEvent) => {
+      const targetNode = event.target as Node
+      const clickedInsideNav = navRef.current?.contains(targetNode)
+
+      if (!clickedInsideNav) {
         setIsMobileMenuOpen(false)
+        setIsProductsMenuOpen(false)
+      }
+
+      // Also collapse products submenu when clicking anywhere outside its li
+      if (productsMenuRef.current && !productsMenuRef.current.contains(targetNode)) {
         setIsProductsMenuOpen(false)
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('click', handleDocumentClick)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('click', handleDocumentClick)
     }
   }, [])
 
@@ -78,14 +89,21 @@ export default function Navigation() {
     }
   }, [])
 
+  // Close mobile menu when pathname changes (navigation)
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setIsProductsMenuOpen(false)
+  }, [pathname])
+
   return (
-    <nav className="navbar" id="navbar">
+    <nav className="navbar" id="navbar" ref={navRef}>
       <div className="nav-container">
         <Link href="/" className="logo">
           Elixderm
         </Link>
         
         <div 
+          id="mobile-menu-toggle"
           className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`} 
           onClick={handleMobileMenuToggle}
         >
@@ -94,7 +112,7 @@ export default function Navigation() {
           <span className="hamburger-line"></span>
         </div>
         
-        <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+        <ul id="nav-menu" className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li 
             className={`nav-item ${styles.navItemWithDropdown}`}
             ref={productsMenuRef}
