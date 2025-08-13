@@ -1,0 +1,158 @@
+/* Service Specialties Slider Styles */
+
+.imageSlider {
+  position: relative;
+  width: 100%;
+  margin: 70px 0;
+}
+
+.hitContainer {
+  /* Container for additional styling if needed */
+}
+
+.hitTitles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 15%;
+}
+
+.hitTitles h2 {
+  font-size: 2.5rem; /* 40px */
+  margin-bottom: 15px;
+}
+
+.hitTitles p {
+  font-size: 1.125rem; /* 18px */
+}
+
+.sliderContainer {
+  overflow: hidden;
+  margin: 30px;
+  position: relative;
+  touch-action: pan-x; /* Allow horizontal panning for swipe */
+  user-select: none; /* Prevent text selection during swipe */
+}
+
+.formulations {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+.formulation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  transition: 0.3s;
+  background: #e4e6e8;
+  border-radius: 30px 30px 0 0;
+  border-bottom: 3px solid #10b981;
+  box-sizing: border-box;
+  flex: 0 0 calc(33.333% - 20px); /* 3 items per row with gap */
+  width: calc(33.333% - 20px);
+}
+
+.formulation:hover {
+  background: #f0f2f4;
+  transition: 0.3s;
+}
+
+.formulations img {
+  width: 75px;
+  margin-bottom: 15px;
+  height: auto;
+}
+
+.prevF, .nextF {
+  position: absolute;
+  top: calc(50% + 60px); /* Adjust to be in middle of cards (accounting for titles) */
+  transform: translateY(-50%);
+  font-size: 30px;
+  cursor: pointer;
+  background: #ffffffeb !important;
+  border: none !important;
+  color: #10b981 !important;
+  transition: 0.3s;
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prevF { 
+  left: 10px;
+}
+
+.nextF { 
+  right: 10px;
+}
+
+.prevF:hover, .nextF:hover {
+  background: #10b981 !important;
+  color: #fff !important;
+  transition: 0.3s;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Desktop and Tablet styles (769px and up) */
+@media screen and (min-width: 769px) {
+  .sliderContainer {
+    margin: 30px;
+  }
+
+  .formulation {
+    padding: 40px;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .sliderContainer {
+    margin: 20px;
+  }
+
+  .formulations {
+    gap: 20px;
+  }
+
+  .formulation {
+    padding: 30px 20px;
+    flex: 0 0 calc(100% - 20px); /* 1 item per row on mobile */
+    width: calc(100% - 20px);
+  }
+
+  .hitTitles {
+    margin: 0 5%;
+  }
+
+  .hitTitles h2 {
+    font-size: 1.5625rem; /* 25px */
+  }
+
+  .hitTitles p {
+    font-size: 0.875rem; /* 14px on mobile */
+  }
+
+  .prevF, .nextF {
+    width: 42px; /* 15% smaller than 50px = 42.5px */
+    height: 42px;
+    font-size: 25px; /* 15% smaller than 30px = 25.5px */
+    top: calc(50% + 40px); /* Adjust for mobile card height */
+  }
+
+  .prevF {
+    left: 5px;
+  }
+
+  .nextF {
+    right: 5px;
+  }
+}
