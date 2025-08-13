@@ -1,9 +1,13 @@
-/* Service Specialties Slider Styles */
+/* Modern Service Specialties Slider Styles */
 
 .imageSlider {
   position: relative;
   width: 100%;
-  margin: 70px 0;
+  margin: 80px 0;
+  padding: 0 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hitContainer {
@@ -15,144 +19,244 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: 0 15%;
+  margin: 0 auto 60px auto;
+  max-width: 800px;
 }
 
 .hitTitles h2 {
-  font-size: 2.5rem; /* 40px */
-  margin-bottom: 15px;
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1f2937;
+  line-height: 1.2;
 }
 
 .hitTitles p {
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.25rem;
+  color: #6b7280;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .sliderContainer {
   overflow: hidden;
-  margin: 30px;
+  margin: 0 40px;
   position: relative;
-  touch-action: pan-x; /* Allow horizontal panning for swipe */
-  user-select: none; /* Prevent text selection during swipe */
+  touch-action: pan-x;
+  user-select: none;
 }
 
 .formulations {
   display: flex;
-  transition: transform 0.5s ease;
-  gap: 30px;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 32px;
   box-sizing: border-box;
 }
 
 .formulation {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 40px;
-  transition: 0.3s;
-  background: #e4e6e8;
-  border-radius: 30px 30px 0 0;
-  border-bottom: 3px solid #10b981;
+  align-items: center;
+  text-align: center;
+  padding: 48px 32px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
   box-sizing: border-box;
-  flex: 0 0 calc(33.333% - 20px); /* 3 items per row with gap */
-  width: calc(33.333% - 20px);
+  flex: 0 0 calc(33.333% - 22px);
+  width: calc(33.333% - 22px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
 }
 
+
+
 .formulation:hover {
-  background: #f0f2f4;
-  transition: 0.3s;
+  border-color: #10b981;
+}
+
+.formulation h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 20px 0 12px 0;
+  line-height: 1.3;
+}
+
+.formulation p {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 400;
 }
 
 .formulations img {
-  width: 75px;
-  margin-bottom: 15px;
-  height: auto;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.formulation:hover img {
+  transform: scale(1.1);
 }
 
 .prevF, .nextF {
   position: absolute;
-  top: calc(50% + 60px); /* Adjust to be in middle of cards (accounting for titles) */
+  top: calc(50% + 80px);
   transform: translateY(-50%);
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
-  background: #ffffffeb !important;
-  border: none !important;
-  color: #10b981 !important;
-  transition: 0.3s;
-  z-index: 2;
-  width: 50px;
-  height: 50px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #10b981;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 .prevF { 
-  left: 10px;
+  left: -8px;
 }
 
 .nextF { 
-  right: 10px;
+  right: -8px;
 }
 
 .prevF:hover, .nextF:hover {
-  background: #10b981 !important;
-  color: #fff !important;
-  transition: 0.3s;
-  transform: translateY(-50%) scale(1.1);
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-/* Desktop and Tablet styles (769px and up) */
-@media screen and (min-width: 769px) {
-  .sliderContainer {
-    margin: 30px;
+.prevF:active, .nextF:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Tablet styles */
+@media screen and (max-width: 1024px) {
+  .imageSlider {
+    padding: 0 16px;
   }
 
-  .formulation {
-    padding: 40px;
+  .sliderContainer {
+    margin: 0 24px;
+  }
+
+  .hitTitles h2 {
+    font-size: 2.25rem;
+  }
+
+  .hitTitles p {
+    font-size: 1.125rem;
   }
 }
 
 /* Mobile styles */
 @media screen and (max-width: 768px) {
+  .imageSlider {
+    margin: 60px 0;
+    padding: 0 12px;
+  }
+
   .sliderContainer {
-    margin: 20px;
+    margin: 0 16px;
   }
 
   .formulations {
-    gap: 20px;
+    gap: 24px;
   }
 
   .formulation {
-    padding: 30px 20px;
-    flex: 0 0 calc(100% - 20px); /* 1 item per row on mobile */
-    width: calc(100% - 20px);
+    padding: 40px 24px;
+    flex: 0 0 calc(100% - 24px);
+    width: calc(100% - 24px);
+    border-radius: 20px;
   }
 
   .hitTitles {
-    margin: 0 5%;
+    margin: 0 auto 48px auto;
+    max-width: none;
   }
 
   .hitTitles h2 {
-    font-size: 1.5625rem; /* 25px */
+    font-size: 2rem;
   }
 
   .hitTitles p {
-    font-size: 0.875rem; /* 14px on mobile */
+    font-size: 1rem;
+  }
+
+  .formulation h3 {
+    font-size: 1.25rem;
+    margin: 16px 0 10px 0;
+  }
+
+  .formulation p {
+    font-size: 0.9375rem;
+  }
+
+  .formulations img {
+    width: 70px;
+    height: 70px;
   }
 
   .prevF, .nextF {
-    width: 42px; /* 15% smaller than 50px = 42.5px */
-    height: 42px;
-    font-size: 25px; /* 15% smaller than 30px = 25.5px */
-    top: calc(50% + 40px); /* Adjust for mobile card height */
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    top: calc(50% + 60px);
   }
 
   .prevF {
-    left: 5px;
+    left: -4px;
   }
 
   .nextF {
-    right: 5px;
+    right: -4px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .imageSlider {
+    margin: 48px 0;
+  }
+
+  .hitTitles h2 {
+    font-size: 1.75rem;
+  }
+
+  .hitTitles p {
+    font-size: 0.9375rem;
+  }
+
+  .formulation {
+    padding: 32px 20px;
+  }
+
+  .formulation h3 {
+    font-size: 1.125rem;
+  }
+
+  .formulation p {
+    font-size: 0.875rem;
+  }
+
+  .formulations img {
+    width: 64px;
+    height: 64px;
   }
 }

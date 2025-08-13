@@ -6,7 +6,9 @@ export type Service = {
   name: string
   slug: string
   menuName?: string
+  menuDescription?: string
   showInMenu?: boolean
+  menuOrder?: number
   category?: 'formulation' | 'research' | 'testing' | 'consulting'
   seo?: {
     metaTitle: string

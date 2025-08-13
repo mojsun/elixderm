@@ -27,11 +27,25 @@ const service = {
       description: 'Custom name to display in navigation menu (leave empty to use Service Name)'
     },
     {
+      name: 'menuDescription',
+      title: 'Menu Description',
+      type: 'text',
+      description: 'Short description to display in the services navigation menu',
+      rows: 2
+    },
+    {
       name: 'showInMenu',
       title: 'Show in Navigation Menu',
       type: 'boolean',
       description: 'Toggle to control if this service appears in the main navigation menu',
       initialValue: true
+    },
+    {
+      name: 'menuOrder',
+      title: 'Menu Order',
+      type: 'number',
+      description: 'Order in which this service appears in the menu (1-4, lower numbers appear first)',
+      validation: (Rule: any) => Rule.min(1).max(4)
     },
     {
       name: 'category',

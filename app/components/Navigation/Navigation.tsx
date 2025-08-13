@@ -4,16 +4,21 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import ProductsMegaMenu from '@/app/components/ProductsMegaMenu'
+import ServicesMegaMenu from '@/app/components/ServicesMegaMenu'
 import styles from './Navigation.module.css'
-import { getMenuProducts } from '@/sanity/sanity-utils'
+import { getMenuProducts, getMenuServices } from '@/sanity/sanity-utils'
 import { Product } from '@/types/Product'
+import { Service } from '@/types/Service'
 
 export default function Navigation() {
   const pathname = usePathname()
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false)
+  const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [menuProducts, setMenuProducts] = useState<Product[]>([])
+  const [menuServices, setMenuServices] = useState<Service[]>([])
   const productsMenuRef = useRef<HTMLLIElement>(null)
+  const servicesMenuRef = useRef<HTMLLIElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -22,11 +27,26 @@ export default function Navigation() {
       clearTimeout(timeoutRef.current)
     }
     setIsProductsMenuOpen(true)
+    setIsServicesMenuOpen(false)
   }
 
   const handleProductsMenuLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsProductsMenuOpen(false)
+    }, 150) // Small delay to prevent flickering
+  }
+
+  const handleServicesMenuEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    setIsServicesMenuOpen(true)
+    setIsProductsMenuOpen(false)
+  }
+
+  const handleServicesMenuLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsServicesMenuOpen(false)
     }, 150) // Small delay to prevent flickering
   }
 
@@ -37,24 +57,35 @@ export default function Navigation() {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
     setIsProductsMenuOpen(false)
+    setIsServicesMenuOpen(false)
   }
 
   const toggleProductsMobile = () => {
     setIsProductsMenuOpen(!isProductsMenuOpen)
+    setIsServicesMenuOpen(false)
   }
 
-  // Fetch menu products on component mount
+  const toggleServicesMobile = () => {
+    setIsServicesMenuOpen(!isServicesMenuOpen)
+    setIsProductsMenuOpen(false)
+  }
+
+  // Fetch menu products and services on component mount
   useEffect(() => {
-    async function fetchMenuProducts() {
+    async function fetchMenuData() {
       try {
-        const products = await getMenuProducts()
+        const [products, services] = await Promise.all([
+          getMenuProducts(),
+          getMenuServices()
+        ])
         setMenuProducts(products)
+        setMenuServices(services)
       } catch (error) {
-        console.error('Failed to fetch menu products:', error)
+        console.error('Failed to fetch menu data:', error)
       }
     }
     
-    fetchMenuProducts()
+    fetchMenuData()
   }, [])
 
   // Close menus when clicking outside the navbar
@@ -66,11 +97,17 @@ export default function Navigation() {
       if (!clickedInsideNav) {
         setIsMobileMenuOpen(false)
         setIsProductsMenuOpen(false)
+        setIsServicesMenuOpen(false)
       }
 
-      // Also collapse products submenu when clicking anywhere outside its li
-      if (productsMenuRef.current && !productsMenuRef.current.contains(targetNode)) {
-        setIsProductsMenuOpen(false)
+      // Also collapse submenus when clicking anywhere outside their li elements (only on desktop)
+      if (window.innerWidth > 768) {
+        if (productsMenuRef.current && !productsMenuRef.current.contains(targetNode)) {
+          setIsProductsMenuOpen(false)
+        }
+        if (servicesMenuRef.current && !servicesMenuRef.current.contains(targetNode)) {
+          setIsServicesMenuOpen(false)
+        }
       }
     }
 
@@ -93,6 +130,7 @@ export default function Navigation() {
   useEffect(() => {
     setIsMobileMenuOpen(false)
     setIsProductsMenuOpen(false)
+    setIsServicesMenuOpen(false)
   }, [pathname])
 
   return (
@@ -115,6 +153,36 @@ export default function Navigation() {
         <ul id="nav-menu" className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li 
             className={`nav-item ${styles.navItemWithDropdown}`}
+            ref={servicesMenuRef}
+            onMouseEnter={handleServicesMenuEnter}
+            onMouseLeave={handleServicesMenuLeave}
+          >
+            <Link 
+              href="/services" 
+              className={`nav-link ${styles.navLinkWithDropdown}`}
+              onClick={(e) => {
+                if (window.innerWidth <= 768) {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  toggleServicesMobile()
+                } else {
+                  closeMobileMenu()
+                }
+              }}
+            >
+              Services
+              <span className={styles.dropdownArrow}>⌄</span>
+            </Link>
+            
+            <ServicesMegaMenu
+              services={menuServices}
+              isOpen={isServicesMenuOpen}
+              onClose={closeMobileMenu}
+            />
+          </li>
+          
+          <li 
+            className={`nav-item ${styles.navItemWithDropdown}`}
             ref={productsMenuRef}
             onMouseEnter={handleProductsMenuEnter}
             onMouseLeave={handleProductsMenuLeave}
@@ -125,6 +193,7 @@ export default function Navigation() {
               onClick={(e) => {
                 if (window.innerWidth <= 768) {
                   e.preventDefault()
+                  e.stopPropagation()
                   toggleProductsMobile()
                 } else {
                   closeMobileMenu()
@@ -135,11 +204,11 @@ export default function Navigation() {
               <span className={styles.dropdownArrow}>⌄</span>
             </Link>
             
-                             <ProductsMegaMenu
-                   products={menuProducts}
-                   isOpen={isProductsMenuOpen}
-                   onClose={closeMobileMenu}
-                 />
+            <ProductsMegaMenu
+              products={menuProducts}
+              isOpen={isProductsMenuOpen}
+              onClose={closeMobileMenu}
+            />
           </li>
           
           <li className="nav-item">
