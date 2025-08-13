@@ -82,7 +82,7 @@ export default function ServiceFAQ({ service }: ServiceFAQProps) {
                 <span className={styles.toggleIcon}>
                   {activeItems.includes(index) ? '-' : '+'}
                 </span>
-                {item.question}
+                <span>{item.question}</span>
               </h3>
               <div className={styles.faqAnswer}>
                 <div className={styles.answerContent}>

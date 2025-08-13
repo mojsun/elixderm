@@ -1,60 +1,98 @@
-/* Service Middle CTA Styles */
+/* Modern Service Middle CTA Styles */
 
 .middleCTA {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  background-color: #e4e6e8;
-  padding: 2% 0;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #f8fffe 0%, #e8f5f3 50%, #f0f9f7 100%);
+  padding: 80px 60px;
   overflow: hidden;
-  z-index: 0;
-  margin-bottom: 50px;
+  margin: 80px 0;
+  border-radius: 24px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
 }
 
 .mctaText {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  max-width: 500px;
+  z-index: 2;
+  position: relative;
 }
 
 .mctaText p {
-  font-size: 1.125rem; /* 18px */
-  margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #10b981;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  opacity: 0.9;
 }
 
 .mctaText h2 {
-  font-size: 2.5rem; /* 40px */
-  margin-bottom: 15px;
-}
-
-.mctaText button svg {
-  width: 70px;
-  height: 35px;
-  margin-left: 10px;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 32px;
+  line-height: 1.2;
 }
 
 .mctaText button {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border: 2px solid #10b981 !important;
-  background-color: transparent !important;
-  color: #10b981 !important;
-  padding: 10px 20px;
+  justify-content: center;
+  gap: 12px;
+  border: 2px solid #10b981;
+  background: transparent;
+  color: #10b981;
+  padding: 16px 32px;
   cursor: pointer;
-  border-radius: 30px;
-  width: 70%;
-  transition: 0.3s;
-  font-size: 1.125rem; /* 18px */
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.125rem;
+  font-weight: 600;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mctaText button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.mctaText button:hover::before {
+  left: 100%;
 }
 
 .mctaText button:hover {
-  border: 2px solid transparent !important;
-  background-color: #10b981 !important;
-  color: white !important;
-  padding: 10px 20px;
-  width: 75%;
-  transition: 0.3s;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-color: #10b981;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.mctaText button svg {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s ease;
+}
+
+.mctaText button:hover svg {
+  transform: translateX(4px);
 }
 
 .mctaText button:hover svg line {
@@ -65,18 +103,26 @@
   fill: white;
 }
 
+.middleCTA > div:first-child {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+}
+
 .blobContainer {
   position: absolute;
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
   z-index: 0;
-  left: 15%;
+  opacity: 0.3;
   transition: transform 0.3s ease;
-  display: none;
 }
 
 .middleCTA:hover .blobContainer {
-  transform: translate(-10px, -10px);
+  transform: rotate(10deg) scale(1.05);
 }
 
 .middleCTA img {
@@ -84,31 +130,103 @@
   z-index: 1;
   mix-blend-mode: multiply;
   filter: brightness(1.03);
+  max-width: 350px;
+  height: auto;
+  transition: transform 0.3s ease;
 }
 
-/* Mobile styles */
-@media screen and (max-width: 600px) {
+.middleCTA:hover img {
+  transform: scale(1.02);
+}
+
+/* Tablet styles */
+@media screen and (max-width: 1024px) {
   .middleCTA {
-    flex-direction: column;
-  }
-
-  .mctaText {
-    margin: 10% 5% 5% 5%;
-  }
-
-  .mctaText p {
-    font-size: 0.875rem; /* 14px on mobile */
-    margin-bottom: 20px;
-    line-height: 1.1;
+    padding: 60px 40px;
+    margin: 60px 20px;
   }
 
   .mctaText h2 {
-    line-height: 1.25;
+    font-size: 2.25rem;
+  }
+
+  .middleCTA > div:first-child {
+    margin-left: 20px;
+  }
+
+  .middleCTA img {
+    max-width: 300px;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .middleCTA {
+    flex-direction: column;
+    padding: 48px 24px;
+    margin: 48px 12px;
+    text-align: center;
+    border-radius: 20px;
+  }
+
+  .middleCTA > div:first-child {
+    margin-left: 0;
+    margin-bottom: 32px;
+    order: -1;
+  }
+
+  .mctaText {
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mctaText p {
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+  }
+
+  .mctaText h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    line-height: 1.3;
   }
 
   .mctaText button {
-    width: 90%;
-    margin-top: 5%;
-    font-size: 15px;
+    min-width: 180px;
+    padding: 14px 28px;
+    font-size: 1rem;
+    align-self: center;
+  }
+
+  .middleCTA img {
+    max-width: 325px;
+  }
+
+  .blobContainer {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .middleCTA {
+    padding: 40px 20px;
+    margin: 40px 8px;
+  }
+
+  .mctaText h2 {
+    font-size: 1.75rem;
+  }
+
+  .mctaText button {
+    min-width: 160px;
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+  }
+
+  .middleCTA img {
+    max-width: 260px;
   }
 }

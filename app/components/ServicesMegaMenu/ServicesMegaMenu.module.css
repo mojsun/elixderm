@@ -1,0 +1,239 @@
+/* Services Mega Menu */
+.servicesMegaMenu {
+  position: fixed;
+  top: 80px; /* Adjust based on navbar height */
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.servicesMegaMenu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.servicesMenuContent {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 40px 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.serviceItem {
+  position: relative;
+  padding: 32px 24px;
+  margin: 0 12px;
+  transition: all 0.3s ease;
+}
+
+.serviceItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: -12px;
+  width: 1px;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
+}
+
+.serviceItem:hover {
+  background: var(--color-light);
+  border-radius: 8px;
+}
+
+.serviceLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.serviceTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.3s ease;
+}
+
+.serviceItem:hover .serviceTitle {
+  color: var(--color-primary);
+}
+
+.serviceArrow {
+  font-size: 16px;
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.serviceItem:hover .serviceArrow {
+  color: var(--color-secondary);
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.serviceDescription {
+  font-size: 14px;
+  color: var(--color-gray);
+  line-height: 1.5;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.serviceItem:hover .serviceDescription {
+  color: var(--color-dark);
+}
+
+/* Mobile Styles */
+@media (max-width: 1024px) {
+  .servicesMegaMenu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+  }
+  
+  .servicesMenuContent {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 24px;
+    gap: 16px;
+  }
+  
+  .serviceItem {
+    padding: 20px 16px;
+  }
+  
+  .serviceItem:nth-child(odd)::after {
+    display: block;
+  }
+  
+  .serviceItem:nth-child(even)::after {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .servicesMegaMenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: transparent;
+    border-radius: 0;
+    border-top: none;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .servicesMenuContent {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  
+  .serviceItem {
+    padding: 16px 0;
+    margin: 0;
+    border-bottom: 1px solid #e5e7eb;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+  
+  .serviceItem:last-child {
+    border-bottom: none;
+  }
+  
+  .serviceItem::after {
+    display: none;
+  }
+  
+  .serviceItem:hover {
+    background: transparent;
+  }
+  
+  .serviceTitle {
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+  
+  .serviceArrow {
+    font-size: 14px;
+    margin-left: 8px;
+    display: inline;
+  }
+  
+  .serviceDescription {
+    font-size: 13px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicesMenuContent {
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .serviceItem {
+    padding: 12px 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 380px;
+  }
+  
+  .serviceTitle {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+  
+  .serviceArrow {
+    font-size: 12px;
+    margin-left: 6px;
+  }
+  
+  .serviceDescription {
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+}

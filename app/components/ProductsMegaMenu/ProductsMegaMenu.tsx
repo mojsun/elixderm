@@ -75,7 +75,7 @@ export default function ProductsMegaMenu({
           // Only render column if it has products
           column.products.length > 0 && (
             <div key={columnIndex} className={styles.megaMenuColumn}>
-              <h4 className={styles.megaMenuTitle}>{column.title}</h4>
+              <p className={styles.megaMenuTitle}>{column.title}</p>
               <ul className={styles.megaMenuList}>
                 {column.products.map((product) => (
                   <li key={product._id}>

@@ -187,17 +187,21 @@ export async function getServices(): Promise<Service[]> {
     category,
     hero {
       heading,
-      description
+      description,
+      "image": image.asset->url,
+      imageAlt
     }
   }`);
 }
 
 export async function getMenuServices(): Promise<Service[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "service" && showInMenu == true] | order(category asc, name asc){
+  return createClient(clientConfig).fetch(groq`*[_type == "service" && showInMenu == true] | order(menuOrder asc, name asc){
     _id,
     name,
     "slug": slug.current,
     menuName,
+    menuDescription,
+    menuOrder,
     category
   }`);
 }

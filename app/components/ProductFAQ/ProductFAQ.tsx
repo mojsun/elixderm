@@ -88,7 +88,7 @@ export default function ProductFAQ({ product }: ProductFAQProps) {
                 <span className={styles.toggleIcon}>
                   {activeItems.includes(index) ? '-' : '+'}
                 </span>
-                {faq.question}
+                <span>{faq.question}</span>
               </h3>
               <div 
                 className={styles.faqAnswer}
