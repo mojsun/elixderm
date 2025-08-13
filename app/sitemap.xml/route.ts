@@ -36,6 +36,13 @@ type SitemapProduct = {
   _updatedAt: string
 }
 
+type SitemapService = {
+  _id: string
+  name: string
+  slug: string
+  _updatedAt: string
+}
+
 export async function GET() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'
@@ -57,6 +64,12 @@ export async function GET() {
       },
       { 
         url: '/products', 
+        changeFreq: 'weekly' as const, 
+        priority: 0.9,
+        lastModified: new Date().toISOString()
+      },
+      { 
+        url: '/services', 
         changeFreq: 'weekly' as const, 
         priority: 0.9,
         lastModified: new Date().toISOString()
@@ -86,7 +99,7 @@ export async function GET() {
     })
 
     // Fetch dynamic pages from Sanity
-    const [pages, projects, products] = await Promise.all([
+    const [pages, projects, products, services] = await Promise.all([
       // Pages
       client.fetch(`*[_type == "page" && defined(slug.current)] {
         _id,
@@ -103,6 +116,13 @@ export async function GET() {
       }`),
       // Products
       client.fetch(`*[_type == "product" && defined(slug.current)] {
+        _id,
+        name,
+        "slug": slug.current,
+        _updatedAt
+      }`),
+      // Services
+      client.fetch(`*[_type == "service" && defined(slug.current)] {
         _id,
         name,
         "slug": slug.current,
@@ -135,6 +155,16 @@ export async function GET() {
       sitemap.push({
         url: `${baseUrl}/products/${product.slug}`,
         lastModified: new Date(product._updatedAt).toISOString(),
+        changeFreq: 'weekly',
+        priority: 0.8
+      })
+    })
+
+    // Add services
+    services.forEach((service: SitemapService) => {
+      sitemap.push({
+        url: `${baseUrl}/services/${service.slug}`,
+        lastModified: new Date(service._updatedAt).toISOString(),
         changeFreq: 'weekly',
         priority: 0.8
       })

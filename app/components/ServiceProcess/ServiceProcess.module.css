@@ -1,0 +1,102 @@
+/* Service Process (How It Works) Styles */
+
+.howItWorks {
+  display: flex;
+  flex-direction: column;
+  margin: 50px 3% 70px 3%;
+  margin-bottom: 70px;
+}
+
+.hitContainer {
+  /* Container for additional styling if needed */
+}
+
+.hitTitles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 15%;
+}
+
+.hitTitles h2 {
+  font-size: 2.5rem; /* 40px */
+  margin-bottom: 15px;
+}
+
+.hitTitles p {
+  font-size: 1.125rem; /* 18px */
+}
+
+.hitSteps {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3%;
+  text-align: center;
+}
+
+.hitStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hitStep p {
+  font-size: 1.125rem; /* 18px */
+}
+
+.hitStep h4 {
+  margin: 5px 0 10px 0;
+  transition: 0.3s;
+  font-size: 1.25rem; /* 20px */
+}
+
+.hitStep:hover h4 {
+  color: #10b981; 
+  transition: 0.3s;
+}
+
+.hitStep img {
+  width: 85px;
+  height: 85px;
+  margin-bottom: 10px;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+  .hitSteps {
+    flex-direction: column;
+  }
+
+  .howItWorks {
+    margin: 50px 3% 30px 3%;
+  }
+
+  .hitStep img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .hitStep {
+    margin-bottom: 15px;
+  }
+
+  .hitTitles {
+    margin: 0 5%;
+  }
+
+  .hitTitles h2 {
+    font-size: 1.5625rem; /* 25px */
+  }
+
+  .hitTitles p {
+    font-size: 0.875rem; /* 14px on mobile */
+  }
+
+  .hitStep p {
+    font-size: 0.875rem; /* 14px on mobile */
+  }
+}

@@ -1,0 +1,114 @@
+/* Service Middle CTA Styles */
+
+.middleCTA {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #e4e6e8;
+  padding: 2% 0;
+  overflow: hidden;
+  z-index: 0;
+  margin-bottom: 50px;
+}
+
+.mctaText {
+  display: flex;
+  flex-direction: column;
+}
+
+.mctaText p {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 5px;
+}
+
+.mctaText h2 {
+  font-size: 2.5rem; /* 40px */
+  margin-bottom: 15px;
+}
+
+.mctaText button svg {
+  width: 70px;
+  height: 35px;
+  margin-left: 10px;
+}
+
+.mctaText button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #10b981 !important;
+  background-color: transparent !important;
+  color: #10b981 !important;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  width: 70%;
+  transition: 0.3s;
+  font-size: 1.125rem; /* 18px */
+}
+
+.mctaText button:hover {
+  border: 2px solid transparent !important;
+  background-color: #10b981 !important;
+  color: white !important;
+  padding: 10px 20px;
+  width: 75%;
+  transition: 0.3s;
+}
+
+.mctaText button:hover svg line {
+  stroke: white;
+}
+
+.mctaText button:hover svg polygon {
+  fill: white;
+}
+
+.blobContainer {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  z-index: 0;
+  left: 15%;
+  transition: transform 0.3s ease;
+  display: none;
+}
+
+.middleCTA:hover .blobContainer {
+  transform: translate(-10px, -10px);
+}
+
+.middleCTA img {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  filter: brightness(1.03);
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+  .middleCTA {
+    flex-direction: column;
+  }
+
+  .mctaText {
+    margin: 10% 5% 5% 5%;
+  }
+
+  .mctaText p {
+    font-size: 0.875rem; /* 14px on mobile */
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .mctaText h2 {
+    line-height: 1.25;
+  }
+
+  .mctaText button {
+    width: 90%;
+    margin-top: 5%;
+    font-size: 15px;
+  }
+}

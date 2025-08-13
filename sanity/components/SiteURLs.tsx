@@ -69,6 +69,7 @@ export default function SiteURLs() {
         { title: 'Home', url: '/', type: 'Static Page' },
         { title: 'About', url: '/about', type: 'Static Page' },
         { title: 'Products', url: '/products', type: 'Static Page' },
+        { title: 'Services', url: '/services', type: 'Static Page' },
         { title: 'Contact Us', url: '/contact-us', type: 'Static Page' },
         { title: 'Sitemap', url: '/sitemap', type: 'Static Page' },
       ]
@@ -87,7 +88,7 @@ export default function SiteURLs() {
       })
 
       // Fetch dynamic pages from Sanity with proper slug handling
-      const [pages, projects, products] = await Promise.all([
+      const [pages, projects, products, services] = await Promise.all([
         // Pages
         client.fetch(`*[_type == "page" && defined(slug.current)] {
           _id,
@@ -109,6 +110,18 @@ export default function SiteURLs() {
         }`),
         // Products  
         client.fetch(`*[_type == "product" && defined(slug.current)] {
+          _id,
+          name,
+          "slug": slug.current,
+          _updatedAt,
+          seo {
+            metaTitle,
+            metaDescription,
+            noIndex
+          }
+        }`),
+        // Services
+        client.fetch(`*[_type == "service" && defined(slug.current)] {
           _id,
           name,
           "slug": slug.current,
@@ -167,6 +180,24 @@ export default function SiteURLs() {
           metaDescription: product.seo?.metaDescription,
           canonical: `${baseUrl}/products/${product.slug}`,
           noIndex: product.seo?.noIndex,
+          canEdit: true,
+          canDelete: true
+        })
+      })
+
+      // Add services
+      services.forEach((service: any) => {
+        allUrls.push({
+          id: service._id,
+          title: service.name,
+          url: `${baseUrl}/services/${service.slug}`,
+          type: 'Service',
+          status: 'Published',
+          lastModified: new Date(service._updatedAt).toLocaleDateString(),
+          metaTitle: service.seo?.metaTitle,
+          metaDescription: service.seo?.metaDescription,
+          canonical: `${baseUrl}/services/${service.slug}`,
+          noIndex: service.seo?.noIndex,
           canEdit: true,
           canDelete: true
         })

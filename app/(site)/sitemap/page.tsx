@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
-import { getProducts } from "@/sanity/sanity-utils";
+import { getProducts, getServices } from "@/sanity/sanity-utils";
 import { getProjects } from "@/sanity/sanity-utils";
 import { createClient } from "next-sanity";
 import { Product } from "@/types/Product";
 import { Project } from "@/types/project";
+import { Service } from "@/types/Service";
 
 type Page = {
   _id: string;
@@ -27,9 +28,10 @@ export default async function Sitemap() {
   ];
 
   // Fetch dynamic content from Sanity
-  const [products, projects, pages] = await Promise.all([
+  const [products, projects, services, pages] = await Promise.all([
     getProducts(),
     getProjects(),
+    getServices(),
     client.fetch(`*[_type == "page" && defined(slug.current)] {
       _id,
       title,
@@ -96,6 +98,35 @@ export default async function Sitemap() {
                     </span>
                     <span className="flex-1">
                       {product.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Services Section */}
+          {services && services.length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Our Services
+              </h2>
+              <p className="text-gray-600 mb-8">
+                Comprehensive cosmetic manufacturing and development services for your brand.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 md:gap-y-4">
+                {services.map((service: Service) => (
+                  <Link 
+                    key={service._id}
+                    href={`/services/${service.slug}`} 
+                    className="flex items-start text-emerald-600 hover:text-emerald-700 text-lg group"
+                  >
+                    <span className="text-emerald-500 mr-3 mt-1 text-sm group-hover:text-emerald-600 transition-colors">
+                      •
+                    </span>
+                    <span className="flex-1">
+                      {service.name}
                     </span>
                   </Link>
                 ))}

@@ -46,6 +46,7 @@ const config = defineConfig({
             S.documentTypeListItem('page'),
             S.documentTypeListItem('project'),
             S.documentTypeListItem('product'),
+            S.documentTypeListItem('service'),
           ])
     })
   ],
