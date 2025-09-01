@@ -307,6 +307,12 @@ export async function POST(request: NextRequest) {
                         <span class="info-value">${formData.phone}</span>
                     </div>
                     ` : ''}
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Project Details</h2>
+                <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Target Market:</span>
                         <span class="info-value">${formData.targetMarket}</span>
@@ -319,12 +325,6 @@ export async function POST(request: NextRequest) {
                         <span class="info-label">Has Benchmark Product:</span>
                         <span class="info-value">${formData.hasBenchmarkProduct}</span>
                     </div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Project Details</h2>
-                <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Product Type:</span>
                         <span class="info-value">${formData.productType}</span>
