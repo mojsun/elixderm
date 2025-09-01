@@ -16,6 +16,9 @@ export default function ContactUs() {
     email: '',
     company: '',
     phone: '',
+    targetMarket: '',
+    businessStage: '',
+    hasBenchmarkProduct: '',
     productType: '',
     timeline: '',
     quantity: '',
@@ -57,6 +60,9 @@ export default function ContactUs() {
           email: '',
           company: '',
           phone: '',
+          targetMarket: '',
+          businessStage: '',
+          hasBenchmarkProduct: '',
           productType: '',
           timeline: '',
           quantity: '',
@@ -193,6 +199,69 @@ export default function ContactUs() {
                       value={formData.phone}
                       onChange={handleInputChange}
                     />
+                  </div>
+
+                  <div className="form-field">
+                    <label htmlFor="targetMarket">What is your target market location? *</label>
+                    <input
+                      type="text"
+                      id="targetMarket"
+                      name="targetMarket"
+                      value={formData.targetMarket}
+                      onChange={handleInputChange}
+                      placeholder="e.g., USA, Arizona • Canada, Ontario • Europe, UK • Asia, Japan • etc."
+                      required
+                    />
+                    <small style={{ color: '#6b7280', fontSize: '0.875rem', marginTop: '0.25rem', display: 'block' }}>
+                      You can specify country, state/province, city, or region - whatever best describes your target market
+                    </small>
+                  </div>
+
+                  <div className="form-field">
+                    <label htmlFor="businessStage">What stage is your business currently in? *</label>
+                    <select
+                      id="businessStage"
+                      name="businessStage"
+                      value={formData.businessStage}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="">Select your business stage</option>
+                      <option value="startup">Startup (Just getting started)</option>
+                      <option value="early-stage">Early Stage (1-2 years, building initial products)</option>
+                      <option value="scaling">Scaling (Growing rapidly, expanding product lines)</option>
+                      <option value="established">Established Brand (3+ years, looking to expand/optimize)</option>
+                      <option value="enterprise">Enterprise (Large company/corporation)</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field">
+                    <label>Do you have a benchmark product in the market that you want to be similar to? *</label>
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                        <input
+                          type="radio"
+                          name="hasBenchmarkProduct"
+                          value="yes"
+                          checked={formData.hasBenchmarkProduct === 'yes'}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        Yes
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                        <input
+                          type="radio"
+                          name="hasBenchmarkProduct"
+                          value="no"
+                          checked={formData.hasBenchmarkProduct === 'no'}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        No
+                      </label>
+                    </div>
                   </div>
 
                   <div className="form-field">

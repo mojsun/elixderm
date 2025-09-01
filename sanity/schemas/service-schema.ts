@@ -2,7 +2,6 @@ const service = {
   name: 'service',
   title: 'Services',
   type: 'document',
-  icon: () => '🔬',
   fields: [
     {
       name: 'name',
