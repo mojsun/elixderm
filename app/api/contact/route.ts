@@ -17,6 +17,9 @@ interface ContactFormData {
   email: string;
   company: string;
   phone?: string;
+  targetMarket: string;
+  businessStage: string;
+  hasBenchmarkProduct: string;
   productType: string;
   timeline: string;
   quantity: string;
@@ -31,7 +34,8 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields with TypeScript enforcement
     const requiredFields: (keyof ContactFormData)[] = [
-      'name', 'email', 'company', 'productType', 'timeline',
+      'name', 'email', 'company', 'targetMarket', 'businessStage', 
+      'hasBenchmarkProduct', 'productType', 'timeline',
       'quantity', 'formulation', 'vision', 'budget'
     ];
 
@@ -53,6 +57,9 @@ export async function POST(request: NextRequest) {
       email: formData.email,
       company: formData.company,
       phone: formData.phone || '',
+      targetMarket: formData.targetMarket,
+      businessStage: formData.businessStage,
+      hasBenchmarkProduct: formData.hasBenchmarkProduct,
       productType: formData.productType,
       timeline: formData.timeline,
       quantity: formData.quantity,
@@ -300,6 +307,18 @@ export async function POST(request: NextRequest) {
                         <span class="info-value">${formData.phone}</span>
                     </div>
                     ` : ''}
+                    <div class="info-item">
+                        <span class="info-label">Target Market:</span>
+                        <span class="info-value">${formData.targetMarket}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Business Stage:</span>
+                        <span class="info-value">${formData.businessStage}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Has Benchmark Product:</span>
+                        <span class="info-value">${formData.hasBenchmarkProduct}</span>
+                    </div>
                 </div>
             </div>
             

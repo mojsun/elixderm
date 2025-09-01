@@ -14,6 +14,9 @@ interface ContactSubmission {
   email: string;
   company: string;
   phone: string;
+  targetMarket: string;
+  businessStage: string;
+  hasBenchmarkProduct: string;
   productType: string;
   timeline: string;
   quantity: string;
@@ -41,6 +44,9 @@ export default function ContactTable() {
         email,
         company,
         phone,
+        targetMarket,
+        businessStage,
+        hasBenchmarkProduct,
         productType,
         timeline,
         quantity,
@@ -116,7 +122,7 @@ export default function ContactTable() {
   };
 
   const downloadCSV = () => {
-    const headers = ['Name', 'Email', 'Company', 'Phone', 'Product Type', 'Timeline', 'Quantity', 'Formulation', 'Vision', 'Budget', 'Status', 'Submitted At'];
+    const headers = ['Name', 'Email', 'Company', 'Phone', 'Target Market', 'Business Stage', 'Has Benchmark Product', 'Product Type', 'Timeline', 'Quantity', 'Formulation', 'Vision', 'Budget', 'Status', 'Submitted At'];
     const csvContent = [
       headers.join(','),
       ...contacts.map(contact => [
@@ -124,6 +130,9 @@ export default function ContactTable() {
         contact.email,
         contact.company,
         contact.phone || 'N/A',
+        contact.targetMarket,
+        contact.businessStage,
+        contact.hasBenchmarkProduct,
         contact.productType,
         contact.timeline,
         contact.quantity,
@@ -207,6 +216,9 @@ export default function ContactTable() {
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Name</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Email</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Company</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Market</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Stage</th>
+                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Benchmark</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Product</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Timeline</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Status</th>
@@ -233,6 +245,9 @@ export default function ContactTable() {
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.name}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.email}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.company}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.targetMarket}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.businessStage}</td>
+                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.hasBenchmarkProduct}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.productType}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.timeline}</td>
                     <td style={{ padding: '1rem 0.75rem' }}>

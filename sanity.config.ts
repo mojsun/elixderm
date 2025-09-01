@@ -1,5 +1,6 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
+import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon } from "@sanity/icons";
 import schemas from "./sanity/schemas";
 import ContactTable from "./sanity/components/ContactTable";
 import HomeContactTable from "./sanity/components/HomeContactTable";
@@ -20,33 +21,38 @@ const config = defineConfig({
           .items([
             // Media Library (Custom)
             S.listItem()
-              .title('📁 Media Library')
+              .title('Media Library')
+              .icon(ImageIcon)
               .child(S.component(MediaLibrary).title('Media Library')),
             // Separator
             S.divider(),
             // Published URLs
             S.listItem()
-              .title('🔗 Published URLs')
+              .title('Published URLs')
+              .icon(LinkIcon)
               .child(S.component(SiteURLs).title('Published URLs')),
             // Separator
             S.divider(),
             // Short Contact Form with custom table view
             S.listItem()
               .title('Short Contact Form')
+              .icon(EnvelopeIcon)
               .child(S.component(HomeContactTable).title('Short Contact Form')),
             // Separator
             S.divider(),
             // Main Contact Form with custom table view
             S.listItem()
               .title('Main Contact Form')
+              .icon(EnvelopeIcon)
               .child(S.component(ContactTable).title('Main Contact Form')),
             // Separator
             S.divider(),
-            // Other content types
-            S.documentTypeListItem('page'),
-            S.documentTypeListItem('project'),
-            S.documentTypeListItem('product'),
-            S.documentTypeListItem('service'),
+            // Content types
+            S.documentTypeListItem('product').icon(PackageIcon),
+            S.documentTypeListItem('service').icon(CogIcon),
+            // Hidden: pages and projects (kept in system but not in menu)
+            // S.documentTypeListItem('page'),
+            // S.documentTypeListItem('project'),
           ])
     })
   ],

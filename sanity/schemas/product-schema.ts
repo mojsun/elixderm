@@ -2,7 +2,6 @@ const product = {
   name: 'product',
   title: 'Products',
   type: 'document',
-  icon: () => '🛍️',
   fields: [
     {
       name: 'name',

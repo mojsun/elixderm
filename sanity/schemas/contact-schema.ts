@@ -56,6 +56,21 @@ const contact = defineType({
       type: "string",
     },
     {
+      name: "targetMarket",
+      title: "Target Market Location",
+      type: "string",
+    },
+    {
+      name: "businessStage",
+      title: "Business Stage",
+      type: "string",
+    },
+    {
+      name: "hasBenchmarkProduct",
+      title: "Has Benchmark Product",
+      type: "string",
+    },
+    {
       name: "submittedAt",
       title: "Submitted At",
       type: "datetime",
