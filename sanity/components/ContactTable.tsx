@@ -31,10 +31,33 @@ export default function ContactTable() {
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [selectedContact, setSelectedContact] = useState<ContactSubmission | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchContacts();
   }, []);
+
+  const openModal = (contact: ContactSubmission) => {
+    setSelectedContact(contact);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedContact(null);
+    setIsModalOpen(false);
+  };
+
+  const getDaysAgo = (submittedAt: string) => {
+    const submissionDate = new Date(submittedAt);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - submissionDate.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return '1 day ago';
+    return `${diffDays} days ago`;
+  };
 
   const fetchContacts = async () => {
     try {
@@ -218,7 +241,6 @@ export default function ContactTable() {
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Company</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Market</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Stage</th>
-                  <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Benchmark</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Product</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Timeline</th>
                   <th style={{ padding: '0.75rem', textAlign: 'left', fontSize: '0.75rem', fontWeight: '500', color: '#374151', textTransform: 'uppercase', borderBottom: '1px solid #e5e7eb' }}>Status</th>
@@ -235,6 +257,13 @@ export default function ContactTable() {
                       borderBottom: index < contacts.length - 1 ? '1px solid #f3f4f6' : 'none',
                       cursor: 'pointer'
                     }}
+                    onClick={(e) => {
+                      // Don't open modal if clicking on select or button
+                      if (e.target instanceof HTMLSelectElement || e.target instanceof HTMLButtonElement || (e.target as HTMLElement).closest('button')) {
+                        return;
+                      }
+                      openModal(contact);
+                    }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#f1f5f9';
                     }}
@@ -247,7 +276,6 @@ export default function ContactTable() {
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.company}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.targetMarket}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.businessStage}</td>
-                    <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.hasBenchmarkProduct}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.productType}</td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#1f2937' }}>{contact.timeline}</td>
                     <td style={{ padding: '1rem 0.75rem' }}>
@@ -264,7 +292,12 @@ export default function ContactTable() {
                       </select>
                     </td>
                     <td style={{ padding: '1rem 0.75rem', fontSize: '0.875rem', color: '#6b7280' }}>
-                      {new Date(contact.submittedAt).toLocaleDateString()}
+                      <div>
+                        {new Date(contact.submittedAt).toLocaleDateString()}
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '2px' }}>
+                        {getDaysAgo(contact.submittedAt)}
+                      </div>
                     </td>
                     <td style={{ padding: '1rem 0.75rem', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <button
@@ -320,6 +353,260 @@ export default function ContactTable() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Details Modal */}
+      {isModalOpen && selectedContact && (
+        <div 
+          style={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            zIndex: 1000,
+            padding: '20px'
+          }}
+          onClick={closeModal}
+        >
+          <div 
+            style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '12px', 
+              maxWidth: '700px', 
+              width: '100%', 
+              maxHeight: '90vh', 
+              overflow: 'auto',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div style={{ 
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+              padding: '24px', 
+              borderTopLeftRadius: '12px', 
+              borderTopRightRadius: '12px',
+              color: 'white',
+              position: 'relative'
+            }}>
+              <button
+                onClick={closeModal}
+                style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '24px',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  color: 'white',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  fontWeight: 'bold'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                }}
+              >
+                ×
+              </button>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '700' }}>
+                Contact Submission Details
+              </h2>
+              <p style={{ margin: '8px 0 0 0', opacity: 0.9, fontSize: '14px' }}>
+                Submitted {getDaysAgo(selectedContact.submittedAt)} • {new Date(selectedContact.submittedAt).toLocaleDateString('en-US', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
+            </div>
+
+            {/* Modal Content */}
+            <div style={{ padding: '32px' }}>
+              {/* Contact Information */}
+              <div style={{ marginBottom: '32px' }}>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid #10b981'
+                }}>
+                  Contact Information
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Name</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937', fontWeight: '500' }}>{selectedContact.name}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
+                      <a href={`mailto:${selectedContact.email}`} style={{ color: '#10b981', textDecoration: 'none' }}>
+                        {selectedContact.email}
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Company</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937', fontWeight: '500' }}>{selectedContact.company}</p>
+                  </div>
+                  {selectedContact.phone && (
+                    <div>
+                      <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</label>
+                      <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
+                        <a href={`tel:${selectedContact.phone}`} style={{ color: '#10b981', textDecoration: 'none' }}>
+                          {selectedContact.phone}
+                        </a>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Business Information */}
+              <div style={{ marginBottom: '32px' }}>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid #10b981'
+                }}>
+                  Business Information
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target Market</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.targetMarket}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Business Stage</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.businessStage}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Has Benchmark Product</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
+                      <span style={{ 
+                        padding: '4px 12px', 
+                        borderRadius: '20px', 
+                        fontSize: '14px', 
+                        fontWeight: '500',
+                        backgroundColor: selectedContact.hasBenchmarkProduct === 'yes' ? '#dbeafe' : '#f3f4f6',
+                        color: selectedContact.hasBenchmarkProduct === 'yes' ? '#1e40af' : '#374151'
+                      }}>
+                        {selectedContact.hasBenchmarkProduct === 'yes' ? 'Yes' : 'No'}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Details */}
+              <div style={{ marginBottom: '32px' }}>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid #10b981'
+                }}>
+                  Project Details
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Product Type</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.productType}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Launch Timeline</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.timeline}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Order Quantity</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.quantity}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Formulation</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.formulation}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Budget Range</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.budget}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
+                      <span style={{ 
+                        padding: '4px 12px', 
+                        borderRadius: '20px', 
+                        fontSize: '14px', 
+                        fontWeight: '500',
+                        backgroundColor: selectedContact.status === 'new' ? '#f3f4f6' : 
+                                       selectedContact.status === 'contacted' ? '#fef3c7' :
+                                       selectedContact.status === 'in-progress' ? '#dbeafe' : '#d1fae5',
+                        color: selectedContact.status === 'new' ? '#374151' :
+                               selectedContact.status === 'contacted' ? '#92400e' :
+                               selectedContact.status === 'in-progress' ? '#1e40af' : '#065f46'
+                      }}>
+                        {selectedContact.status.charAt(0).toUpperCase() + selectedContact.status.slice(1).replace('-', ' ')}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Vision */}
+              <div>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid #10b981'
+                }}>
+                  Project Vision
+                </h3>
+                <div style={{ 
+                  backgroundColor: '#f8fafc', 
+                  borderRadius: '8px', 
+                  padding: '20px',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  <p style={{ 
+                    margin: 0, 
+                    fontSize: '16px', 
+                    color: '#1f2937', 
+                    lineHeight: '1.6',
+                    whiteSpace: 'pre-wrap'
+                  }}>
+                    {selectedContact.vision}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
