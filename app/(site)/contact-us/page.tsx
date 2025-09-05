@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
 
@@ -236,9 +235,9 @@ export default function ContactUs() {
                     >
                       <option value="">Please select</option>
                       <option value="yes-complete">Yes, we have a complete brand identity</option>
-                      <option value="yes-partial">Yes, but it's still developing</option>
+                      <option value="yes-partial">Yes, but it&apos;s still developing</option>
                       <option value="no-need-help">No, we need help creating one</option>
-                      <option value="no-diy">No, we'll handle branding ourselves</option>
+                      <option value="no-diy">No, we&apos;ll handle branding ourselves</option>
                     </select>
                   </div>
 
