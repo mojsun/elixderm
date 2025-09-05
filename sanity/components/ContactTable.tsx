@@ -13,16 +13,16 @@ interface ContactSubmission {
   name: string;
   email: string;
   company: string;
-  phone: string;
   targetMarket: string;
   businessStage: string;
+  hasBrand: string;
   hasBenchmarkProduct: string;
   productType: string;
   timeline: string;
   quantity: string;
   formulation: string;
+  packagingIdeas: string;
   vision: string;
-  budget: string;
   submittedAt: string;
   status: string;
 }
@@ -66,16 +66,16 @@ export default function ContactTable() {
         name,
         email,
         company,
-        phone,
         targetMarket,
         businessStage,
+        hasBrand,
         hasBenchmarkProduct,
         productType,
         timeline,
         quantity,
         formulation,
+        packagingIdeas,
         vision,
-        budget,
         submittedAt,
         status
       }`;
@@ -145,23 +145,23 @@ export default function ContactTable() {
   };
 
   const downloadCSV = () => {
-    const headers = ['Name', 'Email', 'Company', 'Phone', 'Target Market', 'Business Stage', 'Has Benchmark Product', 'Product Type', 'Timeline', 'Quantity', 'Formulation', 'Vision', 'Budget', 'Status', 'Submitted At'];
+    const headers = ['Name', 'Email', 'Company', 'Target Market', 'Business Stage', 'Has Brand', 'Has Benchmark Product', 'Product Type', 'Timeline', 'Quantity', 'Formulation', 'Packaging Ideas', 'Vision', 'Status', 'Submitted At'];
     const csvContent = [
       headers.join(','),
       ...contacts.map(contact => [
         contact.name,
         contact.email,
         contact.company,
-        contact.phone || 'N/A',
         contact.targetMarket,
         contact.businessStage,
+        contact.hasBrand,
         contact.hasBenchmarkProduct,
         contact.productType,
         contact.timeline,
         contact.quantity,
         contact.formulation,
+        `"${contact.packagingIdeas.replace(/"/g, '""')}"`,
         `"${contact.vision.replace(/"/g, '""')}"`,
-        contact.budget,
         contact.status,
         new Date(contact.submittedAt).toLocaleDateString()
       ].join(','))
@@ -470,16 +470,6 @@ export default function ContactTable() {
                     <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Company</label>
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937', fontWeight: '500' }}>{selectedContact.company}</p>
                   </div>
-                  {selectedContact.phone && (
-                    <div>
-                      <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</label>
-                      <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
-                        <a href={`tel:${selectedContact.phone}`} style={{ color: '#10b981', textDecoration: 'none' }}>
-                          {selectedContact.phone}
-                        </a>
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -503,6 +493,10 @@ export default function ContactTable() {
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Business Stage</label>
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.businessStage}</p>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Has Brand</label>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.hasBrand}</p>
                   </div>
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Has Benchmark Product</label>
@@ -552,10 +546,6 @@ export default function ContactTable() {
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.formulation}</p>
                   </div>
                   <div>
-                    <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Budget Range</label>
-                    <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>{selectedContact.budget}</p>
-                  </div>
-                  <div>
                     <label style={{ fontSize: '12px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</label>
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', color: '#1f2937' }}>
                       <span style={{ 
@@ -574,6 +564,36 @@ export default function ContactTable() {
                       </span>
                     </p>
                   </div>
+                </div>
+              </div>
+
+              {/* Packaging Ideas */}
+              <div style={{ marginBottom: '32px' }}>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  paddingBottom: '8px',
+                  borderBottom: '2px solid #10b981'
+                }}>
+                  Packaging Ideas & Preferences
+                </h3>
+                <div style={{ 
+                  backgroundColor: '#f8fafc', 
+                  borderRadius: '8px', 
+                  padding: '20px',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  <p style={{ 
+                    margin: 0, 
+                    fontSize: '16px', 
+                    color: '#1f2937', 
+                    lineHeight: '1.6',
+                    whiteSpace: 'pre-wrap'
+                  }}>
+                    {selectedContact.packagingIdeas}
+                  </p>
                 </div>
               </div>
 
