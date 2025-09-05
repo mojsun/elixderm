@@ -16,16 +16,16 @@ interface ContactFormData {
   name: string;
   email: string;
   company: string;
-  phone?: string;
   targetMarket: string;
   businessStage: string;
+  hasBrand: string;
   hasBenchmarkProduct: string;
   productType: string;
   timeline: string;
   quantity: string;
   formulation: string;
+  packagingIdeas: string;
   vision: string;
-  budget: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
     // Validate required fields with TypeScript enforcement
     const requiredFields: (keyof ContactFormData)[] = [
       'name', 'email', 'company', 'targetMarket', 'businessStage', 
-      'hasBenchmarkProduct', 'productType', 'timeline',
-      'quantity', 'formulation', 'vision', 'budget'
+      'hasBrand', 'hasBenchmarkProduct', 'productType', 'timeline',
+      'quantity', 'formulation', 'packagingIdeas', 'vision'
     ];
 
     for (const field of requiredFields) {
@@ -56,16 +56,16 @@ export async function POST(request: NextRequest) {
       name: formData.name,
       email: formData.email,
       company: formData.company,
-      phone: formData.phone || '',
       targetMarket: formData.targetMarket,
       businessStage: formData.businessStage,
+      hasBrand: formData.hasBrand,
       hasBenchmarkProduct: formData.hasBenchmarkProduct,
       productType: formData.productType,
       timeline: formData.timeline,
       quantity: formData.quantity,
       formulation: formData.formulation,
+      packagingIdeas: formData.packagingIdeas,
       vision: formData.vision,
-      budget: formData.budget,
       submittedAt: new Date().toISOString(),
       status: 'new',
     });
@@ -96,6 +96,8 @@ export async function POST(request: NextRequest) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
     <title>New Contact Form Submission - Elixderm</title>
     <style>
         * {
@@ -109,6 +111,49 @@ export async function POST(request: NextRequest) {
             line-height: 1.6;
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 20px;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+            }
+            .email-container {
+                background: #1f2937 !important;
+                border: 1px solid #374151 !important;
+            }
+            .content {
+                background: #1f2937 !important;
+            }
+            .section-title {
+                color: #f9fafb !important;
+            }
+            .info-label {
+                color: #d1d5db !important;
+            }
+            .info-value {
+                color: #f3f4f6 !important;
+            }
+            .info-value a {
+                color: #34d399 !important;
+            }
+            .message-box {
+                background: #374151 !important;
+                border: 1px solid #4b5563 !important;
+            }
+            .message-text {
+                color: #f3f4f6 !important;
+            }
+            .footer {
+                background: #374151 !important;
+                border-top: 1px solid #4b5563 !important;
+            }
+            .footer-text {
+                color: #d1d5db !important;
+            }
+            .timestamp {
+                color: #9ca3af !important;
+            }
         }
         
         .email-container {
@@ -207,6 +252,23 @@ export async function POST(request: NextRequest) {
             white-space: pre-wrap;
         }
         
+        /* Additional dark mode adjustments */
+        @media (prefers-color-scheme: dark) {
+            .message-box h4 {
+                color: #f9fafb !important;
+            }
+            /* Keep header gradient as is - it has good contrast */
+            .header {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+                color: white !important;
+            }
+            /* Ensure visit button remains visible */
+            .visit-button {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+                color: white !important;
+            }
+        }
+        
         .footer {
             background: #f8fafc;
             padding: 30px;
@@ -301,17 +363,11 @@ export async function POST(request: NextRequest) {
                         <span class="info-label">Company:</span>
                         <span class="info-value">${formData.company}</span>
                     </div>
-                    ${formData.phone ? `
-                    <div class="info-item">
-                        <span class="info-label">Phone:</span>
-                        <span class="info-value">${formData.phone}</span>
-                    </div>
-                    ` : ''}
                 </div>
             </div>
             
             <div class="section">
-                <h2 class="section-title">Project Details</h2>
+                <h2 class="section-title">Business Information</h2>
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Target Market:</span>
@@ -322,9 +378,19 @@ export async function POST(request: NextRequest) {
                         <span class="info-value">${formData.businessStage}</span>
                     </div>
                     <div class="info-item">
+                        <span class="info-label">Has Brand:</span>
+                        <span class="info-value">${formData.hasBrand}</span>
+                    </div>
+                    <div class="info-item">
                         <span class="info-label">Has Benchmark Product:</span>
                         <span class="info-value">${formData.hasBenchmarkProduct}</span>
                     </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Product Details</h2>
+                <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">Product Type:</span>
                         <span class="info-value">${formData.productType}</span>
@@ -341,16 +407,17 @@ export async function POST(request: NextRequest) {
                         <span class="info-label">Formulation:</span>
                         <span class="info-value">${formData.formulation}</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Budget Range:</span>
-                        <span class="info-value">${formData.budget}</span>
-                    </div>
                 </div>
             </div>
             
             <div class="section">
-                <h2 class="section-title">Project Vision</h2>
+                <h2 class="section-title">Packaging & Vision</h2>
                 <div class="message-box">
+                    <h4 style="margin: 0 0 12px 0; color: #374151; font-size: 16px; font-weight: 600;">Packaging Ideas & Preferences:</h4>
+                    <div class="message-text">${formData.packagingIdeas}</div>
+                </div>
+                <div class="message-box" style="margin-top: 16px;">
+                    <h4 style="margin: 0 0 12px 0; color: #374151; font-size: 16px; font-weight: 600;">Project Vision:</h4>
                     <div class="message-text">${formData.vision}</div>
                 </div>
             </div>

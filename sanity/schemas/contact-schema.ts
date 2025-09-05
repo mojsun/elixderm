@@ -21,9 +21,14 @@ const contact = defineType({
       type: "string",
     },
     {
-      name: "phone",
-      title: "Phone",
+      name: "hasBrand",
+      title: "Has Brand",
       type: "string",
+    },
+    {
+      name: "packagingIdeas",
+      title: "Packaging Ideas",
+      type: "text",
     },
     {
       name: "productType",
@@ -49,11 +54,6 @@ const contact = defineType({
       name: "vision",
       title: "Vision",
       type: "text",
-    },
-    {
-      name: "budget",
-      title: "Budget",
-      type: "string",
     },
     {
       name: "targetMarket",

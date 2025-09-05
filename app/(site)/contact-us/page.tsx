@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
 
@@ -15,16 +14,16 @@ export default function ContactUs() {
     name: '',
     email: '',
     company: '',
-    phone: '',
     targetMarket: '',
     businessStage: '',
     hasBenchmarkProduct: '',
+    packagingIdeas: '',
+    hasBrand: '',
     productType: '',
     timeline: '',
     quantity: '',
     formulation: '',
-    vision: '',
-    budget: ''
+    vision: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -59,16 +58,16 @@ export default function ContactUs() {
           name: '',
           email: '',
           company: '',
-          phone: '',
           targetMarket: '',
           businessStage: '',
           hasBenchmarkProduct: '',
+          packagingIdeas: '',
+          hasBrand: '',
           productType: '',
           timeline: '',
           quantity: '',
           formulation: '',
-          vision: '',
-          budget: ''
+          vision: ''
         });
       } else {
         setSubmitStatus('error');
@@ -191,17 +190,6 @@ export default function ContactUs() {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="phone">Phone (Optional)</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-
-                  <div className="form-field">
                     <label htmlFor="targetMarket">What is your target market location? *</label>
                     <input
                       type="text"
@@ -233,6 +221,23 @@ export default function ContactUs() {
                       <option value="established">Established Brand (3+ years, looking to expand/optimize)</option>
                       <option value="enterprise">Enterprise (Large company/corporation)</option>
                       <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="form-field">
+                    <label htmlFor="hasBrand">Does your company have a brand? (logo, product name, etc.) *</label>
+                    <select
+                      id="hasBrand"
+                      name="hasBrand"
+                      value={formData.hasBrand}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="">Please select</option>
+                      <option value="yes-complete">Yes, we have a complete brand identity</option>
+                      <option value="yes-partial">Yes, but it&apos;s still developing</option>
+                      <option value="no-need-help">No, we need help creating one</option>
+                      <option value="no-diy">No, we&apos;ll handle branding ourselves</option>
                     </select>
                   </div>
 
@@ -337,6 +342,19 @@ export default function ContactUs() {
                   </div>
 
                   <div className="form-field">
+                    <label htmlFor="packagingIdeas">Do you have any specific packaging ideas or preferences? *</label>
+                    <textarea
+                      id="packagingIdeas"
+                      name="packagingIdeas"
+                      value={formData.packagingIdeas}
+                      onChange={handleInputChange}
+                      placeholder="Describe your packaging vision, material preferences, size requirements, design ideas, sustainability goals, etc..."
+                      rows={3}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="form-field">
                     <label htmlFor="vision">Tell us about your vision: *</label>
                     <textarea
                       id="vision"
@@ -350,22 +368,6 @@ export default function ContactUs() {
                     <div className="char-counter">{formData.vision.length}/500</div>
                   </div>
 
-                  <div className="form-field">
-                    <label htmlFor="budget">What&apos;s your approximate budget range for this project? *</label>
-                    <select
-                      id="budget"
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select budget range</option>
-                      <option value="under-5k">Under $5K</option>
-                      <option value="5k-15k">$5K - $15K</option>
-                      <option value="15k-30k">$15K - $30K</option>
-                      <option value="30k-plus">$30K+</option>
-                    </select>
-                  </div>
 
                   {submitStatus === 'success' && (
                     <div className="success-message" style={{
