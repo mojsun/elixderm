@@ -88,7 +88,7 @@ export default function SiteURLs() {
       })
 
       // Fetch dynamic pages from Sanity with proper slug handling
-      const [pages, projects, products, services] = await Promise.all([
+      const [pages, projects, products, services, blogPosts, authors] = await Promise.all([
         // Pages
         client.fetch(`*[_type == "page" && defined(slug.current)] {
           _id,
@@ -126,6 +126,33 @@ export default function SiteURLs() {
           name,
           "slug": slug.current,
           _updatedAt,
+          seo {
+            metaTitle,
+            metaDescription,
+            noIndex
+          }
+        }`),
+        // Blog Posts
+        client.fetch(`*[_type == "blogPost" && defined(slug.current)] {
+          _id,
+          title,
+          "slug": slug.current,
+          _updatedAt,
+          publishedAt,
+          featured,
+          seo {
+            metaTitle,
+            metaDescription,
+            noIndex
+          }
+        }`),
+        // Authors
+        client.fetch(`*[_type == "author" && defined(slug.current)] {
+          _id,
+          name,
+          "slug": slug.current,
+          _updatedAt,
+          featured,
           seo {
             metaTitle,
             metaDescription,
@@ -201,6 +228,66 @@ export default function SiteURLs() {
           canEdit: true,
           canDelete: true
         })
+      })
+
+      // Add blog posts
+      blogPosts.forEach((post: any) => {
+        allUrls.push({
+          id: post._id,
+          title: post.title,
+          url: `${baseUrl}/learn/${post.slug}`,
+          type: 'Blog Post',
+          status: 'Published',
+          lastModified: new Date(post._updatedAt).toLocaleDateString(),
+          metaTitle: post.seo?.metaTitle,
+          metaDescription: post.seo?.metaDescription,
+          canonical: `${baseUrl}/learn/${post.slug}`,
+          noIndex: post.seo?.noIndex,
+          canEdit: true,
+          canDelete: true
+        })
+      })
+
+      // Add authors
+      authors.forEach((author: any) => {
+        allUrls.push({
+          id: author._id,
+          title: author.name,
+          url: `${baseUrl}/learn/author/${author.slug}`,
+          type: 'Author Page',
+          status: 'Published',
+          lastModified: new Date(author._updatedAt).toLocaleDateString(),
+          metaTitle: author.seo?.metaTitle,
+          metaDescription: author.seo?.metaDescription,
+          canonical: `${baseUrl}/learn/author/${author.slug}`,
+          noIndex: author.seo?.noIndex,
+          canEdit: true,
+          canDelete: true
+        })
+      })
+
+      // Add learn main page (static)
+      allUrls.push({
+        id: '/learn',
+        title: 'Learn - Beauty Industry Education',
+        url: `${baseUrl}/learn`,
+        type: 'Static Page',
+        status: 'Published',
+        lastModified: 'Static',
+        canEdit: false,
+        canDelete: false
+      })
+
+      // Add authors main page (static)
+      allUrls.push({
+        id: '/learn/author',
+        title: 'Authors - Beauty Industry Experts',
+        url: `${baseUrl}/learn/author`,
+        type: 'Static Page',
+        status: 'Published',
+        lastModified: 'Static',
+        canEdit: false,
+        canDelete: false
       })
 
       // Sort by type, then by title
