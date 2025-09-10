@@ -3,6 +3,8 @@ import { Project } from "@/types/project";
 import { Page } from "@/types/Page";
 import { Product } from "@/types/Product";
 import { Service } from "@/types/Service";
+import { BlogPost } from "@/types/BlogPost";
+import { Author } from "@/types/Author";
 import clientConfig from "./config/client-config";
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
@@ -301,5 +303,275 @@ export async function getService(slug: string): Promise<Service> {
       }
     }`,
     { slug }
+  );
+}
+
+// Blog Posts Functions
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "blogPost"] | order(publishedAt desc){
+    _id,
+    _createdAt,
+    title,
+    "slug": slug.current,
+    excerpt,
+    "featuredImage": featuredImage{
+      "url": asset->url,
+      alt
+    },
+    author->{
+      _id,
+      name,
+      "slug": slug.current,
+      "image": image{
+        "url": asset->url,
+        alt
+      },
+      title,
+      bio,
+      linkedinUrl,
+      expertise,
+      featured
+    },
+    publishedAt,
+    category,
+    readingTime,
+    featured
+  }`);
+}
+
+export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "blogPost" && featured == true] | order(publishedAt desc){
+    _id,
+    _createdAt,
+    title,
+    "slug": slug.current,
+    excerpt,
+    "featuredImage": featuredImage{
+      "url": asset->url,
+      alt
+    },
+    author->{
+      _id,
+      name,
+      "slug": slug.current,
+      "image": image{
+        "url": asset->url,
+        alt
+      },
+      title,
+      bio,
+      linkedinUrl,
+      expertise,
+      featured
+    },
+    publishedAt,
+    category,
+    readingTime,
+    featured
+  }`);
+}
+
+export async function getBlogPost(slug: string): Promise<BlogPost> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "blogPost" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      excerpt,
+      "featuredImage": featuredImage{
+        "url": asset->url,
+        alt
+      },
+      author->{
+        _id,
+        name,
+        "slug": slug.current,
+        "image": image{
+          "url": asset->url,
+          alt
+        },
+        title,
+        bio,
+        linkedinUrl,
+        expertise,
+        featured
+      },
+      publishedAt,
+      category,
+      content,
+      readingTime,
+      featured,
+      seo {
+        metaTitle,
+        metaDescription,
+        noIndex
+      }
+    }`,
+    { slug }
+  );
+}
+
+export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "blogPost" && category == $category] | order(publishedAt desc){
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      excerpt,
+      "featuredImage": featuredImage{
+        "url": asset->url,
+        alt
+      },
+      author->{
+        _id,
+        name,
+        "slug": slug.current,
+        "image": image{
+          "url": asset->url,
+          alt
+        },
+        title,
+        bio,
+        linkedinUrl,
+        expertise,
+        featured
+      },
+      publishedAt,
+      category,
+      readingTime,
+      featured
+    }`,
+    { category }
+  );
+}
+
+export async function getRecentBlogPosts(limit: number = 3): Promise<BlogPost[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "blogPost"] | order(publishedAt desc)[0...${limit}]{
+    _id,
+    _createdAt,
+    title,
+    "slug": slug.current,
+    excerpt,
+    "featuredImage": featuredImage{
+      "url": asset->url,
+      alt
+    },
+    author->{
+      _id,
+      name,
+      "slug": slug.current,
+      "image": image{
+        "url": asset->url,
+        alt
+      },
+      title,
+      bio,
+      linkedinUrl,
+      expertise,
+      featured
+    },
+    publishedAt,
+    category,
+    readingTime,
+    featured
+  }`);
+}
+
+// Author Functions
+export async function getAuthors(): Promise<Author[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "author"] | order(name asc){
+    _id,
+    _createdAt,
+    name,
+    "slug": slug.current,
+    "image": image{
+      "url": asset->url,
+      alt
+    },
+    title,
+    bio,
+    linkedinUrl,
+    expertise,
+    featured
+  }`);
+}
+
+export async function getFeaturedAuthors(): Promise<Author[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "author" && featured == true] | order(name asc){
+    _id,
+    _createdAt,
+    name,
+    "slug": slug.current,
+    "image": image{
+      "url": asset->url,
+      alt
+    },
+    title,
+    bio,
+    linkedinUrl,
+    expertise,
+    featured
+  }`);
+}
+
+export async function getAuthor(slug: string): Promise<Author> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "author" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      name,
+      "slug": slug.current,
+      "image": image{
+        "url": asset->url,
+        alt
+      },
+      title,
+      bio,
+      linkedinUrl,
+      expertise,
+      featured,
+      seo {
+        metaTitle,
+        metaDescription
+      }
+    }`,
+    { slug }
+  );
+}
+
+export async function getBlogPostsByAuthor(authorSlug: string): Promise<BlogPost[]> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "blogPost" && author->slug.current == $authorSlug] | order(publishedAt desc){
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      excerpt,
+      "featuredImage": featuredImage{
+        "url": asset->url,
+        alt
+      },
+      author->{
+        _id,
+        name,
+        "slug": slug.current,
+        "image": image{
+          "url": asset->url,
+          alt
+        },
+        title,
+        bio,
+        linkedinUrl,
+        expertise,
+        featured
+      },
+      publishedAt,
+      category,
+      readingTime,
+      featured
+    }`,
+    { authorSlug }
   );
 }
