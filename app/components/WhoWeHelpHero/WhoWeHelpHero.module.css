@@ -1,0 +1,161 @@
+.heroContainer {
+  margin-top: 50px;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #e4e6e8;
+  border-radius: 0 25% 0 0;
+  width: 50%;
+  height: 590px;
+}
+
+.left p {
+  margin: 10px 0;
+  font-size: 1.125rem; /* 18px */
+}
+
+.leftText {
+  margin: 10%;
+}
+
+.left h1 {
+  margin: 10px 0;
+  font-size: 3.125rem; /* 50px */
+}
+
+.heroCTAButton {
+  height: 47px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #10b981 !important;
+  color: white;
+  padding: 0 25px;
+  border-radius: 30px;
+  font-size: 1.125rem; /* 18px */
+}
+
+.heroCTAButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.heroCTAButton:active {
+  transform: translateY(1px);
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.8);
+  transition: 0.1s;
+}
+
+.right {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 25% 0 0 0;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50%;
+}
+
+.rightB {
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.right img {
+  width: auto;
+  height: 450px !important;
+  position: absolute;
+  bottom: 6%;
+  animation: float 3s ease-in-out infinite;
+}
+
+.buttonsHolder {
+  margin-top: 12% !important;
+  display: flex;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+  .hero {
+    flex-direction: column-reverse;
+    background: #e4e6e8;
+    border-radius: 0 0 10% 10%;
+  }
+  
+  .right {
+    width: 100%;
+    border-radius: 0 0 0 25%;
+    height: 300px;
+  }
+  
+  .right img {
+    height: 350px !important;
+    top: 6%;
+    bottom: 0%;
+  }
+  
+  .right:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -25%;
+    width: 25%;
+    height: 25%;
+    background-color: #e4e6e8;
+    border-radius: 0 75%;
+  }
+  
+  .rightB:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -25%;
+    width: 25%;
+    height: 25%;
+    background-color: #059669;
+    border-radius: 0 0 0 85%;
+  }
+  
+  .left {
+    width: 100%;
+    border-radius: 0; /* Remove border radius on mobile */
+    height: auto; /* Override fixed height on mobile */
+  }
+  
+  .left h1 {
+    font-size: 1.875rem; /* 30px */
+  }
+  
+  .left p {
+    font-size: 0.875rem; /* 14px */
+  }
+  
+  .leftText {
+    margin: 15% 5% 8% 5%; /* Reduced margins */
+  }
+  
+  .heroContainer {
+    margin-top: 5px;
+  }
+  
+  .heroCTAButton {
+    font-size: 16px;
+  }
+}

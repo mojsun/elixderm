@@ -5,6 +5,7 @@ import { Product } from "@/types/Product";
 import { Service } from "@/types/Service";
 import { BlogPost } from "@/types/BlogPost";
 import { Author } from "@/types/Author";
+import { WhoWeHelp } from "@/types/WhoWeHelp";
 import clientConfig from "./config/client-config";
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
@@ -573,5 +574,122 @@ export async function getBlogPostsByAuthor(authorSlug: string): Promise<BlogPost
       featured
     }`,
     { authorSlug }
+  );
+}
+
+// Who We Help Functions
+export async function getWhoWeHelps(): Promise<WhoWeHelp[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "whoWeHelp"]{
+    _id,
+    _createdAt,
+    name,
+    "slug": slug.current,
+    menuName,
+    showInMenu,
+    category,
+    hero {
+      heading,
+      description,
+      "image": image.asset->url,
+      imageAlt
+    }
+  }`);
+}
+
+export async function getMenuWhoWeHelps(): Promise<WhoWeHelp[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "whoWeHelp" && showInMenu == true] | order(category asc, name asc){
+    _id,
+    name,
+    "slug": slug.current,
+    menuName,
+    category
+  }`);
+}
+
+export async function getWhoWeHelp(slug: string): Promise<WhoWeHelp> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "whoWeHelp" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      name,
+      "slug": slug.current,
+      menuName,
+      showInMenu,
+      category,
+      seo {
+        metaTitle,
+        metaDescription,
+        noIndex
+      },
+      hero {
+        subheading,
+        heading,
+        description,
+        "image": image.asset->url,
+        imageAlt
+      },
+      value {
+        heading,
+        description,
+        images[] {
+          "url": image.asset->url,
+          alt,
+          heading
+        }
+      },
+      slider {
+        images[] {
+          "url": image.asset->url,
+          alt
+        }
+      },
+      howItWorks {
+        title,
+        description,
+        steps[] {
+          "imageUrl": image.asset->url,
+          imageAlt,
+          title,
+          description
+        }
+      },
+      topCTA {
+        text
+      },
+      features {
+        heading,
+        subheading,
+        centerImage {
+          "url": image.asset->url,
+          alt
+        },
+        items[] {
+          "image": image.asset->url,
+          imageAlt,
+          heading,
+          subheading
+        }
+      },
+      middleCTA {
+        subheading,
+        heading,
+        ctaText,
+        "image": image.asset->url,
+        imageAlt
+      },
+      faq {
+        title,
+        subtitle,
+        items[] {
+          question,
+          answer
+        }
+      },
+      bottomCTA {
+        text,
+        buttonText
+      }
+    }`,
+    { slug }
   );
 }
