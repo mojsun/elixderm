@@ -7,7 +7,8 @@ import product from "./product-schema";
 import service from "./service-schema";
 import blogPost from "./blog-post-schema";
 import author from "./author-schema";
+import whoWeHelp from "./who-we-help-schema";
 
-const schemas = [project, page, contact, homeContact, product, service, blogPost, author];
+const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp];
 
 export default schemas;

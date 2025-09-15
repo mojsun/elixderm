@@ -1,6 +1,6 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
-import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon } from "@sanity/icons";
+import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon, UsersIcon } from "@sanity/icons";
 import schemas from "./sanity/schemas";
 import ContactTable from "./sanity/components/ContactTable";
 import HomeContactTable from "./sanity/components/HomeContactTable";
@@ -52,6 +52,7 @@ const config = defineConfig({
             S.documentTypeListItem('blogPost').title('Blog Posts').icon(DocumentTextIcon),
             S.documentTypeListItem('product').icon(PackageIcon),
             S.documentTypeListItem('service').icon(CogIcon),
+            S.documentTypeListItem('whoWeHelp').title('Who We Help').icon(UsersIcon),
             // Hidden: pages and projects (kept in system but not in menu)
             // S.documentTypeListItem('page'),
             // S.documentTypeListItem('project'),

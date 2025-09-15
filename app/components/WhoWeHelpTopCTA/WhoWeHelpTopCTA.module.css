@@ -1,0 +1,64 @@
+.ctaRow {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  height: 100px;
+  display: flex;
+  color: white;
+  font-size: 25px;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 40px;
+}
+
+.ctaRow:hover {
+  background: var(--color-light);
+  height: 100px;
+  display: flex;
+  color: #059669;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+  border-top: 2px solid #059669;
+  border-bottom: 2px solid #059669;
+}
+
+.ctaRow svg {
+  width: 100px;
+  transition: 0.3s;
+}
+
+.ctaRow:hover svg {
+  width: 120px;
+  transition: 0.3s;
+  stroke: #059669;
+  fill: #059669;
+}
+
+.ctaRow:hover svg g line,
+.ctaRow:hover svg defs marker polygon {
+  width: 120px;
+  transition: 0.3s;
+  stroke: #059669;
+  fill: #059669;
+}
+
+.ctaRow p {
+  margin: 0;
+  font-size: 1.75rem; /* 28px */
+  font-family: var(--font-heading);
+}
+
+@media screen and (max-width: 600px) {
+  .ctaRow {
+    padding: 2% 8%;
+  }
+  
+  .ctaRow p {
+    font-size: 1.25rem; /* 20px on mobile */
+    font-family: var(--font-heading);
+    width: 90%;
+    line-height: 1.3;
+  }
+}
