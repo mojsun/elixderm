@@ -54,9 +54,17 @@ const ContactChart: React.FC<ContactChartProps> = ({ contacts }) => {
         
         if (dateMap[dateStr]) {
           dateMap[dateStr].count++;
-          const status = contact.status as keyof typeof dateMap[dateStr].statusBreakdown;
-          if (status in dateMap[dateStr].statusBreakdown) {
-            dateMap[dateStr].statusBreakdown[status]++;
+          // Map status values to match our statusBreakdown structure
+          const statusMap: { [key: string]: keyof ChartData['statusBreakdown'] } = {
+            'new': 'new',
+            'contacted': 'contacted',
+            'in-progress': 'in-progress',
+            'completed': 'completed'
+          };
+          
+          const mappedStatus = statusMap[contact.status];
+          if (mappedStatus && mappedStatus in dateMap[dateStr].statusBreakdown) {
+            dateMap[dateStr].statusBreakdown[mappedStatus]++;
           }
         }
       });
