@@ -43,6 +43,16 @@ type SitemapService = {
   _updatedAt: string
 }
 
+type SitemapWhoWeHelp = {
+  _id: string
+  name: string
+  slug: string
+  _updatedAt: string
+  seo?: {
+    noIndex?: boolean
+  }
+}
+
 export async function GET() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'
@@ -75,6 +85,12 @@ export async function GET() {
         lastModified: new Date().toISOString()
       },
       { 
+        url: '/who-we-help', 
+        changeFreq: 'weekly' as const, 
+        priority: 0.9,
+        lastModified: new Date().toISOString()
+      },
+      { 
         url: '/contact-us', 
         changeFreq: 'monthly' as const, 
         priority: 0.9,
@@ -99,7 +115,7 @@ export async function GET() {
     })
 
     // Fetch dynamic pages from Sanity
-    const [pages, projects, products, services] = await Promise.all([
+    const [pages, projects, products, services, whoWeHelps] = await Promise.all([
       // Pages
       client.fetch(`*[_type == "page" && defined(slug.current)] {
         _id,
@@ -127,6 +143,16 @@ export async function GET() {
         name,
         "slug": slug.current,
         _updatedAt
+      }`),
+      // Who We Help (only indexable pages)
+      client.fetch(`*[_type == "whoWeHelp" && defined(slug.current) && (!defined(seo.noIndex) || seo.noIndex != true)] {
+        _id,
+        name,
+        "slug": slug.current,
+        _updatedAt,
+        seo {
+          noIndex
+        }
       }`)
     ])
 
@@ -165,6 +191,16 @@ export async function GET() {
       sitemap.push({
         url: `${baseUrl}/services/${service.slug}`,
         lastModified: new Date(service._updatedAt).toISOString(),
+        changeFreq: 'weekly',
+        priority: 0.8
+      })
+    })
+
+    // Add who we help pages (only indexable ones)
+    whoWeHelps.forEach((whoWeHelp: SitemapWhoWeHelp) => {
+      sitemap.push({
+        url: `${baseUrl}/who-we-help/${whoWeHelp.slug}`,
+        lastModified: new Date(whoWeHelp._updatedAt).toISOString(),
         changeFreq: 'weekly',
         priority: 0.8
       })
