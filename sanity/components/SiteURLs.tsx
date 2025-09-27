@@ -88,7 +88,7 @@ export default function SiteURLs() {
       })
 
       // Fetch dynamic pages from Sanity with proper slug handling
-      const [pages, projects, products, services, blogPosts, authors] = await Promise.all([
+      const [pages, projects, products, services, blogPosts, authors, whoWeHelps] = await Promise.all([
         // Pages
         client.fetch(`*[_type == "page" && defined(slug.current)] {
           _id,
@@ -153,6 +153,18 @@ export default function SiteURLs() {
           "slug": slug.current,
           _updatedAt,
           featured,
+          seo {
+            metaTitle,
+            metaDescription,
+            noIndex
+          }
+        }`),
+        // Who We Help
+        client.fetch(`*[_type == "whoWeHelp" && defined(slug.current)] {
+          _id,
+          name,
+          "slug": slug.current,
+          _updatedAt,
           seo {
             metaTitle,
             metaDescription,
@@ -266,6 +278,24 @@ export default function SiteURLs() {
         })
       })
 
+      // Add who we help pages
+      whoWeHelps.forEach((whoWeHelp: any) => {
+        allUrls.push({
+          id: whoWeHelp._id,
+          title: whoWeHelp.name,
+          url: `${baseUrl}/who-we-help/${whoWeHelp.slug}`,
+          type: 'Who We Help',
+          status: 'Published',
+          lastModified: new Date(whoWeHelp._updatedAt).toLocaleDateString(),
+          metaTitle: whoWeHelp.seo?.metaTitle,
+          metaDescription: whoWeHelp.seo?.metaDescription,
+          canonical: `${baseUrl}/who-we-help/${whoWeHelp.slug}`,
+          noIndex: whoWeHelp.seo?.noIndex,
+          canEdit: true,
+          canDelete: true
+        })
+      })
+
       // Add learn main page (static)
       allUrls.push({
         id: '/learn',
@@ -283,6 +313,18 @@ export default function SiteURLs() {
         id: '/learn/author',
         title: 'Authors - Beauty Industry Experts',
         url: `${baseUrl}/learn/author`,
+        type: 'Static Page',
+        status: 'Published',
+        lastModified: 'Static',
+        canEdit: false,
+        canDelete: false
+      })
+
+      // Add who we help main page (static)
+      allUrls.push({
+        id: '/who-we-help',
+        title: 'Who We Help - Cosmetic Manufacturing Solutions',
+        url: `${baseUrl}/who-we-help`,
         type: 'Static Page',
         status: 'Published',
         lastModified: 'Static',

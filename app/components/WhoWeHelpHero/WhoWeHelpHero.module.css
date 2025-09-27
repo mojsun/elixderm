@@ -57,7 +57,6 @@
 }
 
 .right {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   border-radius: 25% 0 0 0;
   height: 350px;
   display: flex;
@@ -111,27 +110,6 @@
     bottom: 0%;
   }
   
-  .right:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: -25%;
-    width: 25%;
-    height: 25%;
-    background-color: #e4e6e8;
-    border-radius: 0 75%;
-  }
-  
-  .rightB:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: -25%;
-    width: 25%;
-    height: 25%;
-    background-color: #059669;
-    border-radius: 0 0 0 85%;
-  }
   
   .left {
     width: 100%;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from 'next-sanity';
+import ContactChart from './ContactChart';
 
 const client = createClient({
   projectId: '7v67lu84',
@@ -196,6 +197,9 @@ export default function ContactTable() {
 
   return (
     <div style={{ padding: '1.5rem', fontFamily: 'system-ui, sans-serif' }}>
+      {/* Analytics Chart */}
+      <ContactChart contacts={contacts} />
+      
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
           Main Contact Form ({contacts.length})

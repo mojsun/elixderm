@@ -18,15 +18,11 @@ export default function WhoWeHelpFeatures({ whoWeHelp }: WhoWeHelpFeaturesProps)
   const leftFeatures = features.items?.slice(0, 3) || []
   const rightFeatures = features.items?.slice(3, 6) || []
 
-  if (!features.heading && !features.items?.length) {
-    return null
-  }
-
   return (
     <div className={styles.featuresParent}>
       <div className={styles.hitTitles}>
-        <h2>{features.heading || 'Our Features'}</h2>
-        <p>{features.subheading || 'Discover what makes us different'}</p>
+        <h2>{features.heading || 'Loading...'}</h2>
+        <p>{features.subheading || 'Loading...'}</p>
       </div>
       
       {/* Desktop Layout */}

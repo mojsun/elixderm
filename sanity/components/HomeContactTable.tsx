@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from 'next-sanity';
 import clientConfig from '../config/client-config';
+import HomeContactChart from './HomeContactChart';
 
 // Create a client for fetching data (read-only)
 const sanityClient = createClient({
@@ -139,6 +140,9 @@ const HomeContactTable: React.FC = () => {
 
   return (
     <div style={{ padding: '20px' }}>
+      {/* Analytics Chart */}
+      <HomeContactChart submissions={submissions} />
+      
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h2>Short Contact Form ({submissions.length})</h2>
         <button
