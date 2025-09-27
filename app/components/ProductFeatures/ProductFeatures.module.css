@@ -59,6 +59,7 @@
 .featureHolder img {
   width: 75px;
   height: 75px;
+  object-fit: contain;
 }
 
 .featureHolder h3 {
@@ -106,6 +107,7 @@
   .featureHolder img {
     width: 50px;
     height: 50px;
+    object-fit: contain;
   }
   
   .featureHolder {
