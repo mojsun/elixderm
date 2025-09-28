@@ -5,20 +5,25 @@ import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import ProductsMegaMenu from '@/app/components/ProductsMegaMenu'
 import ServicesMegaMenu from '@/app/components/ServicesMegaMenu'
+import WhoWeHelpMegaMenu from '@/app/components/WhoWeHelpMegaMenu'
 import styles from './Navigation.module.css'
-import { getMenuProducts, getMenuServices } from '@/sanity/sanity-utils'
+import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from '@/sanity/sanity-utils'
 import { Product } from '@/types/Product'
 import { Service } from '@/types/Service'
+import { WhoWeHelp } from '@/types/WhoWeHelp'
 
 export default function Navigation() {
   const pathname = usePathname()
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false)
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false)
+  const [isWhoWeHelpMenuOpen, setIsWhoWeHelpMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [menuProducts, setMenuProducts] = useState<Product[]>([])
   const [menuServices, setMenuServices] = useState<Service[]>([])
+  const [menuWhoWeHelps, setMenuWhoWeHelps] = useState<WhoWeHelp[]>([])
   const productsMenuRef = useRef<HTMLLIElement>(null)
   const servicesMenuRef = useRef<HTMLLIElement>(null)
+  const whoWeHelpMenuRef = useRef<HTMLLIElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -28,6 +33,7 @@ export default function Navigation() {
     }
     setIsProductsMenuOpen(true)
     setIsServicesMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }
 
   const handleProductsMenuLeave = () => {
@@ -42,11 +48,27 @@ export default function Navigation() {
     }
     setIsServicesMenuOpen(true)
     setIsProductsMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }
 
   const handleServicesMenuLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsServicesMenuOpen(false)
+    }, 150) // Small delay to prevent flickering
+  }
+
+  const handleWhoWeHelpMenuEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    setIsWhoWeHelpMenuOpen(true)
+    setIsProductsMenuOpen(false)
+    setIsServicesMenuOpen(false)
+  }
+
+  const handleWhoWeHelpMenuLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsWhoWeHelpMenuOpen(false)
     }, 150) // Small delay to prevent flickering
   }
 
@@ -58,28 +80,39 @@ export default function Navigation() {
     setIsMobileMenuOpen(false)
     setIsProductsMenuOpen(false)
     setIsServicesMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }
 
   const toggleProductsMobile = () => {
     setIsProductsMenuOpen(!isProductsMenuOpen)
     setIsServicesMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }
 
   const toggleServicesMobile = () => {
     setIsServicesMenuOpen(!isServicesMenuOpen)
     setIsProductsMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }
 
-  // Fetch menu products and services on component mount
+  const toggleWhoWeHelpMobile = () => {
+    setIsWhoWeHelpMenuOpen(!isWhoWeHelpMenuOpen)
+    setIsProductsMenuOpen(false)
+    setIsServicesMenuOpen(false)
+  }
+
+  // Fetch menu products, services, and who we help on component mount
   useEffect(() => {
     async function fetchMenuData() {
       try {
-        const [products, services] = await Promise.all([
+        const [products, services, whoWeHelps] = await Promise.all([
           getMenuProducts(),
-          getMenuServices()
+          getMenuServices(),
+          getMenuWhoWeHelps()
         ])
         setMenuProducts(products)
         setMenuServices(services)
+        setMenuWhoWeHelps(whoWeHelps)
       } catch (error) {
         console.error('Failed to fetch menu data:', error)
       }
@@ -98,6 +131,7 @@ export default function Navigation() {
         setIsMobileMenuOpen(false)
         setIsProductsMenuOpen(false)
         setIsServicesMenuOpen(false)
+        setIsWhoWeHelpMenuOpen(false)
       }
 
       // Also collapse submenus when clicking anywhere outside their li elements (only on desktop)
@@ -107,6 +141,9 @@ export default function Navigation() {
         }
         if (servicesMenuRef.current && !servicesMenuRef.current.contains(targetNode)) {
           setIsServicesMenuOpen(false)
+        }
+        if (whoWeHelpMenuRef.current && !whoWeHelpMenuRef.current.contains(targetNode)) {
+          setIsWhoWeHelpMenuOpen(false)
         }
       }
     }
@@ -131,6 +168,7 @@ export default function Navigation() {
     setIsMobileMenuOpen(false)
     setIsProductsMenuOpen(false)
     setIsServicesMenuOpen(false)
+    setIsWhoWeHelpMenuOpen(false)
   }, [pathname])
 
   return (
@@ -211,6 +249,36 @@ export default function Navigation() {
             />
           </li>
           
+          <li 
+            className={`nav-item ${styles.navItemWithDropdown}`}
+            ref={whoWeHelpMenuRef}
+            onMouseEnter={handleWhoWeHelpMenuEnter}
+            onMouseLeave={handleWhoWeHelpMenuLeave}
+          >
+            <Link 
+              href="/who-we-help" 
+              className={`nav-link ${styles.navLinkWithDropdown}`}
+              onClick={(e) => {
+                if (window.innerWidth <= 768) {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  toggleWhoWeHelpMobile()
+                } else {
+                  closeMobileMenu()
+                }
+              }}
+            >
+              Who We Help
+              <span className={styles.dropdownArrow}>⌄</span>
+            </Link>
+            
+            <WhoWeHelpMegaMenu
+              whoWeHelps={menuWhoWeHelps}
+              isOpen={isWhoWeHelpMenuOpen}
+              onClose={closeMobileMenu}
+            />
+          </li>
+
           <li className="nav-item">
             <Link href="/about" className="nav-link" onClick={closeMobileMenu}>
               About Us

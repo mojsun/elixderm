@@ -39,10 +39,10 @@ const whoWeHelp = {
       description: 'Category/group for organizing in the menu',
       options: {
         list: [
-          { title: 'Startups & Entrepreneurs', value: 'startups' },
-          { title: 'Established Brands', value: 'established-brands' },
-          { title: 'Retailers & Distributors', value: 'retailers' },
-          { title: 'Influencers & Content Creators', value: 'influencers' }
+          { title: 'Beauty & Grooming Professionals', value: 'beauty-professionals' },
+          { title: 'Retail Businesses', value: 'retail-businesses' },
+          { title: 'Distributors & Wholesalers', value: 'distributors' },
+          { title: 'Specialized Markets', value: 'specialized-markets' }
         ]
       }
     },
