@@ -15,7 +15,7 @@ export default function NewsList({ newsItems }: NewsListProps) {
         <div className={styles.container}>
           <div className={styles.emptyState}>
             <h2>No News Available</h2>
-            <p>We haven't published any news yet. Check back soon for the latest updates!</p>
+            <p>We haven&apos;t published any news yet. Check back soon for the latest updates!</p>
           </div>
         </div>
       </section>

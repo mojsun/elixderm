@@ -42,12 +42,21 @@ export default function NewsItem({ newsItem }: NewsItemProps) {
     }
   }
 
+  interface BlockContent {
+    _type: string
+    style?: string
+    children?: Array<{ text?: string }>
+    asset?: { url?: string }
+    alt?: string
+    caption?: string
+  }
+
   const renderContent = (content: NewsContent[]) => {
-    return content.map((block: any, index: number) => {
+    return content.map((block: BlockContent, index: number) => {
       if (block._type === 'block') {
         // Handle text blocks
         const children = block.children || []
-        const text = children.map((child: any) => child.text).join('')
+        const text = children.map((child: { text?: string }) => child.text || '').join('')
         
         if (block.style === 'h3') {
           return <h3 key={index} className={styles.newsHeading}>{text}</h3>
