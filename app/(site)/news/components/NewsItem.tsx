@@ -42,41 +42,38 @@ export default function NewsItem({ newsItem }: NewsItemProps) {
     }
   }
 
-  interface BlockContent {
-    _type: string
-    style?: string
-    children?: Array<{ text?: string }>
-    asset?: { url?: string }
-    alt?: string
-    caption?: string
-  }
-
   const renderContent = (content: NewsContent[]) => {
-    return content.map((block: BlockContent, index: number) => {
-      if (block._type === 'block') {
+    return content.map((block, index: number) => {
+      // Type guard for block content
+      if ('_type' in block && block._type === 'block') {
         // Handle text blocks
-        const children = block.children || []
-        const text = children.map((child: { text?: string }) => child.text || '').join('')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const textBlock = block as any // Sanity's PortableText types are complex
+        const children = textBlock.children || []
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const text = children.map((child: any) => child.text || '').join('')
         
-        if (block.style === 'h3') {
+        if (textBlock.style === 'h3') {
           return <h3 key={index} className={styles.newsHeading}>{text}</h3>
-        } else if (block.style === 'h4') {
+        } else if (textBlock.style === 'h4') {
           return <h4 key={index} className={styles.newsSubheading}>{text}</h4>
-        } else if (block.style === 'blockquote') {
+        } else if (textBlock.style === 'blockquote') {
           return <blockquote key={index} className={styles.newsQuote}>{text}</blockquote>
         } else {
           return <p key={index} className={styles.newsText}>{text}</p>
         }
-      } else if (block._type === 'image') {
+      } else if ('_type' in block && block._type === 'image') {
         // Handle images
-        const imageUrl = block.asset?.url
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const imageBlock = block as any // Sanity's image types are complex
+        const imageUrl = imageBlock.asset?.url
         if (!imageUrl) return null
         
         return (
           <div key={index} className={styles.newsImageContainer}>
             <Image
               src={imageUrl}
-              alt={block.alt || 'News image'}
+              alt={imageBlock.alt || 'News image'}
               width={600}
               height={400}
               className={styles.newsImage}
@@ -86,8 +83,8 @@ export default function NewsItem({ newsItem }: NewsItemProps) {
                 objectFit: 'cover'
               }}
             />
-            {block.caption && (
-              <p className={styles.newsImageCaption}>{block.caption}</p>
+            {imageBlock.caption && (
+              <p className={styles.newsImageCaption}>{imageBlock.caption}</p>
             )}
           </div>
         )
