@@ -82,9 +82,14 @@ const TeamSection: React.FC = () => {
           <div className="team-card">
             <div className="card-header">
               <div className="member-photo">
-                <div className="member-avatar">
-                  <div className="avatar-circle">RV</div>
-                </div>
+                <Image 
+                  src="/images/richa-vyas.jpg" 
+                  alt="Richa Vyas - Regulatory Affairs Specialist" 
+                  width={120}
+                  height={120}
+                  className="member-image"
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
               <div className="member-details">
                 <div className="member-name-row">

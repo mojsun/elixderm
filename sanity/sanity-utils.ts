@@ -6,6 +6,7 @@ import { Service } from "@/types/Service";
 import { BlogPost } from "@/types/BlogPost";
 import { Author } from "@/types/Author";
 import { WhoWeHelp } from "@/types/WhoWeHelp";
+import { News } from "@/types/News";
 import clientConfig from "./config/client-config";
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
@@ -692,4 +693,65 @@ export async function getWhoWeHelp(slug: string): Promise<WhoWeHelp> {
     }`,
     { slug }
   );
+}
+
+// News Functions
+export async function getNews(): Promise<News[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc){
+    _id,
+    _createdAt,
+    title,
+    content[]{
+      ...,
+      _type == 'image' => {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+    publishDate,
+    isPublished
+  }`);
+}
+
+export async function getAllNews(): Promise<News[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "news"] | order(publishDate desc){
+    _id,
+    _createdAt,
+    title,
+    content[]{
+      ...,
+      _type == 'image' => {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+    publishDate,
+    isPublished
+  }`);
+}
+
+export async function getRecentNews(limit: number = 5): Promise<News[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc)[0...${limit}]{
+    _id,
+    _createdAt,
+    title,
+    content[]{
+      ...,
+      _type == 'image' => {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+    publishDate,
+    isPublished
+  }`);
 }
