@@ -1,6 +1,6 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
-import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon, UsersIcon } from "@sanity/icons";
+import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon, UsersIcon, DocumentsIcon } from "@sanity/icons";
 import schemas from "./sanity/schemas";
 import ContactTable from "./sanity/components/ContactTable";
 import HomeContactTable from "./sanity/components/HomeContactTable";
@@ -48,6 +48,7 @@ const config = defineConfig({
             // Separator
             S.divider(),
             // Content types
+            S.documentTypeListItem('news').title('News & Updates').icon(DocumentsIcon),
             S.documentTypeListItem('author').title('Authors').icon(UserIcon),
             S.documentTypeListItem('blogPost').title('Blog Posts').icon(DocumentTextIcon),
             S.documentTypeListItem('product').icon(PackageIcon),

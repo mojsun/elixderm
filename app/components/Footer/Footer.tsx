@@ -14,6 +14,11 @@ export default function Footer() {
                   About Elixderm
                 </Link>
               </li>
+              <li>
+                <Link href="/news" className={styles.footerLink}>
+                  Latest News
+                </Link>
+              </li>
               <li className={styles.footerAddress}>
                 <div className={styles.addressContainer}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.locationIcon}>

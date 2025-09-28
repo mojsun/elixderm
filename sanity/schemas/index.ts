@@ -8,7 +8,8 @@ import service from "./service-schema";
 import blogPost from "./blog-post-schema";
 import author from "./author-schema";
 import whoWeHelp from "./who-we-help-schema";
+import news from "./news-schema";
 
-const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp];
+const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp, news];
 
 export default schemas;

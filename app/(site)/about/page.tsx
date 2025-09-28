@@ -1,5 +1,6 @@
 import OurStorySection from "@/app/components/OurStory/OurStory";
 import TeamSection from "@/app/components/Team/Team";
+import NewsSection from "@/app/components/NewsSection";
 import ContactSection from "@/app/components/ContactSection/ContactSection";
 import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
@@ -24,6 +25,7 @@ export default function About() {
 
         <OurStorySection />
         <TeamSection />
+        <NewsSection />
         <ContactSection />
       </main>
     </div>
