@@ -1,0 +1,404 @@
+/* Who We Help Mega Menu */
+.megaMenu {
+  position: fixed;
+  top: 81px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-width: unset;
+  padding: 0;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+}
+
+.megaMenu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.megaMenuHeader {
+  background: rgba(248, 250, 252, 0.8);
+  padding: 2rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.megaMenuMainTitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.megaMenuContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Fixed 4-column layout */
+
+.megaMenuColumn {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.megaMenuColumn:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(148, 163, 184, 0.3), transparent);
+}
+
+.megaMenuTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-primary);
+  position: relative;
+}
+
+.megaMenuList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.megaMenuItem {
+  display: block;
+  padding: 0.6rem 0;
+  color: #4a5568;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  position: relative;
+}
+
+.megaMenuItem:hover {
+  color: var(--color-primary);
+  padding-left: 1rem;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.megaMenuItem:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+  border-radius: 2px;
+}
+
+.megaMenuFooter {
+  background: rgba(248, 250, 252, 0.6);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  text-align: center;
+}
+
+.megaMenuMainCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.megaMenuMainCta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.megaMenuMainCta:hover::before {
+  left: 100%;
+}
+
+.megaMenuMainCta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  filter: brightness(0.9);
+}
+
+.ctaText {
+  /* Text styling handled by parent */
+}
+
+.ctaArrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.megaMenuMainCta:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .megaMenu {
+    width: 700px;
+    min-width: 500px;
+  }
+  
+  .megaMenuContent {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1.75rem;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .megaMenu {
+    position: static;
+    width: 100%;
+    min-width: unset;
+    padding: 0;
+    background: rgba(102, 126, 234, 0.02);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: none;
+    border-bottom: none;
+    border: none;
+    transform: none;
+    /* iOS Safari scroll improvements */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  .megaMenuHeader {
+    padding: 1rem 1.5rem 0.75rem;
+    position: sticky;
+    top: 0;
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  }
+  
+  .megaMenuMainTitle {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .megaMenuContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    max-width: unset;
+    margin: 0;
+  }
+  
+  .megaMenuColumn {
+    background: white;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .megaMenuTitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-dark);
+  }
+  
+  .megaMenuItem {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    margin: 0.125rem 0.5rem 0.125rem 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .megaMenuItem:hover {
+    background: rgba(16, 185, 129, 0.1);
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .megaMenuFooter {
+    padding: 1.5rem;
+    position: sticky;
+    bottom: 0;
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    z-index: 10;
+  }
+  
+  .megaMenuMainCta {
+    padding: 0.875rem 1.5rem;
+    font-size: 1.1rem;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .megaMenu {
+    max-height: 75vh;
+    border-radius: 6px;
+  }
+  
+  .megaMenuHeader {
+    padding: 1rem 1rem 0.75rem;
+  }
+  
+  .megaMenuMainTitle {
+    font-size: 1rem;
+  }
+  
+  .megaMenuContent {
+    padding: 1.25rem 1rem;
+    gap: 1.5rem;
+  }
+  
+  .megaMenuColumn {
+    padding: 1rem;
+  }
+  
+  .megaMenuTitle {
+    font-size: 0.95rem;
+    margin-bottom: 0.875rem;
+  }
+  
+  .megaMenuItem {
+    padding: 0.675rem 0.875rem;
+    font-size: 0.9rem;
+    margin: 0.125rem 0.5rem;
+  }
+  
+  .megaMenuFooter {
+    padding: 1.25rem 1rem;
+  }
+  
+  .megaMenuMainCta {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+  }
+}
+
+/* Mobile animation improvements */
+@media (max-width: 768px) {
+  .megaMenu:not(.open) {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .megaMenu.open {
+    transition: max-height 0.4s ease, padding 0.3s ease, margin 0.3s ease;
+  }
+}
+
+/* iOS Safari specific improvements */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .megaMenu {
+      /* Better scrolling on iOS */
+      -webkit-overflow-scrolling: touch;
+      /* Prevent bounce at top/bottom */
+      overscroll-behavior-y: contain;
+      /* Ensure proper rendering */
+      will-change: scroll-position;
+      /* Improve touch responsiveness */
+      touch-action: pan-y;
+    }
+    
+    .megaMenuItem {
+      /* Better tap targets for iOS */
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      /* Prevent text selection on tap */
+      -webkit-user-select: none;
+      user-select: none;
+      /* Prevent callouts */
+      -webkit-touch-callout: none;
+      /* Improve tap highlight */
+      -webkit-tap-highlight-color: rgba(16, 185, 129, 0.2);
+    }
+    
+    .megaMenuMainCta {
+      /* iOS safe tap target size */
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: none;
+      outline: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: rgba(16, 185, 129, 0.3);
+      -webkit-appearance: none;
+    }
+    
+    /* Improve sticky positioning on iOS */
+    .megaMenuHeader,
+    .megaMenuFooter {
+      /* Ensure proper stacking on iOS */
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

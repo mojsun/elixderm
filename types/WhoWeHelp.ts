@@ -7,7 +7,7 @@ export type WhoWeHelp = {
   slug: string
   menuName?: string
   showInMenu?: boolean
-  category?: 'startups' | 'established-brands' | 'retailers' | 'influencers'
+  category?: 'beauty-professionals' | 'retail-businesses' | 'distributors' | 'specialized-markets'
   seo?: {
     metaTitle: string
     metaDescription: string

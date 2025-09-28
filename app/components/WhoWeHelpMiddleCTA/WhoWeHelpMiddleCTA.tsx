@@ -27,7 +27,18 @@ export default function WhoWeHelpMiddleCTA({ whoWeHelp }: WhoWeHelpMiddleCTAProp
           </svg>
         </div>
         {middleCTA.image && (
-          <Image src={middleCTA.image} alt={middleCTA.imageAlt || 'Middle CTA image'} width={300} height={250} />
+          <Image 
+            src={middleCTA.image} 
+            alt={middleCTA.imageAlt || 'Middle CTA image'} 
+            width={300} 
+            height={300}
+            style={{
+              width: 'auto',
+              height: 'auto',
+              maxHeight: '400px',
+              objectFit: 'contain'
+            }}
+          />
         )}
       </div>
       <div className={styles.mctaText}>

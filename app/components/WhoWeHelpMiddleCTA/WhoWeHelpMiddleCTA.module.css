@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: #e4e6e8;
   padding: 2% 0;
   overflow: hidden;
@@ -23,16 +23,33 @@
   transform: translate(-10px, -10px);
 }
 
+.middleCta > div:first-child {
+  width: 35%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  padding-right: 2%;
+  min-height: 300px;
+}
+
 .middleCta img {
   position: relative;
   z-index: 1;
-  height: 300px !important;
+  max-height: 400px !important;
+  height: auto !important;
+  width: auto !important;
+  max-width: 100%;
+  object-fit: contain;
   mix-blend-mode: multiply;
 }
 
 .mctaText {
   display: flex;
   flex-direction: column;
+  width: 60%;
+  max-width: 60%;
+  padding-left: 2%;
 }
 
 .mctaText p {
@@ -88,8 +105,21 @@
     flex-direction: column;
   }
   
+  .middleCta > div:first-child {
+    width: 100%;
+    margin-bottom: 20px;
+    min-height: auto;
+    justify-content: center;
+  }
+  
+  .middleCta img {
+    max-height: 250px !important;
+  }
+  
   .mctaText {
-    margin: 8% 3% 5% 3%; /* Reduced margins */
+    width: 100%;
+    padding-left: 0;
+    margin: 0 3% 5% 3%; /* Reduced margins */
   }
   
   .mctaText p {
