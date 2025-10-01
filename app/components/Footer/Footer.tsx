@@ -1,7 +1,9 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
+import { getMenuServices } from "@/sanity/sanity-utils";
 
-export default function Footer() {
+export default async function Footer() {
+  const services = await getMenuServices();
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
@@ -30,6 +32,29 @@ export default function Footer() {
                     Mississauga, ON, Canada L4W 1V1
                   </span>
                 </div>
+              </li>
+            </ul>
+          </div>
+          
+          <div className={styles.footerColumn}>
+            <h3 className={styles.footerHeading}>What we do</h3>
+            <ul className={styles.footerLinks}>
+              {services.map((service) => (
+                <li key={service._id}>
+                  <Link href={`/services/${service.slug}`} className={styles.footerLink}>
+                    {service.menuName || service.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/products" className={styles.footerLink}>
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/who-we-help" className={styles.footerLink}>
+                  Who We Help
+                </Link>
               </li>
             </ul>
           </div>

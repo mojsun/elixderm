@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 import Footer from "../components/Footer/Footer";
 import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollHandler";
@@ -81,6 +82,7 @@ export default function RootLayout({
         </div>
 
       </body>
+      <GoogleAnalytics gaId="G-YTNY2D4FJV" />
     </html>
   );
 }
