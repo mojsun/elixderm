@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 import Footer from "../components/Footer/Footer";
 import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollHandler";
@@ -53,19 +54,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTNY2D4FJV"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-YTNY2D4FJV');
-            `,
-          }}
-        />
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
         
         {/* Favicon and App Icons */}
@@ -94,6 +82,7 @@ export default function RootLayout({
         </div>
 
       </body>
+      <GoogleAnalytics gaId="G-YTNY2D4FJV" />
     </html>
   );
 }

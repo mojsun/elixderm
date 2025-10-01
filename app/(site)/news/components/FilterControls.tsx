@@ -24,15 +24,8 @@ export default function FilterControls({
   onCustomDateRangeChange,
   totalResults
 }: FilterControlsProps) {
-  const [showCustomDatePicker, setShowCustomDatePicker] = useState(false)
-
   const handleDateFilterChange = (filter: DateFilter) => {
     onDateFilterChange(filter)
-    if (filter === 'custom') {
-      setShowCustomDatePicker(true)
-    } else {
-      setShowCustomDatePicker(false)
-    }
   }
 
   const handleCustomDateChange = (field: 'start' | 'end', value: string) => {
@@ -44,7 +37,6 @@ export default function FilterControls({
     onSearchChange('')
     onDateFilterChange('all')
     onCustomDateRangeChange({ start: '', end: '' })
-    setShowCustomDatePicker(false)
   }
 
   const hasActiveFilters = searchTerm || dateFilter !== 'all'

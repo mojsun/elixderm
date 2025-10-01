@@ -28,7 +28,7 @@ export default function NewsList({ newsItems }: NewsListProps) {
         item.title.toLowerCase().includes(searchLower) ||
         (item.content && item.content.some(block => {
           if ('children' in block && Array.isArray(block.children)) {
-            return block.children.some((child: any) => 
+            return block.children.some((child: { text?: string }) => 
               child.text && child.text.toLowerCase().includes(searchLower)
             )
           }
@@ -45,8 +45,6 @@ export default function NewsList({ newsItems }: NewsListProps) {
       filtered = filtered.filter(item => {
         const itemDate = new Date(item.publishDate)
         const itemTime = itemDate.getTime()
-        const diffTime = currentTime - itemTime
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
 
         switch (dateFilter) {
           case 'custom':
