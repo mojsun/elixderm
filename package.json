@@ -12,7 +12,7 @@
     "@next/third-parties": "^15.5.4",
     "@sanity/table": "^1.1.4",
     "@types/nodemailer": "^6.4.17",
-    "next": "15.4.1",
+    "next": "15.4.10",
     "next-sanity": "^10.0.0",
     "nodemailer": "^7.0.5",
     "postcss": "^8.5.6",
