@@ -1,7 +1,7 @@
 export interface ProductOptions {
   _id: string
   _type: 'productOptions'
-  name: string
+  name?: string
   title: string
   subtitle?: string
   plan1: {

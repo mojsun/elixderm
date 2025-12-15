@@ -5,7 +5,7 @@ import styles from './ProductOptionsModule.module.css'
 
 interface ProductOption {
   _id: string
-  name: string
+  name?: string
   title: string
   subtitle?: string
   plan1: {

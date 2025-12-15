@@ -8,8 +8,7 @@ const productOptions = {
       title: 'Module Name',
       type: 'string',
       description: 'Internal name (e.g., "Hair Care Plans")',
-      validation: (Rule: any) => Rule.required(),
-      initialValue: 'Product Plans'
+      placeholder: 'Enter a name for this module...'
     },
     {
       name: 'title',
@@ -122,22 +121,16 @@ const productOptions = {
       validation: (Rule: any) => Rule.required()
     }
   ],
-  initialValue: {
-    name: 'Product Plans',
-    title: 'Choose Your Plan',
-    subtitle: 'Select the perfect plan for your business needs',
-    ctaText: 'Get Your Custom Quote'
-  },
   preview: {
     select: {
-      title: 'name',
-      subtitle: 'title'
+      name: 'name',
+      title: 'title'
     },
     prepare(selection: any) {
-      const { title, subtitle } = selection
+      const { name, title } = selection
       return {
-        title: title,
-        subtitle: subtitle
+        title: name || title || 'Product Options Module',
+        subtitle: title || 'No heading set'
       }
     }
   }
