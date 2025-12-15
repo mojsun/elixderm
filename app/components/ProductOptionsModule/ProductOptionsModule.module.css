@@ -149,33 +149,18 @@
 .planFeatures {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .feature {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px solid #f3f4f6;
+  align-items: center;
 }
 
-.feature:last-child {
-  border-bottom: none;
-}
-
-.featureLabel {
-  font-weight: 600;
+.featureText {
   color: #374151;
-  flex-shrink: 0;
-  margin-right: 15px;
-}
-
-.featureValue {
-  color: #6b7280;
-  text-align: right;
-  flex: 1;
-  line-height: 1.4;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .ctaContainer {

@@ -169,24 +169,20 @@ export async function getProduct(slug: string): Promise<Product> {
         name,
         title,
         subtitle,
-        plans[] {
-          name,
-          description,
-          products {
-            shampoos,
-            conditioners
-          },
-          labelIncluded,
-          packSizes,
-          timeline,
-          featured,
-          price
+        plan1 {
+          title,
+          features
         },
-        cta {
-          text,
-          link,
-          openInNewTab
-        }
+        plan2 {
+          title,
+          features,
+          featured
+        },
+        plan3 {
+          title,
+          features
+        },
+        ctaText
       },
       faq {
         title,
@@ -787,29 +783,20 @@ export async function getProductOptions(): Promise<ProductOptions[]> {
     name,
     title,
     subtitle,
-    plans[] {
-      name,
-      description,
-      products {
-        shampoos,
-        conditioners
-      },
-      labelIncluded,
-      packSizes,
-      timeline,
-      featured,
-      price
+    plan1 {
+      title,
+      features
     },
-    cta {
-      text,
-      link,
-      openInNewTab
+    plan2 {
+      title,
+      features,
+      featured
     },
-    showOnProducts[]-> {
-      _id,
-      name,
-      "slug": slug.current
-    }
+    plan3 {
+      title,
+      features
+    },
+    ctaText
   }`);
 }
 
@@ -820,29 +807,20 @@ export async function getProductOption(id: string): Promise<ProductOptions> {
       name,
       title,
       subtitle,
-      plans[] {
-        name,
-        description,
-        products {
-          shampoos,
-          conditioners
-        },
-        labelIncluded,
-        packSizes,
-        timeline,
-        featured,
-        price
+      plan1 {
+        title,
+        features
       },
-      cta {
-        text,
-        link,
-        openInNewTab
+      plan2 {
+        title,
+        features,
+        featured
       },
-      showOnProducts[]-> {
-        _id,
-        name,
-        "slug": slug.current
-      }
+      plan3 {
+        title,
+        features
+      },
+      ctaText
     }`,
     { id }
   );

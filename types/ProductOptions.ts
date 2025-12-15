@@ -2,30 +2,20 @@ export interface ProductOptions {
   _id: string
   _type: 'productOptions'
   name: string
-  title?: string
+  title: string
   subtitle?: string
-  plans: ProductPlan[]
-  cta: {
-    text: string
-    link: string
-    openInNewTab?: boolean
+  plan1: {
+    title: string
+    features: string[]
   }
-  showOnProducts?: Array<{
-    _ref: string
-    _type: 'reference'
-  }>
-}
-
-export interface ProductPlan {
-  name: string
-  description?: string
-  products: {
-    shampoos: number
-    conditioners: number
+  plan2: {
+    title: string
+    features: string[]
+    featured?: boolean
   }
-  labelIncluded: boolean
-  packSizes: string[]
-  timeline: string
-  featured?: boolean
-  price?: string
+  plan3: {
+    title: string
+    features: string[]
+  }
+  ctaText: string
 }

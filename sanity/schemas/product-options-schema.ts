@@ -7,182 +7,137 @@ const productOptions = {
       name: 'name',
       title: 'Module Name',
       type: 'string',
-      description: 'Internal name for this options module',
-      validation: (Rule: any) => Rule.required()
+      description: 'Internal name (e.g., "Hair Care Plans")',
+      validation: (Rule: any) => Rule.required(),
+      initialValue: 'Product Plans'
     },
     {
       name: 'title',
-      title: 'Section Title',
+      title: 'Main Heading (H2)',
       type: 'string',
-      description: 'Main heading for the options section',
-      initialValue: 'Choose Your Plan'
+      description: 'Main heading displayed at the top',
+      initialValue: 'Choose Your Plan',
+      validation: (Rule: any) => Rule.required()
     },
     {
       name: 'subtitle',
-      title: 'Section Subtitle',
+      title: 'Subheading',
       type: 'text',
-      description: 'Optional subtitle or description',
-      rows: 2
+      description: 'Text below the main heading',
+      rows: 2,
+      initialValue: 'Select the perfect plan for your business needs'
     },
     {
-      name: 'plans',
-      title: 'Plans',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'plan',
-          title: 'Plan',
-          fields: [
-            {
-              name: 'name',
-              title: 'Plan Name',
-              type: 'string',
-              description: 'e.g., Startup, Professional, Enterprise',
-              validation: (Rule: any) => Rule.required()
-            },
-            {
-              name: 'description',
-              title: 'Plan Description',
-              type: 'text',
-              description: 'Brief description of this plan',
-              rows: 2
-            },
-            {
-              name: 'products',
-              title: 'Products Included',
-              type: 'object',
-              fields: [
-                {
-                  name: 'shampoos',
-                  title: 'Number of Shampoos',
-                  type: 'number',
-                  initialValue: 2,
-                  validation: (Rule: any) => Rule.min(0).max(10)
-                },
-                {
-                  name: 'conditioners',
-                  title: 'Number of Conditioners',
-                  type: 'number',
-                  initialValue: 1,
-                  validation: (Rule: any) => Rule.min(0).max(10)
-                }
-              ]
-            },
-            {
-              name: 'labelIncluded',
-              title: 'Label Included',
-              type: 'boolean',
-              description: 'Whether custom labeling is included in this plan',
-              initialValue: true
-            },
-            {
-              name: 'packSizes',
-              title: 'Available Pack Sizes',
-              type: 'array',
-              of: [
-                {
-                  type: 'string',
-                  options: {
-                    list: [
-                      { title: '500ml', value: '500ml' },
-                      { title: '1 Liter', value: '1L' },
-                      { title: 'Gallon', value: 'gallon' }
-                    ]
-                  }
-                }
-              ],
-              initialValue: ['500ml', '1L']
-            },
-            {
-              name: 'timeline',
-              title: 'Timeline',
-              type: 'string',
-              description: 'Expected completion time',
-              initialValue: 'Three weeks'
-            },
-            {
-              name: 'featured',
-              title: 'Featured Plan',
-              type: 'boolean',
-              description: 'Highlight this plan as recommended',
-              initialValue: false
-            },
-            {
-              name: 'price',
-              title: 'Price (Optional)',
-              type: 'string',
-              description: 'Display price or "Contact for pricing"'
-            }
-          ],
-          preview: {
-            select: {
-              title: 'name',
-              subtitle: 'description',
-              featured: 'featured'
-            },
-            prepare(selection: any) {
-              const { title, subtitle, featured } = selection
-              return {
-                title: featured ? `⭐ ${title}` : title,
-                subtitle: subtitle || 'No description'
-              }
-            }
-          }
-        }
-      ],
-      validation: (Rule: any) => Rule.min(1).max(5)
-    },
-    {
-      name: 'cta',
-      title: 'Call to Action',
+      name: 'plan1',
+      title: 'Plan 1 - Startup',
       type: 'object',
       fields: [
         {
-          name: 'text',
-          title: 'CTA Button Text',
+          name: 'title',
+          title: 'Plan Title (H3)',
           type: 'string',
-          initialValue: 'Book a Call With Us'
+          initialValue: 'Startup',
+          validation: (Rule: any) => Rule.required()
         },
         {
-          name: 'link',
-          title: 'CTA Link',
-          type: 'url',
-          description: 'URL for the call to action button',
-          initialValue: '/contact-us'
-        },
-        {
-          name: 'openInNewTab',
-          title: 'Open in New Tab',
-          type: 'boolean',
-          initialValue: false
+          name: 'features',
+          title: 'Features (one per line)',
+          type: 'array',
+          of: [{ type: 'string' }],
+          initialValue: [
+            '2 Shampoos + 1 Conditioner',
+            'Custom Label Included',
+            '500ml & 1L Pack Sizes',
+            'Three Weeks Timeline'
+          ]
         }
       ]
     },
     {
-      name: 'showOnProducts',
-      title: 'Show on Products',
-      type: 'array',
-      of: [
+      name: 'plan2',
+      title: 'Plan 2 - Professional',
+      type: 'object',
+      fields: [
         {
-          type: 'reference',
-          to: [{ type: 'product' }]
+          name: 'title',
+          title: 'Plan Title (H3)',
+          type: 'string',
+          initialValue: 'Professional',
+          validation: (Rule: any) => Rule.required()
+        },
+        {
+          name: 'features',
+          title: 'Features (one per line)',
+          type: 'array',
+          of: [{ type: 'string' }],
+          initialValue: [
+            '3 Shampoos + 2 Conditioners',
+            'Premium Label & Packaging',
+            'All Pack Sizes (500ml, 1L, Gallon)',
+            'Two Weeks Timeline',
+            'Priority Support'
+          ]
+        },
+        {
+          name: 'featured',
+          title: 'Mark as Featured/Recommended',
+          type: 'boolean',
+          initialValue: true
         }
-      ],
-      description: 'Select which products should display this options module'
+      ]
+    },
+    {
+      name: 'plan3',
+      title: 'Plan 3 - Enterprise',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Plan Title (H3)',
+          type: 'string',
+          initialValue: 'Enterprise',
+          validation: (Rule: any) => Rule.required()
+        },
+        {
+          name: 'features',
+          title: 'Features (one per line)',
+          type: 'array',
+          of: [{ type: 'string' }],
+          initialValue: [
+            '5+ Custom Products',
+            'Complete Branding Package',
+            'All Pack Sizes + Custom Sizes',
+            'One Week Timeline',
+            'Dedicated Account Manager',
+            'Bulk Pricing Available'
+          ]
+        }
+      ]
+    },
+    {
+      name: 'ctaText',
+      title: 'CTA Button Text',
+      type: 'string',
+      initialValue: 'Get Your Custom Quote',
+      validation: (Rule: any) => Rule.required()
     }
   ],
+  initialValue: {
+    name: 'Product Plans',
+    title: 'Choose Your Plan',
+    subtitle: 'Select the perfect plan for your business needs',
+    ctaText: 'Get Your Custom Quote'
+  },
   preview: {
     select: {
       title: 'name',
-      subtitle: 'title',
-      planCount: 'plans.length'
+      subtitle: 'title'
     },
     prepare(selection: any) {
-      const { title, subtitle, planCount } = selection
+      const { title, subtitle } = selection
       return {
         title: title,
-        subtitle: `${subtitle} (${planCount || 0} plans)`
+        subtitle: subtitle
       }
     }
   }

@@ -6,28 +6,22 @@ import styles from './ProductOptionsModule.module.css'
 interface ProductOption {
   _id: string
   name: string
-  title?: string
+  title: string
   subtitle?: string
-  plans: Plan[]
-  cta: {
-    text: string
-    link: string
-    openInNewTab?: boolean
+  plan1: {
+    title: string
+    features: string[]
   }
-}
-
-interface Plan {
-  name: string
-  description?: string
-  products: {
-    shampoos: number
-    conditioners: number
+  plan2: {
+    title: string
+    features: string[]
+    featured?: boolean
   }
-  labelIncluded: boolean
-  packSizes: string[]
-  timeline: string
-  featured?: boolean
-  price?: string
+  plan3: {
+    title: string
+    features: string[]
+  }
+  ctaText: string
 }
 
 interface ProductOptionsModuleProps {
@@ -38,7 +32,7 @@ interface ProductOptionsModuleProps {
 export default function ProductOptionsModule({ options, showCheckbox = true }: ProductOptionsModuleProps) {
   const [isVisible, setIsVisible] = useState(!showCheckbox)
 
-  if (!options || !options.plans || options.plans.length === 0) {
+  if (!options) {
     return null
   }
 
@@ -47,12 +41,10 @@ export default function ProductOptionsModule({ options, showCheckbox = true }: P
   }
 
   const handleCTAClick = () => {
-    if (options.cta.openInNewTab) {
-      window.open(options.cta.link, '_blank', 'noopener,noreferrer')
-    } else {
-      window.location.href = options.cta.link
-    }
+    window.location.href = 'https://www.elixderm.com/contact-us'
   }
+
+  const plans = [options.plan1, options.plan2, options.plan3].filter(plan => plan && plan.title)
 
   return (
     <section className={styles.optionsSection}>
@@ -75,61 +67,38 @@ export default function ProductOptionsModule({ options, showCheckbox = true }: P
         <div className={styles.optionsContent}>
           <div className={styles.optionsContainer}>
             <div className={styles.optionsHeader}>
-              <h2>{options.title || 'Choose Your Plan'}</h2>
+              <h2>{options.title}</h2>
               {options.subtitle && <p>{options.subtitle}</p>}
             </div>
 
             <div className={styles.plansGrid}>
-              {options.plans.map((plan, index) => (
-                <div 
-                  key={index} 
-                  className={`${styles.planCard} ${plan.featured ? styles.featured : ''}`}
-                >
-                  {plan.featured && (
-                    <div className={styles.featuredBadge}>
-                      Recommended
-                    </div>
-                  )}
-                  
-                  <div className={styles.planHeader}>
-                    <h3 className={styles.planName}>{plan.name}</h3>
-                    {plan.description && (
-                      <p className={styles.planDescription}>{plan.description}</p>
+              {plans.map((plan, index) => {
+                const isFeatured = index === 1 && options.plan2?.featured
+                return (
+                  <div 
+                    key={index} 
+                    className={`${styles.planCard} ${isFeatured ? styles.featured : ''}`}
+                  >
+                    {isFeatured && (
+                      <div className={styles.featuredBadge}>
+                        Recommended
+                      </div>
                     )}
-                    {plan.price && (
-                      <div className={styles.planPrice}>{plan.price}</div>
-                    )}
-                  </div>
-
-                  <div className={styles.planFeatures}>
-                    <div className={styles.feature}>
-                      <span className={styles.featureLabel}>Products:</span>
-                      <span className={styles.featureValue}>
-                        {plan.products.shampoos} Shampoo{plan.products.shampoos !== 1 ? 's' : ''} + {plan.products.conditioners} Conditioner{plan.products.conditioners !== 1 ? 's' : ''}
-                      </span>
+                    
+                    <div className={styles.planHeader}>
+                      <h3 className={styles.planName}>{plan.title}</h3>
                     </div>
 
-                    <div className={styles.feature}>
-                      <span className={styles.featureLabel}>Label:</span>
-                      <span className={styles.featureValue}>
-                        {plan.labelIncluded ? '✓ Included' : '✗ Not included'}
-                      </span>
-                    </div>
-
-                    <div className={styles.feature}>
-                      <span className={styles.featureLabel}>Pack Sizes:</span>
-                      <span className={styles.featureValue}>
-                        {plan.packSizes.join(', ')}
-                      </span>
-                    </div>
-
-                    <div className={styles.feature}>
-                      <span className={styles.featureLabel}>Timeline:</span>
-                      <span className={styles.featureValue}>{plan.timeline}</span>
+                    <div className={styles.planFeatures}>
+                      {plan.features?.map((feature, featureIndex) => (
+                        <div key={featureIndex} className={styles.feature}>
+                          <span className={styles.featureText}>✓ {feature}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             <div className={styles.ctaContainer}>
@@ -137,7 +106,7 @@ export default function ProductOptionsModule({ options, showCheckbox = true }: P
                 className={styles.ctaButton}
                 onClick={handleCTAClick}
               >
-                {options.cta.text}
+                {options.ctaText}
               </button>
             </div>
           </div>

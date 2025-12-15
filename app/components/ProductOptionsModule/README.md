@@ -1,24 +1,31 @@
-# ProductOptionsModule Component
+# ProductOptionsModule Component - SIMPLIFIED
 
-A flexible product options/pricing module that can be added to product pages with Sanity CMS integration.
+A clean, simple product options module that displays 3 pricing plans with easy Sanity CMS management.
 
-## Features
+## ✨ **Super Simple Structure**
 
-- ✅ **Checkbox Toggle**: Optional checkbox to show/hide the options module
-- ✅ **Multiple Plans**: Support for up to 5 different pricing plans
-- ✅ **Product Details**: Configurable number of shampoos and conditioners
-- ✅ **Pack Sizes**: Flexible pack size options (500ml, 1L, Gallon)
-- ✅ **Timeline Display**: Customizable completion timeline
-- ✅ **Featured Plans**: Highlight recommended plans
-- ✅ **CTA Button**: Configurable call-to-action with custom link
-- ✅ **Responsive Design**: Mobile-first responsive layout
-- ✅ **Sanity Integration**: Full CMS control over content
+- **H2**: Main heading
+- **Subheading**: Description text
+- **3 Cards**: Startup, Professional, Enterprise
+- **Features**: Simple bullet points per plan
+- **CTA Button**: Goes to contact page
 
-## Usage
+## 🎯 **Easy Sanity Setup**
 
-### In Product Pages
+### Just Fill These Fields:
+1. **Main Heading (H2)**: "Choose Your Plan"
+2. **Subheading**: "Select the perfect plan for your business needs"
+3. **Plan 1 - Startup**: Title + list of features
+4. **Plan 2 - Professional**: Title + features + mark as featured
+5. **Plan 3 - Enterprise**: Title + list of features
+6. **CTA Button Text**: "Get Your Custom Quote"
 
-The module is automatically integrated into product pages when a `productOptions` reference is added to a product in Sanity.
+### Default Features (Ready to Use):
+- **Startup**: 2 Shampoos + 1 Conditioner, Custom Label, 500ml & 1L, Three Weeks
+- **Professional**: 3 Shampoos + 2 Conditioners, Premium Label, All Sizes, Two Weeks, Priority Support
+- **Enterprise**: 5+ Products, Complete Branding, Custom Sizes, One Week, Account Manager
+
+## 🚀 **Usage**
 
 ```tsx
 {product.productOptions && (
@@ -29,53 +36,21 @@ The module is automatically integrated into product pages when a `productOptions
 )}
 ```
 
-### Props
+## 🎨 **What You Get**
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `options` | `ProductOption` | - | Product options data from Sanity |
-| `showCheckbox` | `boolean` | `true` | Whether to show the toggle checkbox |
+- ✅ **Checkbox toggle** to show/hide plans
+- ✅ **3 clean cards** with your content
+- ✅ **Featured badge** on middle plan (if enabled)
+- ✅ **Responsive design** that looks great everywhere
+- ✅ **CTA button** that goes to https://www.elixderm.com/contact-us
+- ✅ **No complexity** - just works!
 
-## Sanity Configuration
+## 📝 **How to Use**
 
-### Schema Fields
+1. Go to `/admin` in Sanity
+2. Create "Product Options Module"
+3. Fill in the simple fields
+4. Assign to a product
+5. Done! It appears above FAQ section
 
-- **Module Name**: Internal identifier
-- **Section Title**: Main heading (default: "Choose Your Plan")
-- **Section Subtitle**: Optional description
-- **Plans**: Array of pricing plans (1-5 plans)
-- **CTA**: Call-to-action button configuration
-- **Show on Products**: Select which products display this module
-
-### Plan Configuration
-
-Each plan includes:
-- **Name**: Plan title (e.g., "Startup", "Professional")
-- **Description**: Brief plan description
-- **Products**: Number of shampoos and conditioners
-- **Label Included**: Whether custom labeling is included
-- **Pack Sizes**: Available sizes (500ml, 1L, Gallon)
-- **Timeline**: Expected completion time
-- **Featured**: Mark as recommended plan
-- **Price**: Optional price display
-
-## Styling
-
-The component uses CSS modules with:
-- **Modern Design**: Clean, professional appearance
-- **Brand Colors**: Matches Elixderm design system
-- **Smooth Animations**: Fade-in effects and hover states
-- **Responsive Grid**: Adapts to different screen sizes
-- **Featured Highlighting**: Visual emphasis for recommended plans
-
-## Default Values
-
-- **Timeline**: "Three weeks"
-- **Products**: 2 shampoos + 1 conditioner
-- **Pack Sizes**: 500ml, 1L
-- **CTA Text**: "Book a Call With Us"
-- **CTA Link**: "/contact-us"
-
-## Integration
-
-The module appears above the FAQ section on product pages and can be toggled on/off via checkbox for better user experience.
+**Much simpler than before - no more maze! 🎉**
