@@ -471,6 +471,14 @@ const product = {
         }
       ]
     },
+    // Product Options Module
+    {
+      name: 'productOptions',
+      title: 'Product Options Module',
+      type: 'reference',
+      to: [{ type: 'productOptions' }],
+      description: 'Optional: Add a product options/pricing module above the FAQ section'
+    },
     // Bottom CTA Section
     {
       name: 'bottomCTA',

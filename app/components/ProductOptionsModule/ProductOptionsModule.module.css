@@ -1,0 +1,276 @@
+.optionsSection {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.checkboxContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #374151;
+  gap: 12px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #10b981;
+  cursor: pointer;
+}
+
+.checkboxText {
+  user-select: none;
+}
+
+.optionsContent {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.optionsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.optionsHeader {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.optionsHeader h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.optionsHeader p {
+  font-size: 1.25rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.planCard {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.planCard.featured {
+  border-color: #10b981;
+  transform: scale(1.05);
+}
+
+.planCard.featured:hover {
+  transform: scale(1.05) translateY(-4px);
+}
+
+.featuredBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 16px 0 16px;
+}
+
+.planHeader {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.planName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.planDescription {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.planPrice {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #10b981;
+  padding: 8px 16px;
+  background: #ecfdf5;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.planFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feature {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.feature:last-child {
+  border-bottom: none;
+}
+
+.featureLabel {
+  font-weight: 600;
+  color: #374151;
+  flex-shrink: 0;
+  margin-right: 15px;
+}
+
+.featureValue {
+  color: #6b7280;
+  text-align: right;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.ctaContainer {
+  text-align: center;
+}
+
+.ctaButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+}
+
+.ctaButton:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px -3px rgba(16, 185, 129, 0.4);
+}
+
+.ctaButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .optionsSection {
+    padding: 40px 0;
+  }
+
+  .optionsHeader h2 {
+    font-size: 2rem;
+  }
+
+  .optionsHeader p {
+    font-size: 1.125rem;
+  }
+
+  .plansGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .planCard {
+    padding: 25px;
+  }
+
+  .planCard.featured {
+    transform: none;
+  }
+
+  .planCard.featured:hover {
+    transform: translateY(-4px);
+  }
+
+  .feature {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .featureValue {
+    text-align: left;
+  }
+
+  .ctaButton {
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .optionsContainer {
+    padding: 0 15px;
+  }
+
+  .checkboxContainer {
+    padding: 0 15px;
+  }
+
+  .optionsHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .planCard {
+    padding: 20px;
+  }
+
+  .planName {
+    font-size: 1.25rem;
+  }
+}

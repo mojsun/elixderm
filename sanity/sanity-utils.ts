@@ -7,6 +7,7 @@ import { BlogPost } from "@/types/BlogPost";
 import { Author } from "@/types/Author";
 import { WhoWeHelp } from "@/types/WhoWeHelp";
 import { News } from "@/types/News";
+import { ProductOptions } from "@/types/ProductOptions";
 import clientConfig from "./config/client-config";
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
@@ -162,6 +163,30 @@ export async function getProduct(slug: string): Promise<Product> {
         ctaText,
         "image": image.asset->url,
         imageAlt
+      },
+      productOptions-> {
+        _id,
+        name,
+        title,
+        subtitle,
+        plans[] {
+          name,
+          description,
+          products {
+            shampoos,
+            conditioners
+          },
+          labelIncluded,
+          packSizes,
+          timeline,
+          featured,
+          price
+        },
+        cta {
+          text,
+          link,
+          openInNewTab
+        }
       },
       faq {
         title,
@@ -754,4 +779,71 @@ export async function getRecentNews(limit: number = 5): Promise<News[]> {
     publishDate,
     isPublished
   }`);
+}
+
+export async function getProductOptions(): Promise<ProductOptions[]> {
+  return createClient(clientConfig).fetch(groq`*[_type == "productOptions"]{
+    _id,
+    name,
+    title,
+    subtitle,
+    plans[] {
+      name,
+      description,
+      products {
+        shampoos,
+        conditioners
+      },
+      labelIncluded,
+      packSizes,
+      timeline,
+      featured,
+      price
+    },
+    cta {
+      text,
+      link,
+      openInNewTab
+    },
+    showOnProducts[]-> {
+      _id,
+      name,
+      "slug": slug.current
+    }
+  }`);
+}
+
+export async function getProductOption(id: string): Promise<ProductOptions> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "productOptions" && _id == $id][0]{
+      _id,
+      name,
+      title,
+      subtitle,
+      plans[] {
+        name,
+        description,
+        products {
+          shampoos,
+          conditioners
+        },
+        labelIncluded,
+        packSizes,
+        timeline,
+        featured,
+        price
+      },
+      cta {
+        text,
+        link,
+        openInNewTab
+      },
+      showOnProducts[]-> {
+        _id,
+        name,
+        "slug": slug.current
+      }
+    }`,
+    { id }
+  );
 }

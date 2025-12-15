@@ -10,6 +10,7 @@ import ProductHowItWorks from '@/app/components/ProductHowItWorks/ProductHowItWo
 import ProductTopCTA from '@/app/components/ProductTopCTA/ProductTopCTA'
 import ProductFeatures from '@/app/components/ProductFeatures/ProductFeatures'
 import ProductMiddleCTA from '@/app/components/ProductMiddleCTA/ProductMiddleCTA'
+import ProductOptionsModule from '@/app/components/ProductOptionsModule/ProductOptionsModule'
 import ProductFAQ from '@/app/components/ProductFAQ/ProductFAQ'
 import ProductBottomCTA from '@/app/components/ProductBottomCTA/ProductBottomCTA'
 
@@ -99,6 +100,12 @@ export default async function ProductPage({ params }: Props) {
         <ProductTopCTA product={product} />
         <ProductFeatures product={product} />
         <ProductMiddleCTA product={product} />
+        {product.productOptions && (
+          <ProductOptionsModule 
+            options={product.productOptions} 
+            showCheckbox={true}
+          />
+        )}
         <ProductFAQ product={product} />
         <ProductBottomCTA product={product} />
       </main>

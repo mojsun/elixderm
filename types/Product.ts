@@ -1,4 +1,5 @@
 import { PortableTextBlock } from "sanity"
+import { ProductOptions } from "./ProductOptions"
 
 export type Product = {
   _id: string
@@ -69,6 +70,7 @@ export type Product = {
     image: string
     imageAlt: string
   }
+  productOptions?: ProductOptions
   faq?: {
     title: string
     subtitle: string
