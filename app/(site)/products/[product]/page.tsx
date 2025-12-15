@@ -102,8 +102,7 @@ export default async function ProductPage({ params }: Props) {
         <ProductMiddleCTA product={product} />
         {product.productOptions && (
           <ProductOptionsModule 
-            options={product.productOptions} 
-            showCheckbox={true}
+            options={product.productOptions}
           />
         )}
         <ProductFAQ product={product} />
