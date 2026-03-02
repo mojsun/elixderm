@@ -99,6 +99,7 @@ export default function PartnersSection(): React.JSX.Element {
               {partners.map((partner, index) => (
                 <div key={index} className="partner-logo">
                   <a href={partner.url} target="_blank" rel="noopener noreferrer">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       src={partner.src} 
                       alt={partner.alt} 

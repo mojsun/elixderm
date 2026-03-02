@@ -164,7 +164,7 @@ export const CloseIcon: React.FC<IconProps> = ({
 );
 
 // Export all icons for easy importing
-export default {
+const MaterialIcons = {
   TrendingUpIcon,
   StarIcon,
   ArrowForwardIcon,
@@ -174,4 +174,6 @@ export default {
   LocationIcon,
   MenuIcon,
   CloseIcon,
-}; 
+};
+
+export default MaterialIcons; 

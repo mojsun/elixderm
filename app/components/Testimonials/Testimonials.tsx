@@ -271,7 +271,7 @@ export default function Testimonials() {
         {isMobile && (
           <>
             <div className="slider-indicators">
-              {personas_array.map((persona, index) => (
+              {personas_array.map((persona) => (
                 <button
                   key={persona}
                   className={`slider-dot ${active === persona ? "active" : ""}`}

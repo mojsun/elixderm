@@ -7,13 +7,11 @@ export default function HowItWorks(): React.JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
   const [isContentReady, setIsContentReady] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastScrollTime = useRef(0);
   const wheelAccumulator = useRef(0);
   const isScrollLocked = useRef(false);
   
@@ -282,7 +280,6 @@ export default function HowItWorks(): React.JSX.Element {
     };
   }, [isContentReady]);
 
-  const progressPercentage = ((currentStepIndex + 1) / steps.length) * 100;
 
   return (
     <section 
@@ -368,6 +365,7 @@ export default function HowItWorks(): React.JSX.Element {
                       </div>
                     </video>
                   ) : (
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       key={step.media.src}
                       src={step.media.src} 
