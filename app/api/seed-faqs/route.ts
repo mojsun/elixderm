@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
         order: faq.order,
       })
       results.push({ question: faq.question, id: doc._id })
-    } catch (err: any) {
-      errors.push({ question: faq.question, error: err?.message ?? 'Unknown error' })
+    } catch (err: unknown) {
+      const seedErr = err as { message?: string }
+      errors.push({ question: faq.question, error: seedErr?.message ?? 'Unknown error' })
     }
   }
 

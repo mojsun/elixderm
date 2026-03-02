@@ -108,10 +108,11 @@ export async function POST(request: NextRequest) {
     const reply = completion.choices[0]?.message?.content ?? ''
 
     return NextResponse.json({ reply, usage: completion.usage }, { status: 200 })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Chat API error:', error)
 
-    if (error?.status === 401) {
+    const apiError = error as { status?: number; message?: string }
+    if (apiError?.status === 401) {
       return NextResponse.json(
         { error: 'OpenAI API key is missing or invalid.' },
         { status: 500 }

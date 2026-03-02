@@ -1,5 +1,4 @@
 import { getWhoWeHelp, getWhoWeHelps } from '@/sanity/sanity-utils'
-import { WhoWeHelp } from '@/types/WhoWeHelp'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Breadcrumb from '@/app/components/Breadcrumb/Breadcrumb'

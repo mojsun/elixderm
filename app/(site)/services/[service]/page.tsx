@@ -1,5 +1,4 @@
 import { getService, getServices } from '@/sanity/sanity-utils'
-import { Service } from '@/types/Service'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Breadcrumb from '@/app/components/Breadcrumb/Breadcrumb'

@@ -6,7 +6,7 @@ import styles from './HowItWorks.module.css';
 export default function HowItWorks(): React.JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isInView, setIsInView] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [, setIsScrolling] = useState(false);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
   const [isContentReady, setIsContentReady] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
