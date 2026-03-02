@@ -365,7 +365,7 @@ export default function HowItWorks(): React.JSX.Element {
                       </div>
                     </video>
                   ) : (
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img 
                       key={step.media.src}
                       src={step.media.src} 
