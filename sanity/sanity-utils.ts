@@ -8,7 +8,32 @@ import { Author } from "@/types/Author";
 import { WhoWeHelp } from "@/types/WhoWeHelp";
 import { News } from "@/types/News";
 import { ProductOptions } from "@/types/ProductOptions";
+import { ChatbotFaqCategory } from "@/sanity/data/chatbot-faqs";
 import clientConfig from "./config/client-config";
+
+export interface ChatbotFaq {
+  _id: string;
+  question: string;
+  answer: string;
+  category: ChatbotFaqCategory;
+  isActive: boolean;
+  order: number;
+}
+
+export async function getChatbotFAQs(): Promise<ChatbotFaq[]> {
+  return createClient(clientConfig).fetch(
+    groq`*[_type == "chatbotFaq" && isActive == true] | order(category asc, order asc){
+      _id,
+      question,
+      answer,
+      category,
+      isActive,
+      order
+    }`,
+    {},
+    { next: { revalidate: 3600 } }
+  );
+}
 export async function getProjects(): Promise<Project[]> {
   return createClient(clientConfig).fetch(groq`*[_type == "project"]{
     _id,

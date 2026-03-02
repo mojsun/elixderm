@@ -10,7 +10,9 @@ import author from "./author-schema";
 import whoWeHelp from "./who-we-help-schema";
 import news from "./news-schema";
 import productOptions from "./product-options-schema";
+import chatbotFaq from "./chatbot-faq-schema";
+import chatSession from "./chat-session-schema";
 
-const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp, news, productOptions];
+const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp, news, productOptions, chatbotFaq, chatSession];
 
 export default schemas;

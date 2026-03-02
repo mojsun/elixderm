@@ -1,6 +1,6 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
-import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon, UsersIcon, DocumentsIcon } from "@sanity/icons";
+import { ImageIcon, LinkIcon, PackageIcon, CogIcon, EnvelopeIcon, DocumentTextIcon, UserIcon, UsersIcon, DocumentsIcon, DatabaseIcon, CommentIcon } from "@sanity/icons";
 import schemas from "./sanity/schemas";
 import ContactTable from "./sanity/components/ContactTable";
 import HomeContactTable from "./sanity/components/HomeContactTable";
@@ -54,6 +54,11 @@ const config = defineConfig({
             S.documentTypeListItem('product').icon(PackageIcon),
             S.documentTypeListItem('service').icon(CogIcon),
             S.documentTypeListItem('whoWeHelp').title('Who We Help').icon(UsersIcon),
+            // Separator
+            S.divider(),
+            // Chatbot
+            S.documentTypeListItem('chatbotFaq').title('Chatbot FAQs').icon(DatabaseIcon),
+            S.documentTypeListItem('chatSession').title('Mochi Chat Sessions').icon(CommentIcon),
             // Hidden: pages and projects (kept in system but not in menu)
             // S.documentTypeListItem('page'),
             // S.documentTypeListItem('project'),

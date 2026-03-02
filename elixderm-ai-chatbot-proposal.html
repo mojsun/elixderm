@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elixderm AI Chatbot - Phase 2 Proposal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 32px;
+            margin: 40px 0 20px 0;
+        }
+        h2 {
+            font-size: 24px;
+            margin: 30px 0 15px 0;
+        }
+        h3 {
+            font-size: 20px;
+            margin: 25px 0 10px 0;
+        }
+        h4 {
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul, ol {
+            margin: 10px 0 10px 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            margin: 10px 0;
+        }
+        .date {
+            color: #666;
+            font-size: 14px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+        .note {
+            background: #f9f9f9;
+            border-left: 3px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        @media print {
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Elixderm Manufacturing Platform</h1>
+    <h2>AI-Powered Customer Intelligence System</h2>
+    <p><strong>Phase 2 Development Proposal</strong></p>
+    <p class="date">January 31, 2026</p>
+</div>
+
+<div class="section">
+    <h2>Executive Summary</h2>
+    <p>This proposal outlines the development of an intelligent AI chatbot system for Elixderm. The system will automatically engage visitors after they submit a contact form, answer their questions in real-time, and provide your team with detailed lead intelligence and quality scoring.</p>
+    
+    <p>The AI assistant will serve as a 24/7 first point of contact, handling common questions, gauging customer interest and seriousness, and directing high-quality leads to book consultations with your team.</p>
+</div>
+
+<div class="section">
+    <h2>Project Options</h2>
+
+    <h3>Option 1: Minimum Viable Product (MVP) - Recommended</h3>
+    <p><strong>What You Get:</strong></p>
+    <ul>
+        <li><strong>Intelligent Text Chat Interface</strong> - After a visitor submits your contact form, they're immediately presented with a chat window where they can ask questions and get instant answers about your manufacturing services, capabilities, timelines, and processes.</li>
+        
+        <li><strong>Context-Aware Conversations</strong> - The AI already knows who they are (name, company, product type, timeline) from the contact form they just filled out, so conversations feel personal and relevant from the first message.</li>
+        
+        <li><strong>Smart Knowledge Base</strong> - The AI is trained on 30-50 of your most frequently asked questions and can provide accurate, helpful answers about formulation development, packaging options, minimum order quantities, testing requirements, regulatory compliance, and more.</li>
+        
+        <li><strong>Intelligent Lead Qualification</strong> - As the conversation progresses, the AI evaluates lead quality based on their questions, responses, and engagement level. It identifies serious buyers versus casual browsers.</li>
+        
+        <li><strong>Strategic Call-to-Action</strong> - When the AI detects a high-quality lead or encounters questions beyond its knowledge, it naturally suggests booking a consultation call with your team, displaying a clear booking link.</li>
+        
+        <li><strong>Complete Conversation Storage</strong> - Every chat is automatically saved to your Sanity CMS database, including full transcripts, timestamps, and all context from the original contact form.</li>
+        
+        <li><strong>Admin Dashboard Integration</strong> - Inside your existing Sanity admin panel, you'll see a new "Chat History" section for each contact form submission. Click any submission to view the full conversation transcript in an easy-to-read format.</li>
+        
+        <li><strong>AI-Generated Lead Analysis</strong> - After each conversation, a second AI analyzes the entire chat and generates a structured summary showing:
+            <ul>
+                <li>Lead Quality Score (1-10)</li>
+                <li>Seriousness/Readiness Level (Researching, Considering, Ready to Buy)</li>
+                <li>Main Topics Discussed (e.g., "packaging options, MOQ, timeline")</li>
+                <li>Concerns or Objections Raised</li>
+                <li>Recommended Next Steps</li>
+            </ul>
+        </li>
+        
+        <li><strong>Post-Chat Feedback Survey</strong> - When the chat ends, users are asked to rate their experience (1-5 stars) and optionally provide comments. This feedback is stored and visible in your admin dashboard.</li>
+        
+        <li><strong>Handles Irrelevant Questions Gracefully</strong> - If someone asks about topics unrelated to manufacturing (weather, sports, etc.), the AI politely redirects them: "I specialize in helping with cosmetic manufacturing questions. I can help you with formulation development, packaging, testing, or regulatory compliance. What would you like to know?"</li>
+    </ul>
+
+    <div class="note">
+        <strong>How It Works for Users:</strong>
+        <ol>
+            <li>User fills out contact form and clicks Submit</li>
+            <li>Instead of just a "Thank you" message, a chat window appears</li>
+            <li>AI greets them by name: "Hi Sarah! Thanks for your interest in developing your serum line. I'm here to answer any questions while our team reviews your submission. What would you like to know?"</li>
+            <li>Based on the contact form data and user's specific needs, the AI immediately predicts and displays 4 relevant questions they might want to ask (e.g., "What's the typical timeline for serum development?", "What are the minimum order quantities?", "Do you help with packaging design?", "What testing is required?"). User can click any question to start the conversation instantly, or type their own question.</li>
+            <li>User chats naturally, asking follow-up questions</li>
+            <li>AI provides helpful answers, asks clarifying questions when needed</li>
+            <li>If lead seems high-quality or AI can't answer, it offers: "This sounds like a great fit! Would you like to schedule a 30-minute consultation call with our formulation team?"</li>
+            <li>User rates the experience and either books a call or closes the chat</li>
+        </ol>
+    </div>
+
+    <h3 style="margin-top: 40px;">User Journey Workflow</h3>
+    <div style="margin: 30px 0; padding: 20px; background: #fafafa; border: 1px solid #ddd;">
+        <div style="display: flex; flex-direction: column; gap: 20px; max-width: 700px; margin: 0 auto;">
+            
+            <!-- Step 1 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">1</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Contact Form Submission</strong><br>
+                    <span style="font-size: 14px; color: #555;">User fills out form with name, company, product details, timeline, etc.</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 2 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">2</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Chat Window Appears</strong><br>
+                    <span style="font-size: 14px; color: #555;">Immediately after submission, chat interface launches</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 3 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">3</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Personalized AI Greeting</strong><br>
+                    <span style="font-size: 14px; color: #555;">"Hi Sarah! Thanks for your interest in developing your serum line..."</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 4 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">4</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>AI Predicts 4 Relevant Questions</strong><br>
+                    <span style="font-size: 14px; color: #555;">Clickable question suggestions based on form data (timeline, MOQ, packaging, testing)</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 5 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">5</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Interactive Conversation</strong><br>
+                    <span style="font-size: 14px; color: #555;">User clicks suggested questions or types their own. AI responds with accurate, helpful information.</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 6 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">6</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>AI Evaluates Lead Quality</strong><br>
+                    <span style="font-size: 14px; color: #555;">Behind the scenes: analyzes engagement, question quality, timeline readiness</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 7 (Branching) -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">7</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Smart CTA (if applicable)</strong><br>
+                    <span style="font-size: 14px; color: #555;">High-quality lead or complex question → Suggest booking consultation call</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 8 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">8</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Feedback Survey</strong><br>
+                    <span style="font-size: 14px; color: #555;">User rates chat experience (1-5 stars) and provides optional comments</span>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div style="text-align: center; font-size: 20px; margin: -10px 0;">↓</div>
+
+            <!-- Step 9 -->
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="min-width: 40px; height: 40px; border: 2px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff;">9</div>
+                <div style="flex: 1; padding: 15px; background: #fff; border: 1px solid #ccc;">
+                    <strong>Data Stored & Analyzed</strong><br>
+                    <span style="font-size: 14px; color: #555;">Full transcript, lead scoring, and analysis visible in Sanity admin dashboard</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <p class="price">MVP Investment: <em>[To be discussed]</em></p>
+    <p><strong>Timeline:</strong> 8 weeks</p>
+
+    <hr style="margin: 40px 0; border: none; border-top: 2px solid #ccc;">
+
+    <h3>Option 2: Expanded Implementation</h3>
+    <p><strong>Everything in MVP, Plus:</strong></p>
+    
+    <ul>
+        <li><strong>Voice Conversation Mode</strong> - Users can click a microphone button and speak their questions out loud instead of typing. The AI responds with natural-sounding voice, creating a phone-call-like experience right in the browser. Particularly useful for busy entrepreneurs who prefer talking over typing. Uses OpenAI's Realtime Voice API for natural, human-like conversations with minimal latency.</li>
+        
+        <li><strong>User Account System</strong> - After the initial chat, the system can automatically create an account for users using their name and email from the contact form, or allow them to manually create one with a password (or social login with Google/LinkedIn). Once they have an account, they can:
+            <ul>
+                <li>Return anytime to continue previous conversations</li>
+                <li>Access their complete chat history</li>
+                <li>Start new conversations without re-submitting contact forms</li>
+                <li>Save important information the AI shares</li>
+                <li>Track their inquiry status (New, In Discussion, Quote Received, etc.)</li>
+            </ul>
+        </li>
+        
+        <li><strong>Persistent Chat History</strong> - All conversations are organized by date, searchable, and accessible anytime. Users can reference what was discussed weeks ago, and the AI can recall context from previous conversations: "Last time we discussed your anti-aging serum formula. Have you decided on the packaging yet?"</li>
+        
+        <li><strong>Multi-Session Context</strong> - The AI maintains context across multiple conversations, so returning users don't need to repeat information. It builds on previous discussions naturally.</li>
+        
+        <li><strong>Notification System</strong> - Users receive email notifications when:
+            <ul>
+                <li>Your team responds to their inquiry</li>
+                <li>You have questions for them</li>
+                <li>Their project status changes</li>
+            </ul>
+        </li>
+        
+        <li><strong>Enhanced Admin Dashboard</strong> - Your team sees which users are most engaged, how many conversations they've had, their cumulative engagement score across all sessions, and can flag specific users for priority follow-up.</li>
+    </ul>
+
+    <div class="note">
+        <strong>Expanded User Experience:</strong>
+        <p>After initial contact form and chat, the system can automatically create an account for the user (using their email and name from the form) and send them login credentials, or allow them to manually set up their own account. Two weeks later, they log back in and click "Continue Conversation." The AI greets them: "Welcome back, Sarah! Last time we discussed your serum line - you were deciding between 30ml and 50ml bottles. Did you have more questions, or are you ready to move forward?" The entire conversation history is available to review, and the AI remembers everything discussed previously.</p>
+    </div>
+
+    <p class="price">Expanded Investment: <em>[To be discussed]</em></p>
+    <p><strong>Timeline:</strong> 12 weeks</p>
+</div>
+
+<div class="section">
+    <h2>Technical Implementation Plan</h2>
+    <p>To deliver this system, we'll build and integrate multiple technical components. Here's exactly what needs to be done:</p>
+
+    <h3>Phase A: Foundation & Infrastructure (Weeks 1-2)</h3>
+    
+    <h4>1. Database Schema Design</h4>
+    <p>Design and implement new data structures in Sanity CMS to store all chat-related information.</p>
+    <ul>
+        <li><strong>chatSession schema</strong> - Stores each chat session with unique ID, linked to the contact form submission, start/end times, and session metadata</li>
+        <li><strong>chatMessage schema</strong> - Stores individual messages with sender (user or AI), timestamp, message content, and session reference</li>
+        <li><strong>chatAnalysis schema</strong> - Stores the AI-generated lead analysis JSON with quality scores, topics, and recommendations</li>
+        <li><strong>chatFeedback schema</strong> - Stores user satisfaction ratings and comments</li>
+        <li><strong>userAccount schema</strong> - (Expanded only) Stores user credentials, profile info, and linked chat sessions</li>
+    </ul>
+
+    <h4>2. OpenAI API Integration</h4>
+    <p>Set up secure connection to OpenAI's services for powering the AI conversations.</p>
+    <ul>
+        <li><strong>API Key Configuration</strong> - Securely store OpenAI API credentials in environment variables</li>
+        <li><strong>GPT-4o Mini Chat Integration</strong> - Configure GPT-4o Mini model for text-based conversations with streaming support for real-time responses (cost-effective while maintaining quality)</li>
+        <li><strong>Realtime Voice API Setup</strong> - (Expanded only) Integrate OpenAI's Realtime API for bidirectional voice conversations</li>
+        <li><strong>Token Management</strong> - Implement usage tracking and rate limiting to control API costs</li>
+    </ul>
+
+    <h4>3. Context Management System</h4>
+    <p>Build the system that feeds the AI relevant information about each user and conversation.</p>
+    <ul>
+        <li><strong>Contact Form Data Integration</strong> - Automatically pass user's name, company, product type, timeline, and all form fields to the AI at conversation start</li>
+        <li><strong>FAQ Knowledge Base</strong> - Create a structured document containing 30-50 common questions and detailed answers that the AI will reference</li>
+        <li><strong>System Prompts</strong> - Write and test the core AI instructions that define its personality, knowledge boundaries, and response style</li>
+        <li><strong>Conversation Memory</strong> - Implement short-term memory so AI remembers the current conversation context</li>
+        <li><strong>Multi-Session Context</strong> - (Expanded only) Implement long-term memory so AI recalls previous conversations with returning users</li>
+    </ul>
+
+    <h3>Phase B: Chat Interface Development (Weeks 3-4)</h3>
+
+    <h4>4. Chat UI Components</h4>
+    <p>Build the user-facing chat interface that appears after form submission.</p>
+    <ul>
+        <li><strong>Chat Window Component</strong> - Modern, responsive chat interface with message bubbles, typing indicators, and smooth animations</li>
+        <li><strong>Suggested Questions Display</strong> - After the AI greeting, display 4 AI-predicted relevant questions as clickable buttons based on the user's form data</li>
+        <li><strong>Message Display</strong> - Properly formatted display of text messages with timestamps, sender labels, and Markdown support for formatted responses</li>
+        <li><strong>Input Interface</strong> - Text input field with send button, character counter, and "Enter to send" functionality</li>
+        <li><strong>Typing Indicators</strong> - Visual feedback showing "AI is thinking..." while waiting for responses</li>
+        <li><strong>Voice Interface Components</strong> - (Expanded only) Microphone button, audio visualization, recording indicators, and voice playback controls</li>
+        <li><strong>Mobile Responsiveness</strong> - Ensure chat works perfectly on phones, tablets, and desktops</li>
+    </ul>
+
+    <h4>5. Real-Time Communication</h4>
+    <p>Implement the technology that enables instant back-and-forth messaging.</p>
+    <ul>
+        <li><strong>API Route Setup</strong> - Create Next.js API endpoints for sending/receiving messages</li>
+        <li><strong>Streaming Responses</strong> - Implement server-sent events or WebSocket for real-time message streaming (words appear as AI types)</li>
+        <li><strong>WebSocket Connection</strong> - (Expanded only) Establish persistent connection for voice conversations</li>
+        <li><strong>Audio Streaming</strong> - (Expanded only) Handle bidirectional audio streams for voice mode</li>
+    </ul>
+
+    <h4>6. Contact Form Integration</h4>
+    <p>Connect the existing contact form to automatically launch the chat experience.</p>
+    <ul>
+        <li><strong>Form Submission Handler Update</strong> - Modify the contact form API route to initialize a chat session upon successful submission</li>
+        <li><strong>Automatic Chat Launch</strong> - Replace "Thank you" page with chat interface, pre-loaded with user context</li>
+        <li><strong>Session Management</strong> - Create and maintain unique session IDs linking contact form submissions to chat conversations</li>
+    </ul>
+
+    <h3>Phase C: Intelligence Layer (Weeks 5-6)</h3>
+
+    <h4>7. Lead Scoring & Analysis System</h4>
+    <p>Build the AI system that evaluates conversation quality and generates insights.</p>
+    <ul>
+        <li><strong>Question Prediction Engine</strong> - Implement AI logic that analyzes contact form data (product type, timeline, business stage) to generate 4 contextually relevant suggested questions</li>
+        <li><strong>Analysis Prompt Engineering</strong> - Design specialized AI prompts that analyze conversations and extract structured insights</li>
+        <li><strong>Quality Scoring Algorithm</strong> - Implement logic to score leads based on engagement, question quality, timeline readiness, and budget indicators</li>
+        <li><strong>Topic Extraction</strong> - Use AI to identify and categorize main discussion topics from each conversation</li>
+        <li><strong>Sentiment Analysis</strong> - Detect customer enthusiasm, concerns, or hesitation from conversation tone</li>
+        <li><strong>JSON Output Generation</strong> - Structure all analysis results into clean, consistent JSON format for dashboard display</li>
+    </ul>
+
+    <h4>8. Smart CTA Logic</h4>
+    <p>Implement intelligent decision-making for when and how to suggest booking calls.</p>
+    <ul>
+        <li><strong>High-Quality Lead Detection</strong> - Recognize signals indicating a serious, ready-to-buy customer (specific timeline, clear budget, detailed questions)</li>
+        <li><strong>Knowledge Gap Detection</strong> - Identify when questions exceed the AI's knowledge base and human expertise is needed</li>
+        <li><strong>CTA Timing Engine</strong> - Determine optimal moments in the conversation to suggest booking a call (not too early, not too late)</li>
+        <li><strong>Booking Link Display</strong> - Render prominent, attractive call-to-action with calendar booking integration</li>
+        <li><strong>Alternative Paths</strong> - Offer different next steps based on lead quality (consultation call, send quote, download resource, etc.)</li>
+    </ul>
+
+    <h4>9. Survey & Feedback System</h4>
+    <p>Capture user satisfaction and feedback at conversation end.</p>
+    <ul>
+        <li><strong>Survey Modal Component</strong> - Pop-up interface with star rating and optional text feedback field</li>
+        <li><strong>Trigger Logic</strong> - Detect conversation end (user closes chat, long inactivity, or explicit goodbye)</li>
+        <li><strong>Data Storage</strong> - Save ratings and comments to database linked to the chat session</li>
+        <li><strong>Analytics Aggregation</strong> - Calculate average ratings, identify trends, and flag negative feedback</li>
+    </ul>
+
+    <h3>Phase D: Admin Dashboard (Week 7)</h3>
+
+    <h4>10. Sanity Studio Chat Integration</h4>
+    <p>Build custom components for viewing and managing chat data in your admin panel.</p>
+    <ul>
+        <li><strong>Chat History Viewer Component</strong> - Custom Sanity component displaying full conversation transcripts with clean formatting</li>
+        <li><strong>Lead Analysis Display</strong> - Visual cards showing quality scores, topic tags, and AI recommendations at a glance</li>
+        <li><strong>Contact Form Enhancement</strong> - Add "View Chat History" button to each contact form submission in the existing table</li>
+        <li><strong>Search & Filter</strong> - Enable filtering chats by date, quality score, topics discussed, or feedback rating</li>
+        <li><strong>Export Functionality</strong> - Allow exporting chat transcripts as PDF or text for offline review</li>
+        <li><strong>User Management Dashboard</strong> - (Expanded only) View all registered users, their activity levels, and conversation histories</li>
+    </ul>
+
+    <h4>11. Analytics Dashboard</h4>
+    <p>Create visual insights and metrics about chat performance and lead quality.</p>
+    <ul>
+        <li><strong>Engagement Metrics</strong> - Display total chats, average conversation length, messages per chat, and completion rates</li>
+        <li><strong>Lead Quality Distribution</strong> - Charts showing breakdown of lead scores and quality levels</li>
+        <li><strong>Topic Trends</strong> - Visualize most commonly discussed topics and customer concerns</li>
+        <li><strong>Conversion Tracking</strong> - Monitor how many chats result in consultation bookings</li>
+        <li><strong>Satisfaction Scores</strong> - Display average ratings, trends over time, and user feedback highlights</li>
+    </ul>
+
+    <h3>Phase E: User Authentication (Expanded Only, Week 8-9)</h3>
+
+    <h4>12. Authentication System</h4>
+    <p>Implement secure user registration and login functionality.</p>
+    <ul>
+        <li><strong>Auth Provider Setup</strong> - Integrate NextAuth.js or Clerk for secure authentication</li>
+        <li><strong>Automatic Account Creation</strong> - System can auto-generate accounts using contact form email/name and send credentials via email</li>
+        <li><strong>Manual Registration Flow</strong> - Alternative email/password signup with verification for users who prefer to set their own credentials</li>
+        <li><strong>Login Interface</strong> - Secure login page with "Remember Me" and password reset</li>
+        <li><strong>Social Authentication</strong> - Optional Google/LinkedIn OAuth integration</li>
+        <li><strong>Session Management</strong> - Secure token-based sessions with automatic refresh</li>
+        <li><strong>User Profile Page</strong> - Dashboard where users view their information and conversation history</li>
+    </ul>
+
+    <h4>13. Chat History & Persistence</h4>
+    <p>Build the system for users to access and continue previous conversations.</p>
+    <ul>
+        <li><strong>History Interface</strong> - User-facing page listing all their past conversations with dates and preview snippets</li>
+        <li><strong>Conversation Resume</strong> - Allow users to re-open any previous chat and continue where they left off</li>
+        <li><strong>Search Functionality</strong> - Let users search through their own chat history</li>
+        <li><strong>Context Restoration</strong> - Load full conversation history when resuming, so AI has complete context</li>
+        <li><strong>New Chat Initiation</strong> - Allow logged-in users to start new conversations without re-submitting contact forms</li>
+    </ul>
+
+    <h3>Phase F: Testing & Deployment (Week 8 for MVP, Week 10-12 for Expanded)</h3>
+
+    <h4>14. Quality Assurance & Testing</h4>
+    <p>Thoroughly test all functionality to ensure reliability and quality.</p>
+    <ul>
+        <li><strong>Conversation Flow Testing</strong> - Test dozens of different conversation scenarios and edge cases</li>
+        <li><strong>AI Response Quality Review</strong> - Evaluate accuracy, tone, and helpfulness of AI answers</li>
+        <li><strong>Lead Scoring Validation</strong> - Verify the analysis system correctly identifies high/low quality leads</li>
+        <li><strong>Browser Compatibility</strong> - Test on Chrome, Safari, Firefox, Edge, and mobile browsers</li>
+        <li><strong>Voice Quality Testing</strong> - (Expanded only) Test audio clarity, latency, and reliability across devices</li>
+        <li><strong>Load Testing</strong> - Ensure system handles multiple simultaneous conversations</li>
+        <li><strong>Security Audit</strong> - Review authentication, data storage, and API security</li>
+    </ul>
+
+    <h4>15. FAQ Content Creation</h4>
+    <p>Develop the knowledge base that powers the AI's responses.</p>
+    <ul>
+        <li><strong>FAQ Documentation</strong> - Work with Elixderm team to document 30-50 most common questions with detailed, accurate answers</li>
+        <li><strong>Edge Case Responses</strong> - Define how AI should handle uncommon or out-of-scope questions</li>
+        <li><strong>Tone & Voice Guidelines</strong> - Establish the AI's personality (professional, friendly, consultative)</li>
+        <li><strong>Iterative Refinement</strong> - Test with real scenarios and refine responses based on results</li>
+    </ul>
+
+    <h4>16. Deployment & Monitoring</h4>
+    <p>Launch the system to production and set up ongoing monitoring.</p>
+    <ul>
+        <li><strong>Production Deployment</strong> - Deploy all components to Vercel hosting environment</li>
+        <li><strong>Environment Configuration</strong> - Set up production API keys, database connections, and security settings</li>
+        <li><strong>Error Tracking Setup</strong> - Implement logging and error monitoring (Sentry or similar)</li>
+        <li><strong>Cost Monitoring</strong> - Set up alerts for OpenAI API usage and costs</li>
+        <li><strong>Performance Monitoring</strong> - Track response times, uptime, and user experience metrics</li>
+        <li><strong>Training Documentation</strong> - Provide admin guide for managing chats, updating FAQs, and interpreting analytics</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Project Timeline</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Phase</th>
+                <th>Deliverables</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Week 1</strong></td>
+                <td>Foundation Setup</td>
+                <td>
+                    • Database schemas designed and implemented<br>
+                    • OpenAI API integrated and tested<br>
+                    • Development environment configured
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 2</strong></td>
+                <td>Context & Knowledge Base</td>
+                <td>
+                    • FAQ knowledge base created with 30-50 questions (collaborative with Elixderm team)<br>
+                    • AI prompts written and initial testing complete<br>
+                    • Contact form data integration functional<br>
+                    • Question prediction engine implemented
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 3</strong></td>
+                <td>Chat Interface Build</td>
+                <td>
+                    • Chat UI components built and responsive<br>
+                    • Real-time messaging functional<br>
+                    • Basic chat experience working end-to-end
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 4</strong></td>
+                <td>Contact Form Integration</td>
+                <td>
+                    • Contact form launches chat automatically<br>
+                    • User context properly passed to AI<br>
+                    • Session management working<br>
+                    • Demo ready for review
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 5</strong></td>
+                <td>Intelligence Layer</td>
+                <td>
+                    • Lead scoring system operational<br>
+                    • AI analysis generating quality insights<br>
+                    • Smart CTA logic implemented<br>
+                    • Survey system functional
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 6</strong></td>
+                <td>AI Refinement</td>
+                <td>
+                    • AI responses refined based on testing<br>
+                    • Lead scoring accuracy validated<br>
+                    • Edge cases handled properly<br>
+                    • Knowledge gaps identified and filled
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 7</strong></td>
+                <td>Admin Dashboard</td>
+                <td>
+                    • Sanity Studio chat viewer complete<br>
+                    • Lead analysis displayed beautifully<br>
+                    • Analytics dashboard functional<br>
+                    • Admin training conducted
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Week 8</strong></td>
+                <td>Testing & Launch (MVP)</td>
+                <td>
+                    • Comprehensive QA complete<br>
+                    • Security review passed<br>
+                    • Production deployment successful<br>
+                    • Monitoring and alerts configured<br>
+                    • <strong>System live and operational</strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="note">
+        <strong>For Expanded Implementation:</strong>
+        <p>Add 4 additional weeks (Weeks 9-12) for voice integration, authentication system, and enhanced chat history features. Timeline extends to 12 weeks total with same structured approach.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Investment & Costs</h2>
+
+    <h3>One-Time Development Costs</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Package</th>
+                <th>Timeline</th>
+                <th>Investment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>MVP Implementation</strong><br>(Text chat, lead scoring, admin dashboard)</td>
+                <td>8 weeks</td>
+                <td><em>[To be discussed]</em></td>
+            </tr>
+            <tr>
+                <td><strong>Expanded Implementation</strong><br>(Everything + voice + login + history)</td>
+                <td>12 weeks</td>
+                <td><em>[To be discussed]</em></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Ongoing Monthly Costs (Production)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>MVP (Text Only)</th>
+                <th>Expanded (With Voice)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>OpenAI API (Text Chat - GPT-4o Mini)</td>
+                <td>$40 - $120</td>
+                <td>$40 - $120</td>
+            </tr>
+            <tr>
+                <td>OpenAI Voice API</td>
+                <td>N/A</td>
+                <td>$500 - $1,500</td>
+            </tr>
+            <tr>
+                <td>Database & Hosting</td>
+                <td>$25 - $100</td>
+                <td>$50 - $150</td>
+            </tr>
+            <tr>
+                <td>Authentication Service</td>
+                <td>N/A</td>
+                <td>$0 - $100</td>
+            </tr>
+            <tr>
+                <td><strong>Total Monthly</strong></td>
+                <td><strong>$65 - $220 CAD</strong></td>
+                <td><strong>$590 - $1,870 CAD</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="note">
+        <p><strong>Note on OpenAI Costs:</strong> These are estimates based on typical usage with GPT-4o Mini model, which offers strong performance at significantly lower cost. Actual costs depend on conversation volume and length. Most businesses see costs in the lower range. We'll implement usage monitoring and alerts to track spending.</p>
+    </div>
+
+    <h3>Support & Maintenance (Recommended)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Support Package</th>
+                <th>What's Included</th>
+                <th>Monthly Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Bug Fixes & Improvements</strong></td>
+                <td>
+                    • Bug fixes and technical issue resolution<br>
+                    • FAQ content updates (up to 10 per month)<br>
+                    • AI prompt optimization and refinement<br>
+                    • Lead scoring algorithm improvements<br>
+                    • Performance monitoring and optimization<br>
+                    • Monthly usage and performance reports<br>
+                    • Email support (48hr response time)<br>
+                    <br>
+                    <em>Note: Does not include new feature development</em>
+                </td>
+                <td><strong>$500 CAD</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2>What's Included</h2>
+    <ul>
+        <li>Complete custom development of all features described above</li>
+        <li>Integration with existing Elixderm website and Sanity CMS</li>
+        <li>Collaborative FAQ content development sessions</li>
+        <li>Comprehensive testing and quality assurance</li>
+        <li>Admin training (1 hour of hands-on training)</li>
+        <li>Production deployment and configuration</li>
+    </ul>
+    
+    <div class="note">
+        <p><strong>Post-Launch Support:</strong> While not included in the base project cost, we strongly recommend enrolling in the Bug Fixes & Improvements support package ($500/month) to ensure optimal system performance, handle any issues that arise, and continuously refine the AI's responses based on real-world usage.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Success Metrics</h2>
+    <p>After implementation, you'll be able to measure success through:</p>
+    <ul>
+        <li><strong>Lead Quality Improvement</strong> - Percentage of high-quality leads increased through better pre-qualification</li>
+        <li><strong>Response Time</strong> - Average time from inquiry to first meaningful engagement (should approach zero)</li>
+        <li><strong>Team Efficiency</strong> - Hours saved by handling common questions automatically</li>
+        <li><strong>Conversion Rate</strong> - Percentage of chats that result in consultation bookings</li>
+        <li><strong>User Satisfaction</strong> - Average chat rating and positive feedback percentage</li>
+        <li><strong>Question Coverage</strong> - Percentage of questions AI can answer without human intervention (target: 70-80%)</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Next Steps</h2>
+    <ol>
+        <li><strong>Review Proposal</strong> - Elixderm team reviews this proposal and decides between MVP or Expanded implementation</li>
+        <li><strong>Kickoff Meeting</strong> - Schedule 1-hour kickoff call to align on requirements, FAQ content approach, and project expectations</li>
+        <li><strong>Contract & Terms</strong> - Let's discuss terms and finalize the agreement</li>
+        <li><strong>Week 1 Start</strong> - Begin development with database design and OpenAI integration</li>
+        <li><strong>Bi-Weekly Updates</strong> - Progress updates every 2 weeks on Sundays via email or call</li>
+        <li><strong>Mid-Project Demo</strong> - At Week 4, demo working chat system for feedback and adjustments</li>
+        <li><strong>Final Training & Launch</strong> - Week 8 (MVP) or Week 12 (Expanded) - final training session and go-live</li>
+    </ol>
+</div>
+
+<div class="section" style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 2px solid #000;">
+    <p><strong>Prepared for: Elixderm Manufacturing Platform</strong></p>
+    <p>January 31, 2026</p>
+    <p style="margin-top: 30px; color: #666;">This proposal is valid for 30 days from the date above.</p>
+</div>
+
+</body>
+</html>

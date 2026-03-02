@@ -2687,13 +2687,12 @@ body.loaded .animate-fade-in {
 /* Contact Page Main */
 .contact-page {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .contact-page-main {
   padding-bottom: 0;
 }
-
-
 
 /* Contact Main Section */
 .contact-main-section {
@@ -2705,6 +2704,8 @@ body.loaded .animate-fade-in {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .contact-layout {
@@ -2712,6 +2713,7 @@ body.loaded .animate-fade-in {
   grid-template-columns: 1fr 1.2fr;
   gap: 4rem;
   align-items: start;
+  width: 100%;
 }
 
 /* Contact Information */
@@ -2810,6 +2812,9 @@ body.loaded .animate-fade-in {
   border-radius: 20px;
   box-shadow: var(--shadow-xl);
   padding: 3rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .form-heading {
@@ -2849,24 +2854,80 @@ body.loaded .animate-fade-in {
   font-size: 1rem;
 }
 
-.form-field input,
+.form-field input:not([type="radio"]):not([type="checkbox"]),
 .form-field select,
 .form-field textarea {
   padding: 1rem 1.25rem;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 1rem; /* keeps iOS from auto-zooming (needs ≥16px) */
   transition: all 0.3s ease;
   background: white;
   resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.form-field input:focus,
+/* Custom radio button styling */
+.form-field input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.form-field input[type="radio"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.15s ease;
+}
+
+.form-field input[type="radio"]:checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+
+.form-field input[type="radio"]:checked::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.form-field input:not([type="radio"]):focus,
 .form-field select:focus,
 .form-field textarea:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-field input[type="radio"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+.form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
 }
 
 .form-field textarea {
@@ -2919,9 +2980,7 @@ body.loaded .animate-fade-in {
     flex-direction: column-reverse; /* Form first on mobile */
     gap: 3rem;
   }
-  
 
-  
   .contact-form-area {
     padding: 2.5rem;
   }
@@ -2931,58 +2990,109 @@ body.loaded .animate-fade-in {
   .contact-main-wrapper {
     padding: 0 1rem;
   }
-  
+
   .contact-main-section {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
   }
-  
+
   .contact-form-area {
-    padding: 2rem;
+    padding: 1.5rem;
+    border-radius: 16px;
   }
-  
+
   .form-heading h2 {
-    font-size: 1.875rem;
+    font-size: 1.6rem;
   }
-  
+
+  .form-heading p {
+    font-size: 0.95rem;
+  }
+
+  .contact-form-main {
+    gap: 1.5rem;
+  }
+
+  .form-field input:not([type="radio"]):not([type="checkbox"]),
+  .form-field select,
+  .form-field textarea {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+
   .timeline-item {
     gap: 1rem;
   }
-  
+
   .timeline-number {
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1rem;
   }
-  
+
   .contact-highlights {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
-  
+
   .highlight-item {
     padding: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
+  .contact-main-wrapper {
+    padding: 0 0.75rem;
+  }
+
+  .contact-main-section {
+    padding: 2rem 0;
+  }
+
   .contact-page-title {
     font-size: 1.875rem;
   }
-  
+
   .contact-page-subtitle {
     font-size: 1rem;
   }
-  
+
   .contact-form-area {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+    box-shadow: none; /* remove heavy shadow on small screens */
+    border: 1px solid #e5e7eb;
   }
-  
+
+  .form-heading {
+    margin-bottom: 1.5rem;
+  }
+
   .form-heading h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
-  
+
+  .contact-form-main {
+    gap: 1.25rem;
+  }
+
+  .form-field input:not([type="radio"]):not([type="checkbox"]),
+  .form-field select,
+  .form-field textarea {
+    padding: 0.8rem 0.875rem;
+    border-radius: 10px;
+  }
+
   .form-submit-btn {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
     font-size: 1rem;
+    width: 100%;
+  }
+
+  .contact-process h3 {
+    font-size: 1.4rem;
+  }
+
+  .timeline-details h4 {
+    font-size: 1.1rem;
   }
 }
 
