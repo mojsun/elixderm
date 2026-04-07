@@ -92,6 +92,19 @@ const chatSession = defineType({
       initialValue: false,
     },
     {
+      name: 'bookingConfirmed',
+      title: 'Call Actually Booked',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Set to true automatically when a Discovery Call is detected on Google Calendar.',
+    },
+    {
+      name: 'bookingConfirmedAt',
+      title: 'Booking Confirmed At',
+      type: 'datetime',
+      description: 'Timestamp when the calendar booking was detected.',
+    },
+    {
       name: 'durationSeconds',
       title: 'Duration (seconds)',
       type: 'number',
@@ -103,12 +116,13 @@ const chatSession = defineType({
       contactId: 'contactId',
       messageCount: 'messageCount',
       bookingClicked: 'bookingClicked',
+      bookingConfirmed: 'bookingConfirmed',
       startedAt: 'startedAt',
     },
-    prepare(value: any) {
-      const { contactId, messageCount, bookingClicked, startedAt } = value
+    prepare(value: { contactId?: string; messageCount?: number; bookingClicked?: boolean; bookingConfirmed?: boolean; startedAt?: string }) {
+      const { contactId, messageCount, bookingConfirmed, startedAt } = value
       const date = startedAt ? new Date(startedAt).toLocaleDateString() : 'No date'
-      const booked = bookingClicked ? 'Booked' : 'Not booked'
+      const booked = bookingConfirmed ? '✅ Call Booked' : 'No booking'
       const shortId = contactId ? contactId.substring(0, 8) + '...' : 'Unknown'
       return {
         title: `${shortId} — ${messageCount ?? 0} messages`,
