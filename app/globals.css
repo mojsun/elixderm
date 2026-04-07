@@ -670,7 +670,7 @@ body {
   color: var(--color-dark);
   line-height: 1.6;
   background: var(--color-light);
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior: none;
   overscroll-behavior-y: none;
   padding: 0;
@@ -2687,7 +2687,7 @@ body.loaded .animate-fade-in {
 /* Contact Page Main */
 .contact-page {
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .contact-page-main {
