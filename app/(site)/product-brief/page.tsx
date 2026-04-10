@@ -217,6 +217,7 @@ export default function ProductBriefPage() {
       </div>
 
       <main className="contact-page-main">
+        <div className={styles.formOuter}>
         <div className={styles.formContainer}>
           <form onSubmit={handleSubmit} className={styles.form} noValidate>
 
@@ -471,6 +472,7 @@ export default function ProductBriefPage() {
               {submitState === 'submitting' ? 'Submitting…' : 'Submit Product Brief'}
             </button>
           </form>
+        </div>
         </div>
       </main>
     </div>
