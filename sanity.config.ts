@@ -59,6 +59,8 @@ const config = defineConfig({
             // Chatbot
             S.documentTypeListItem('chatbotFaq').title('Chatbot FAQs').icon(DatabaseIcon),
             S.documentTypeListItem('chatSession').title('Mochi Chat Sessions').icon(CommentIcon),
+            S.divider(),
+            S.documentTypeListItem('productBrief').title('Product Briefs').icon(DocumentTextIcon),
             // Hidden: pages and projects (kept in system but not in menu)
             // S.documentTypeListItem('page'),
             // S.documentTypeListItem('project'),

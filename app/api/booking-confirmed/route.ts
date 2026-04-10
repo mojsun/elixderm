@@ -132,7 +132,28 @@ function userEmailTemplate(firstName: string, eventDate: string, eventTitle: str
         <strong>${eventTitle}</strong>
         <p>${eventDate}</p>
       </div>
-      <p>You'll receive a Google Calendar invite shortly with the call details. If you have any questions in the meantime, feel free to reply to this email.</p>
+      <p>You'll receive a Google Calendar invite shortly with the call details.</p>
+      <p style="font-size:15px;font-weight:700;color:#111827;margin:28px 0 12px;">To prepare for the call, please complete these two steps:</p>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+        <tr>
+          <td style="padding:16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;vertical-align:top;">
+            <div style="font-size:13px;font-weight:700;color:#059669;margin-bottom:6px;">STEP 1</div>
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:6px;">Sign the Confidentiality Agreement</div>
+            <div style="font-size:13px;color:#6b7280;margin-bottom:12px;">Download, sign, and email the signed copy back to hello@elixderm.com.</div>
+            <a href="https://www.elixderm.com/nda.pdf" style="display:inline-block;background:linear-gradient(135deg,#10b981,#059669);color:white;text-decoration:none;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:600;">Download NDA</a>
+          </td>
+        </tr>
+        <tr><td style="height:12px;"></td></tr>
+        <tr>
+          <td style="padding:16px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;vertical-align:top;">
+            <div style="font-size:13px;font-weight:700;color:#059669;margin-bottom:6px;">STEP 2</div>
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:6px;">Complete Your Product Development Brief</div>
+            <div style="font-size:13px;color:#6b7280;margin-bottom:12px;">This short form helps our team prepare for your consultation. It takes about 5–10 minutes.</div>
+            <a href="https://www.elixderm.com/product-brief" style="display:inline-block;background:linear-gradient(135deg,#10b981,#059669);color:white;text-decoration:none;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:600;">Fill Out Brief</a>
+          </td>
+        </tr>
+      </table>
+      <p>If you have any questions in the meantime, feel free to reply to this email.</p>
       <p>See you soon,<br><strong>The Elixderm Team</strong></p>
     </div>
     <div class="footer">

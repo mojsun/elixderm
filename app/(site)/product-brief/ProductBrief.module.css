@@ -1,0 +1,327 @@
+/* ─── Page Header ─────────────────────────────────────────────────────────── */
+.pageHeader {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border-bottom: 1px solid #d1fae5;
+  padding: 52px 24px 40px;
+}
+
+.pageHeaderInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.03em;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.pageSubtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0 0 20px;
+  max-width: 600px;
+}
+
+/* ─── NDA Banner ──────────────────────────────────────────────────────────── */
+.ndaBanner {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.ndaLink {
+  color: #059669;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ndaLink:hover {
+  color: #047857;
+}
+
+/* ─── Form Container ──────────────────────────────────────────────────────── */
+.formContainer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Form Section ────────────────────────────────────────────────────────── */
+.formSection {
+  padding: 32px 0;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formSection:last-of-type {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #10b981;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Fields ──────────────────────────────────────────────────────────────── */
+.fieldGrid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.required {
+  color: #10b981;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: #1f2937;
+  background: #ffffff;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+}
+
+.conditionalInput {
+  margin-top: 10px;
+}
+
+/* ─── Radio Group ─────────────────────────────────────────────────────────── */
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.radioLabel:has(input:checked) {
+  border-color: #10b981;
+  background: #f0fdf4;
+  color: #065f46;
+}
+
+.radioLabel input[type="radio"] {
+  accent-color: #10b981;
+}
+
+/* ─── Checkbox Group ──────────────────────────────────────────────────────── */
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.checkboxLabel:has(input:checked) {
+  border-color: #10b981;
+  background: #f0fdf4;
+  color: #065f46;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  accent-color: #10b981;
+}
+
+/* ─── Submit Button ───────────────────────────────────────────────────────── */
+.submitBtn {
+  margin-top: 32px;
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  font-family: inherit;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── Error ───────────────────────────────────────────────────────────────── */
+.errorMsg {
+  color: #dc2626;
+  font-size: 0.875rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0;
+}
+
+/* ─── Success Page ────────────────────────────────────────────────────────── */
+.successPage {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.successCard {
+  max-width: 520px;
+  text-align: center;
+  background: white;
+  border: 1px solid #d1fae5;
+  border-radius: 16px;
+  padding: 48px 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 auto 24px;
+}
+
+.successTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px;
+}
+
+.successText {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+.successLink {
+  color: #059669;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pageHeader {
+    padding: 36px 20px 28px;
+  }
+
+  .formContainer {
+    padding: 24px 20px 60px;
+  }
+
+  .fieldGrid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .successCard {
+    padding: 36px 24px;
+  }
+
+  .radioGroup,
+  .checkboxGroup {
+    gap: 8px;
+  }
+}

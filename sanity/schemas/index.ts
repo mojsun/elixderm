@@ -12,7 +12,8 @@ import news from "./news-schema";
 import productOptions from "./product-options-schema";
 import chatbotFaq from "./chatbot-faq-schema";
 import chatSession from "./chat-session-schema";
+import productBrief from "./product-brief-schema";
 
-const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp, news, productOptions, chatbotFaq, chatSession];
+const schemas = [project, page, contact, homeContact, product, service, blogPost, author, whoWeHelp, news, productOptions, chatbotFaq, chatSession, productBrief];
 
 export default schemas;
