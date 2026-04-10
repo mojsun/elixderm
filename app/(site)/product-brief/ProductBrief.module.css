@@ -102,6 +102,7 @@
 .radioLabel input[type="radio"] {
   accent-color: #10b981;
   width: 16px;
+  min-width: 16px;
   height: 16px;
 }
 
@@ -135,6 +136,7 @@
 .checkboxLabel input[type="checkbox"] {
   accent-color: #10b981;
   width: 16px;
+  min-width: 16px;
   height: 16px;
 }
 
