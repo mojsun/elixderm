@@ -1,32 +1,3 @@
-/* ─── Page Header ─────────────────────────────────────────────────────────── */
-.pageHeader {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 52px 24px 40px;
-}
-
-.pageHeaderInner {
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.pageTitle {
-  font-size: clamp(1.875rem, 4vw, 2.25rem);
-  font-weight: 700;
-  color: #1f2937;
-  letter-spacing: -0.02em;
-  margin: 0 0 12px;
-  line-height: 1.2;
-  font-family: var(--font-heading);
-}
-
-.pageSubtitle {
-  font-size: 1.1rem;
-  color: #6b7280;
-  line-height: 1.6;
-  margin: 0 0 20px;
-  max-width: 600px;
-}
 
 /* ─── NDA Banner ──────────────────────────────────────────────────────────── */
 .ndaBanner {
@@ -58,17 +29,7 @@
 .formContainer {
   max-width: 820px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
-}
-
-.form {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  padding: 32px 24px 80px;
 }
 
 /* ─── Form Section ────────────────────────────────────────────────────────── */
@@ -100,63 +61,15 @@
   font-family: var(--font-heading);
 }
 
-/* ─── Fields ──────────────────────────────────────────────────────────────── */
+/* ─── Grid layout ─────────────────────────────────────────────────────────── */
 .fieldGrid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
-.fieldGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1f2937;
-  line-height: 1.4;
-}
-
 .required {
   color: #10b981;
-}
-
-.input,
-.select,
-.textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  font-size: 1rem;
-  color: #1f2937;
-  background: #ffffff;
-  font-family: inherit;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.input:focus,
-.select:focus,
-.textarea:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-}
-
-.textarea {
-  resize: vertical;
-  min-height: 100px;
-  line-height: 1.6;
-}
-
-.conditionalInput {
-  margin-top: 12px;
 }
 
 /* ─── Radio Group ─────────────────────────────────────────────────────────── */
@@ -324,19 +237,8 @@
 
 /* ─── Mobile ──────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .pageHeader {
-    padding: 32px 20px 24px;
-  }
-
   .formContainer {
-    padding: 20px 16px 60px;
-  }
-
-  .form {
-    padding: 1.25rem 1rem;
-    border-radius: 12px;
-    box-shadow: none;
-    border: 1px solid #e5e7eb;
+    padding: 16px 16px 60px;
   }
 
   .fieldGrid2 {
@@ -348,17 +250,8 @@
     gap: 1.25rem;
   }
 
-  .input,
-  .select,
-  .textarea {
-    padding: 0.8rem 0.875rem;
-    border-radius: 10px;
-    font-size: 1rem;
-  }
-
-  .submitBtn {
-    padding: 1rem 1.25rem;
-    font-size: 1rem;
+  .ndaBanner {
+    font-size: 0.8rem;
   }
 
   .successCard {

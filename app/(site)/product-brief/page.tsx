@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import PageHero from '@/app/components/PageHero/PageHero'
 import styles from './ProductBrief.module.css'
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
@@ -76,6 +77,15 @@ function CheckboxGroup({
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className={styles.sectionTitle}>{children}</h2>
+}
+
+function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+  return (
+    <div className="form-field">
+      <label>{label}{required && <span className={styles.required}> *</span>}</label>
+      {children}
+    </div>
+  )
 }
 
 export default function ProductBriefPage() {
@@ -198,49 +208,32 @@ export default function ProductBriefPage() {
 
   return (
     <div className="contact-page">
-      {/* Header */}
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <h1 className={styles.pageTitle}>Product Development Brief</h1>
-          <p className={styles.pageSubtitle}>
-            Please complete this form before your Discovery Call. The more detail you provide,
-            the better prepared our team will be to discuss your project.
-          </p>
+      <PageHero
+        title="Product Development Brief"
+        subtitle="Please complete this form before your Discovery Call. The more detail you provide, the better prepared our team will be to discuss your project."
+      />
+
+      <main className="contact-page-main">
+        <div className={styles.formContainer}>
           <div className={styles.ndaBanner}>
             <span>Before you begin — please also</span>
             <a href="/nda.pdf" target="_blank" className={styles.ndaLink}>
               download and sign the Confidentiality Agreement
             </a>
-            <span>and email it back to hello@elixderm.com.</span>
+            <span>and email the signed copy back to hello@elixderm.com.</span>
           </div>
-        </div>
-      </div>
 
-      <main className="contact-page-main">
-        <div className={styles.formOuter}>
-        <div className={styles.formContainer}>
-          <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <div className="contact-form-area">
+            <form onSubmit={handleSubmit} className="contact-form-main" noValidate>
 
             {/* Contact Info */}
             <div className={styles.formSection}>
               <SectionTitle>Contact Information</SectionTitle>
               <div className={styles.fieldGrid2}>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Name <span className={styles.required}>*</span></label>
-                  <input className={styles.input} type="text" value={name} onChange={e => setName(e.target.value)} required />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Phone</label>
-                  <input className={styles.input} type="tel" value={phone} onChange={e => setPhone(e.target.value)} />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Email <span className={styles.required}>*</span></label>
-                  <input className={styles.input} type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Address</label>
-                  <input className={styles.input} type="text" value={address} onChange={e => setAddress(e.target.value)} />
-                </div>
+                <Field label="Name" required><input type="text" value={name} onChange={e => setName(e.target.value)} required /></Field>
+                <Field label="Phone"><input type="tel" value={phone} onChange={e => setPhone(e.target.value)} /></Field>
+                <Field label="Email" required><input type="email" value={email} onChange={e => setEmail(e.target.value)} required /></Field>
+                <Field label="Address"><input type="text" value={address} onChange={e => setAddress(e.target.value)} /></Field>
               </div>
             </div>
 
@@ -248,25 +241,12 @@ export default function ProductBriefPage() {
             <div className={styles.formSection}>
               <SectionTitle>Brand &amp; Product</SectionTitle>
               <div className={styles.fieldGrid2}>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Brand Name <span className={styles.required}>*</span></label>
-                  <input className={styles.input} type="text" value={brandName} onChange={e => setBrandName(e.target.value)} required />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Product Name <span className={styles.required}>*</span></label>
-                  <input className={styles.input} type="text" value={productName} onChange={e => setProductName(e.target.value)} required />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Formulation Type</label>
-                  <input className={styles.input} type="text" placeholder="e.g. Serum, Lotion, Cream" value={formulationType} onChange={e => setFormulationType(e.target.value)} />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Packaging Type</label>
-                  <input className={styles.input} type="text" placeholder="e.g. Pump bottle, Jar, Tube" value={packagingType} onChange={e => setPackagingType(e.target.value)} />
-                </div>
+                <Field label="Brand Name" required><input type="text" value={brandName} onChange={e => setBrandName(e.target.value)} required /></Field>
+                <Field label="Product Name" required><input type="text" value={productName} onChange={e => setProductName(e.target.value)} required /></Field>
+                <Field label="Formulation Type"><input type="text" placeholder="e.g. Serum, Lotion, Cream" value={formulationType} onChange={e => setFormulationType(e.target.value)} /></Field>
+                <Field label="Packaging Type"><input type="text" placeholder="e.g. Pump bottle, Jar, Tube" value={packagingType} onChange={e => setPackagingType(e.target.value)} /></Field>
               </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Which category does this product fall under?</label>
+              <Field label="Which category does this product fall under?">
                 <div className={styles.radioGroup}>
                   {CATEGORIES.map(c => (
                     <label key={c.value} className={styles.radioLabel}>
@@ -275,64 +255,47 @@ export default function ProductBriefPage() {
                     </label>
                   ))}
                 </div>
-              </div>
+              </Field>
             </div>
 
             {/* Product Description */}
             <div className={styles.formSection}>
               <SectionTitle>Product Description</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Describe the product you would like to create</label>
-                <textarea className={styles.textarea} rows={4} value={productDescription} onChange={e => setProductDescription(e.target.value)} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Describe the texture and appearance of the product</label>
-                <textarea className={styles.textarea} rows={3} value={textureAppearance} onChange={e => setTextureAppearance(e.target.value)} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>How should your skin feel after product application?</label>
-                <textarea className={styles.textarea} rows={3} value={skinFeel} onChange={e => setSkinFeel(e.target.value)} />
-              </div>
+              <Field label="Describe the product you would like to create"><textarea rows={4} value={productDescription} onChange={e => setProductDescription(e.target.value)} /></Field>
+              <Field label="Describe the texture and appearance of the product"><textarea rows={3} value={textureAppearance} onChange={e => setTextureAppearance(e.target.value)} /></Field>
+              <Field label="How should your skin feel after product application?"><textarea rows={3} value={skinFeel} onChange={e => setSkinFeel(e.target.value)} /></Field>
             </div>
 
             {/* Customer Profile */}
             <div className={styles.formSection}>
               <SectionTitle>Customer Profile</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Select the generation that best describes your customer</label>
-                <select className={styles.select} value={customerGeneration} onChange={e => setCustomerGeneration(e.target.value)}>
+              <Field label="Select the generation that best describes your customer">
+                <select value={customerGeneration} onChange={e => setCustomerGeneration(e.target.value)}>
                   <option value="">Select a generation</option>
                   {GENERATIONS.map(g => <option key={g.value} value={g.value}>{g.label}</option>)}
                 </select>
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Who is your product geared towards?</label>
+              </Field>
+              <Field label="Who is your product geared towards?">
                 <CheckboxGroup options={TARGET_AUDIENCE} selected={targetAudience} onChange={setTargetAudience} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Is there anything else you can tell us about your customer?</label>
-                <textarea className={styles.textarea} rows={3} value={customerNotes} onChange={e => setCustomerNotes(e.target.value)} />
-              </div>
+              </Field>
+              <Field label="Is there anything else you can tell us about your customer?"><textarea rows={3} value={customerNotes} onChange={e => setCustomerNotes(e.target.value)} /></Field>
             </div>
 
             {/* Attributes */}
             <div className={styles.formSection}>
               <SectionTitle>Product Attributes &amp; Skin Types</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Please check off any attributes relevant to your product</label>
+              <Field label="Please check off any attributes relevant to your product">
                 <CheckboxGroup options={ATTRIBUTES} selected={productAttributes} onChange={setProductAttributes} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>What skin type(s) is your product meant for?</label>
+              </Field>
+              <Field label="What skin type(s) is your product meant for?">
                 <CheckboxGroup options={SKIN_TYPES} selected={skinTypes} onChange={setSkinTypes} />
-              </div>
+              </Field>
             </div>
 
             {/* Color & Scent */}
             <div className={styles.formSection}>
               <SectionTitle>Color &amp; Scent</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Would you like this product to be a certain color?</label>
+              <Field label="Would you like this product to be a certain color?">
                 <div className={styles.radioGroup}>
                   {(['yes', 'no'] as const).map(v => (
                     <label key={v} className={styles.radioLabel}>
@@ -341,18 +304,9 @@ export default function ProductBriefPage() {
                     </label>
                   ))}
                 </div>
-                {hasColor === 'yes' && (
-                  <input
-                    className={`${styles.input} ${styles.conditionalInput}`}
-                    type="text"
-                    placeholder="Please specify the color"
-                    value={colorDescription}
-                    onChange={e => setColorDescription(e.target.value)}
-                  />
-                )}
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Will this product be scented or unscented?</label>
+                {hasColor === 'yes' && <input type="text" placeholder="Please specify the color" value={colorDescription} onChange={e => setColorDescription(e.target.value)} style={{marginTop: '12px'}} />}
+              </Field>
+              <Field label="Will this product be scented or unscented?">
                 <div className={styles.radioGroup}>
                   {(['scented', 'unscented'] as const).map(v => (
                     <label key={v} className={styles.radioLabel}>
@@ -361,32 +315,22 @@ export default function ProductBriefPage() {
                     </label>
                   ))}
                 </div>
-                {scentPreference === 'scented' && (
-                  <textarea
-                    className={`${styles.textarea} ${styles.conditionalInput}`}
-                    rows={3}
-                    placeholder="Please describe the scent in full detail"
-                    value={scentDescription}
-                    onChange={e => setScentDescription(e.target.value)}
-                  />
-                )}
-              </div>
+                {scentPreference === 'scented' && <textarea rows={3} placeholder="Please describe the scent in full detail" value={scentDescription} onChange={e => setScentDescription(e.target.value)} style={{marginTop: '12px'}} />}
+              </Field>
             </div>
 
             {/* Benchmark */}
             <div className={styles.formSection}>
               <SectionTitle>Benchmark Products</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Please list 1–2 benchmark products from other brands. Describe what you would like to see similar in your product.</label>
-                <textarea className={styles.textarea} rows={4} value={benchmarkProducts} onChange={e => setBenchmarkProducts(e.target.value)} />
-              </div>
+              <Field label="Please list 1–2 benchmark products from other brands. Describe what you would like to see similar in your product.">
+                <textarea rows={4} value={benchmarkProducts} onChange={e => setBenchmarkProducts(e.target.value)} />
+              </Field>
             </div>
 
             {/* Ingredients */}
             <div className={styles.formSection}>
               <SectionTitle>Ingredients &amp; Certifications</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Would you like your ingredients to be of</label>
+              <Field label="Would you like your ingredients to be of">
                 <div className={styles.radioGroup}>
                   {INGREDIENT_ORIGINS.map(o => (
                     <label key={o.value} className={styles.radioLabel}>
@@ -395,69 +339,37 @@ export default function ProductBriefPage() {
                     </label>
                   ))}
                 </div>
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Are there any ingredients that should NOT be included in the formula?</label>
-                <textarea className={styles.textarea} rows={3} placeholder="Please be specific" value={ingredientsExclude} onChange={e => setIngredientsExclude(e.target.value)} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Are there any ingredients you WANT to include in the formula?</label>
-                <textarea className={styles.textarea} rows={3} value={ingredientsInclude} onChange={e => setIngredientsInclude(e.target.value)} />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Would you like your product to follow any ingredient guidelines/certifications?</label>
+              </Field>
+              <Field label="Are there any ingredients that should NOT be included in the formula?"><textarea rows={3} placeholder="Please be specific" value={ingredientsExclude} onChange={e => setIngredientsExclude(e.target.value)} /></Field>
+              <Field label="Are there any ingredients you WANT to include in the formula?"><textarea rows={3} value={ingredientsInclude} onChange={e => setIngredientsInclude(e.target.value)} /></Field>
+              <Field label="Would you like your product to follow any ingredient guidelines/certifications?">
                 <CheckboxGroup options={CERTIFICATIONS} selected={certifications} onChange={setCertifications} />
-                {certifications.includes('Other') && (
-                  <input
-                    className={`${styles.input} ${styles.conditionalInput}`}
-                    type="text"
-                    placeholder="Please elaborate"
-                    value={certificationsOther}
-                    onChange={e => setCertificationsOther(e.target.value)}
-                  />
-                )}
-              </div>
+                {certifications.includes('Other') && <input type="text" placeholder="Please elaborate" value={certificationsOther} onChange={e => setCertificationsOther(e.target.value)} style={{marginTop: '12px'}} />}
+              </Field>
             </div>
 
             {/* Market & Retail */}
             <div className={styles.formSection}>
               <SectionTitle>Market &amp; Retail</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>Which regions will you be selling in upon launching?</label>
+              <Field label="Which regions will you be selling in upon launching?">
                 <CheckboxGroup options={REGIONS} selected={sellingRegions} onChange={setSellingRegions} />
-                {sellingRegions.includes('Other') && (
-                  <input
-                    className={`${styles.input} ${styles.conditionalInput}`}
-                    type="text"
-                    placeholder="Please specify regions"
-                    value={sellingRegionsOther}
-                    onChange={e => setSellingRegionsOther(e.target.value)}
-                  />
-                )}
-              </div>
+                {sellingRegions.includes('Other') && <input type="text" placeholder="Please specify regions" value={sellingRegionsOther} onChange={e => setSellingRegionsOther(e.target.value)} style={{marginTop: '12px'}} />}
+              </Field>
               <div className={styles.fieldGrid2}>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Desired product size (ml, oz, or g)</label>
-                  <input className={styles.input} type="text" placeholder="e.g. 50ml, 1oz" value={productSize} onChange={e => setProductSize(e.target.value)} />
-                </div>
-                <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Estimated MSRP</label>
-                  <input className={styles.input} type="text" placeholder="e.g. $29.99" value={estimatedMsrp} onChange={e => setEstimatedMsrp(e.target.value)} />
-                </div>
+                <Field label="Desired product size (ml, oz, or g)"><input type="text" placeholder="e.g. 50ml, 1oz" value={productSize} onChange={e => setProductSize(e.target.value)} /></Field>
+                <Field label="Estimated MSRP"><input type="text" placeholder="e.g. $29.99" value={estimatedMsrp} onChange={e => setEstimatedMsrp(e.target.value)} /></Field>
               </div>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>What retail channels would you like your brand to be sold in?</label>
+              <Field label="What retail channels would you like your brand to be sold in?">
                 <CheckboxGroup options={RETAIL_CHANNELS} selected={retailChannels} onChange={setRetailChannels} />
-              </div>
+              </Field>
             </div>
 
             {/* Additional Notes */}
             <div className={styles.formSection}>
               <SectionTitle>Additional Notes</SectionTitle>
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>If there&apos;s anything else you would like to add that is not included above, please mention it here</label>
-                <textarea className={styles.textarea} rows={5} value={additionalNotes} onChange={e => setAdditionalNotes(e.target.value)} />
-              </div>
+              <Field label="If there's anything else you would like to add that is not included above, please mention it here">
+                <textarea rows={5} value={additionalNotes} onChange={e => setAdditionalNotes(e.target.value)} />
+              </Field>
             </div>
 
             {submitState === 'error' && (
@@ -466,13 +378,13 @@ export default function ProductBriefPage() {
 
             <button
               type="submit"
-              className={styles.submitBtn}
+              className="form-submit-btn"
               disabled={submitState === 'submitting'}
             >
               {submitState === 'submitting' ? 'Submitting…' : 'Submit Product Brief'}
             </button>
           </form>
-        </div>
+          </div>
         </div>
       </main>
     </div>
