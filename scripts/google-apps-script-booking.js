@@ -68,12 +68,14 @@ function checkNewBookings() {
         return;
       }
 
+      var meetLink = event.getHangoutLink() || '';
+
       guests.forEach(function(guest) {
         var guestEmail = guest.getEmail();
         var guestName = guest.getName() || extractNameFromTitle(title) || guestEmail;
 
         Logger.log('Notifying API for: ' + guestEmail);
-        callBookingAPI(guestName, guestEmail, title, event.getStartTime().toISOString());
+        callBookingAPI(guestName, guestEmail, title, event.getStartTime().toISOString(), meetLink);
       });
 
       newProcessed.push(eventId);
@@ -86,12 +88,13 @@ function checkNewBookings() {
 }
 
 // ── CALL THE NEXT.JS API ────────────────────────────────────────────────────
-function callBookingAPI(guestName, guestEmail, eventTitle, eventStart) {
+function callBookingAPI(guestName, guestEmail, eventTitle, eventStart, meetLink) {
   var payload = JSON.stringify({
     guestName: guestName,
     guestEmail: guestEmail,
     eventTitle: eventTitle,
     eventStart: eventStart,
+    meetLink: meetLink || '',
     secret: CONFIG.SECRET,
   });
 
