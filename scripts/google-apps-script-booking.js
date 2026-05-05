@@ -68,7 +68,7 @@ function checkNewBookings() {
         return;
       }
 
-      var meetLink = event.getHangoutLink() || '';
+      var meetLink = extractMeetLink(event);
 
       guests.forEach(function(guest) {
         var guestEmail = guest.getEmail();
@@ -120,4 +120,17 @@ function callBookingAPI(guestName, guestEmail, eventTitle, eventStart, meetLink)
 function extractNameFromTitle(title) {
   var match = title.match(/\(([^)]+)\)/);
   return match ? match[1] : null;
+}
+
+// ── HELPER: Extract Google Meet link from event description ─────────────────
+// Google embeds "meet.google.com/xxx-xxxx-xxx" in the event description
+function extractMeetLink(event) {
+  try {
+    var description = event.getDescription() || '';
+    var match = description.match(/https:\/\/meet\.google\.com\/[a-z0-9\-]+/i);
+    if (match) return match[0];
+  } catch (e) {
+    Logger.log('Could not read description: ' + e.toString());
+  }
+  return '';
 }
