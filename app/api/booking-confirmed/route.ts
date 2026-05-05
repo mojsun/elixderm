@@ -99,14 +99,8 @@ export async function POST(request: NextRequest) {
 // ── Email Templates ────────────────────────────────────────────────────────
 
 function userEmailTemplate(firstName: string, eventDate: string, eventTitle: string, meetLink?: string) {
-  const meetBlock = meetLink
-    ? `<div style="text-align:center;margin:20px 0 8px;">
-        <a href="${meetLink}" style="display:inline-block;background:linear-gradient(135deg,#10b981,#059669);color:white;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;letter-spacing:-0.01em;">
-          Join Google Meet
-        </a>
-        <p style="margin:10px 0 0;font-size:12px;color:#9ca3af;">Or copy the link: <a href="${meetLink}" style="color:#10b981;">${meetLink}</a></p>
-      </div>`
-    : ''
+  void meetLink // reserved for future use
+  const meetBlock = ''
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,8 +135,7 @@ function userEmailTemplate(firstName: string, eventDate: string, eventTitle: str
         <strong>${eventTitle}</strong>
         <p>${eventDate}</p>
       </div>
-      ${meetBlock}
-      <p>You'll also receive a Google Calendar invite with the call details.</p>
+      <p>You'll receive a Google Calendar invite with the Google Meet link to join the call.</p>
       <p style="font-size:15px;font-weight:700;color:#111827;margin:28px 0 12px;">To prepare for the call, please complete these two steps:</p>
       <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
         <tr>
