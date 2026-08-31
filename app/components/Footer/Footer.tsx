@@ -28,8 +28,8 @@ export default async function Footer() {
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
                   <span className={styles.addressText}>
-                    20 Newbridge road , unit # 9-11<br />
-                    Etobicoke, M8Z 2L7
+                    1200 Areowood Dr unit# 33<br />
+                    Mississauga, ON, L4W 2S7
                   </span>
                 </div>
               </li>
