@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getPage } from "@/sanity/sanity-utils";
 import { PortableText } from "@portabletext/react";
 
@@ -8,6 +9,10 @@ type Props = {
 export default async function Page({ params }: Props) {
   const resolvedParams = await params;
   const page = await getPage(resolvedParams.slug);
+
+  if (!page) {
+    return notFound();
+  }
 
   return (
     <div className="page-container">
