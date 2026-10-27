@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { createClient } from 'next-sanity';
+import React, { useCallback, useEffect, useState } from 'react';
 import ContactChart from './ContactChart';
-
-const client = createClient({
-  projectId: '7v67lu84',
-  dataset: 'production',
-  apiVersion: '2025-07-17',
-  useCdn: false,
-});
+import { usePublishedClient } from './usePublishedClient';
 
 interface ContactSubmission {
   _id: string;
@@ -56,6 +49,7 @@ function formatDuration(seconds: number): string {
 }
 
 export default function ContactTable() {
+  const client = usePublishedClient();
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [sessionsByContactId, setSessionsByContactId] = useState<Record<string, ChatSessionSummary>>({});
   const [loading, setLoading] = useState(true);
@@ -63,10 +57,6 @@ export default function ContactTable() {
   const [selectedContact, setSelectedContact] = useState<ContactSubmission | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChatSession, setModalChatSession] = useState<ChatSessionFull | null | 'loading'>('loading');
-
-  useEffect(() => {
-    fetchAll();
-  }, []);
 
   const openModal = async (contact: ContactSubmission) => {
     setSelectedContact(contact);
@@ -103,7 +93,7 @@ export default function ContactTable() {
     return `${diffDays} days ago`;
   };
 
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     try {
       const [contactData, sessionData] = await Promise.all([
         client.fetch<ContactSubmission[]>(`*[_type == "contact"] | order(submittedAt desc) {
@@ -129,22 +119,20 @@ export default function ContactTable() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [client]);
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
 
   const updateStatus = async (id: string, newStatus: string) => {
     try {
-      const response = await fetch('/api/update-contact-status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, status: newStatus }),
-      });
-      if (response.ok) {
-        setContacts(prev =>
-          prev.map(contact =>
-            contact._id === id ? { ...contact, status: newStatus } : contact
-          )
-        );
-      }
+      await client.patch(id).set({ status: newStatus }).commit();
+      setContacts(prev =>
+        prev.map(contact =>
+          contact._id === id ? { ...contact, status: newStatus } : contact
+        )
+      );
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -154,16 +142,8 @@ export default function ContactTable() {
     if (!window.confirm(`Are you sure you want to delete the submission from "${name}"? This action cannot be undone.`)) return;
     setDeleting(id);
     try {
-      const response = await fetch('/api/delete-contact', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      });
-      if (response.ok) {
-        setContacts(prev => prev.filter(contact => contact._id !== id));
-      } else {
-        alert('Failed to delete contact. Please try again.');
-      }
+      await client.delete(id);
+      setContacts(prev => prev.filter(contact => contact._id !== id));
     } catch {
       alert('Error deleting contact. Please try again.');
     } finally {
