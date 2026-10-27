@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
 import { getMenuServices } from "@/sanity/sanity-utils";
+import { ADDRESS } from "@/app/lib/business";
 
 export default async function Footer() {
   const services = await getMenuServices();
@@ -27,10 +28,10 @@ export default async function Footer() {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
-                  <span className={styles.addressText}>
-                    1200 Areowood Dr unit# 33<br />
-                    Mississauga, ON, L4W 2S7
-                  </span>
+                  <address className={styles.addressText}>
+                    {ADDRESS.street}<br />
+                    {ADDRESS.locality}
+                  </address>
                 </div>
               </li>
             </ul>
