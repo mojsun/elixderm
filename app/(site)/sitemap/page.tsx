@@ -3,7 +3,7 @@ import Breadcrumb from "@/app/components/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
 import { getProducts, getServices, getWhoWeHelps } from "@/sanity/sanity-utils";
 import { getProjects } from "@/sanity/sanity-utils";
-import { createClient } from "next-sanity";
+import { serverClient } from "@/sanity/config/server-client";
 import { Product } from "@/types/Product";
 import { Project } from "@/types/project";
 import { Service } from "@/types/Service";
@@ -14,13 +14,6 @@ type Page = {
   title: string;
   slug: string;
 };
-
-const client = createClient({
-  projectId: '7v67lu84',
-  dataset: 'production',
-  apiVersion: '2025-07-17',
-  useCdn: false,
-});
 
 export default async function Sitemap() {
   const breadcrumbItems = [
@@ -34,7 +27,7 @@ export default async function Sitemap() {
     getProjects(),
     getServices(),
     getWhoWeHelps(),
-    client.fetch(`*[_type == "page" && defined(slug.current)] {
+    serverClient.fetch(`*[_type == "page" && defined(slug.current)] {
       _id,
       title,
       "slug": slug.current
