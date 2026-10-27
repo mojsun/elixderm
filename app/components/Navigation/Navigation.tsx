@@ -7,20 +7,22 @@ import ProductsMegaMenu from '@/app/components/ProductsMegaMenu'
 import ServicesMegaMenu from '@/app/components/ServicesMegaMenu'
 import WhoWeHelpMegaMenu from '@/app/components/WhoWeHelpMegaMenu'
 import styles from './Navigation.module.css'
-import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from '@/sanity/sanity-utils'
 import { Product } from '@/types/Product'
 import { Service } from '@/types/Service'
 import { WhoWeHelp } from '@/types/WhoWeHelp'
 
-export default function Navigation() {
+interface NavigationProps {
+  menuProducts: Product[]
+  menuServices: Service[]
+  menuWhoWeHelps: WhoWeHelp[]
+}
+
+export default function Navigation({ menuProducts, menuServices, menuWhoWeHelps }: NavigationProps) {
   const pathname = usePathname()
   const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false)
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false)
   const [isWhoWeHelpMenuOpen, setIsWhoWeHelpMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [menuProducts, setMenuProducts] = useState<Product[]>([])
-  const [menuServices, setMenuServices] = useState<Service[]>([])
-  const [menuWhoWeHelps, setMenuWhoWeHelps] = useState<WhoWeHelp[]>([])
   const productsMenuRef = useRef<HTMLLIElement>(null)
   const servicesMenuRef = useRef<HTMLLIElement>(null)
   const whoWeHelpMenuRef = useRef<HTMLLIElement>(null)
@@ -100,26 +102,6 @@ export default function Navigation() {
     setIsProductsMenuOpen(false)
     setIsServicesMenuOpen(false)
   }
-
-  // Fetch menu products, services, and who we help on component mount
-  useEffect(() => {
-    async function fetchMenuData() {
-      try {
-        const [products, services, whoWeHelps] = await Promise.all([
-          getMenuProducts(),
-          getMenuServices(),
-          getMenuWhoWeHelps()
-        ])
-        setMenuProducts(products)
-        setMenuServices(services)
-        setMenuWhoWeHelps(whoWeHelps)
-      } catch (error) {
-        console.error('Failed to fetch menu data:', error)
-      }
-    }
-    
-    fetchMenuData()
-  }, [])
 
   // Close menus when clicking outside the navbar
   useEffect(() => {
