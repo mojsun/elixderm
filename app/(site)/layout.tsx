@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
+import { Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 import Footer from "../components/Footer/Footer";
@@ -7,14 +7,11 @@ import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollH
 import Navigation from "../components/Navigation";
 import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from "@/sanity/sanity-utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
+// Only code snippets in blog posts use it, so it loads on demand.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 const sairaStencil = Saira_Stencil_One({
@@ -76,7 +73,7 @@ export default async function RootLayout({
         <meta name="color-scheme" content="light" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
+        className={`${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
       >
         <div className="page-layout">
           <Navigation
