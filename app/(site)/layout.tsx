@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
+import { Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 import Footer from "../components/Footer/Footer";
@@ -7,14 +7,11 @@ import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollH
 import Navigation from "../components/Navigation";
 import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from "@/sanity/sanity-utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
+// Only code snippets in blog posts use it, so it loads on demand.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 const sairaStencil = Saira_Stencil_One({
@@ -43,8 +40,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default async function RootLayout({
@@ -59,9 +54,10 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+        {/* Only the icons the site uses. Add new icon names here, in alphabetical order. */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=approval_delegation,balance,biotech,handshake,inventory,lab_research,lightbulb,price_check&display=swap" />
         
         {/* Favicon and App Icons */}
         <link rel="icon" href="/favicon.ico" />
@@ -75,7 +71,7 @@ export default async function RootLayout({
         <meta name="color-scheme" content="light" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
+        className={`${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
       >
         <div className="page-layout">
           <Navigation

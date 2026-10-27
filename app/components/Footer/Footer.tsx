@@ -1,9 +1,10 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
-import { getMenuServices } from "@/sanity/sanity-utils";
+import { getMenuServices, hasPublishedNews } from "@/sanity/sanity-utils";
+import { ADDRESS } from "@/app/lib/business";
 
 export default async function Footer() {
-  const services = await getMenuServices();
+  const [services, hasNews] = await Promise.all([getMenuServices(), hasPublishedNews()]);
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
@@ -16,21 +17,23 @@ export default async function Footer() {
                   About Elixderm
                 </Link>
               </li>
-              <li>
-                <Link href="/news" className={styles.footerLink}>
-                  Latest News
-                </Link>
-              </li>
+              {hasNews && (
+                <li>
+                  <Link href="/news" className={styles.footerLink}>
+                    Latest News
+                  </Link>
+                </li>
+              )}
               <li className={styles.footerAddress}>
                 <div className={styles.addressContainer}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.locationIcon}>
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
-                  <span className={styles.addressText}>
-                    1200 Areowood Dr unit# 33<br />
-                    Mississauga, ON, L4W 2S7
-                  </span>
+                  <address className={styles.addressText}>
+                    {ADDRESS.street}<br />
+                    {ADDRESS.locality}
+                  </address>
                 </div>
               </li>
             </ul>
@@ -87,7 +90,7 @@ export default async function Footer() {
               <p className={styles.footerTagline}>Professional Beauty Solutions</p>
             </div>
             <div className={styles.footerLegal}>
-              <p className={styles.footerCopyright}>© 2025 Elixderm. All rights reserved.</p>
+              <p className={styles.footerCopyright}>© {new Date().getFullYear()} Elixderm. All rights reserved.</p>
               <div className={styles.footerLegalLinks}>
                 <Link href="/sitemap" className={styles.footerLegalLink}>Sitemap</Link>
               </div>

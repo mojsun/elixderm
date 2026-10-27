@@ -1,3 +1,5 @@
+import { ADDRESS_LINE, SERVICE_AREA } from '../../app/lib/business'
+
 export type ChatbotFaqCategory =
   | 'about'
   | 'private-label'
@@ -37,7 +39,7 @@ const chatbotFaqs: ChatbotFaqEntry[] = [
     order: 2,
     isActive: true,
     question: 'Where are you located?',
-    answer: 'We are located in Toronto, Canada.',
+    answer: `We are located at ${ADDRESS_LINE}. ${SERVICE_AREA}`,
   },
   {
     category: 'about',

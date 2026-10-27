@@ -1,5 +1,7 @@
 import "server-only";
-import { createClient } from "next-sanity";
+// Not from "next-sanity": its entry also loads browser components that bundle
+// the whole Sanity client into every page that reads content.
+import { createClient } from "@sanity/client";
 import clientConfig from "./client-config";
 
 /**

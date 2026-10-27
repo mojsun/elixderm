@@ -1,58 +1,23 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
+import { preload } from "react-dom";
+import AutoplayVideo from "../AutoplayVideo/AutoplayVideo";
+
+const HERO_POSTER = "/videos/leaf-elix-poster.webp";
 
 const HeroSection: React.FC = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      const hero = document.querySelector('.hero-section') as HTMLElement;
-      const heroHeight = hero?.offsetHeight || 0;
-      
-      if (scrolled < heroHeight) {
-        const heroVideo = document.querySelector('.hero-video') as HTMLElement;
-        const videoOverlay = document.querySelector('.video-overlay') as HTMLElement;
-        
-        if (heroVideo) {
-          // Subtle parallax effect for video
-          const videoSpeed = 0.3;
-          heroVideo.style.transform = `translate(-50%, -50%) translateY(${scrolled * videoSpeed}px)`;
-        }
-        
-        if (videoOverlay) {
-          // Increase overlay opacity as user scrolls
-          const overlayOpacity = Math.min(0.8, 0.3 + (scrolled / heroHeight) * 0.5);
-          videoOverlay.style.opacity = overlayOpacity.toString();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    // Set loaded class for animations
-    document.body.classList.add('loaded');
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // The poster is the first thing visitors see, so fetch it with the page.
+  preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
 
   return (
     <section className="hero-section relative flex items-center justify-center overflow-hidden" style={{ minHeight: '80vh', margin: '0 2rem', borderRadius: '0 0 2rem 2rem' }}>
       {/* Background Video */}
       <div className="hero-background absolute inset-0 pointer-events-none z-[1]">
-        <video
-          className="hero-video absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover z-[1]"
-          style={{ transform: 'translate(-50%, -50%)' }}
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/videos/leaf-elix.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <AutoplayVideo
+          src="/videos/leaf-elix.mp4"
+          poster={HERO_POSTER}
+          className="hero-video absolute inset-0 w-full h-full object-cover z-[1]"
+        />
         <div 
           className="video-overlay absolute inset-0 z-[2]"
           style={{
@@ -62,8 +27,7 @@ const HeroSection: React.FC = () => {
               rgba(0, 0, 0, 0.40) 50%,
               rgba(16, 185, 129, 0.15) 75%,
               rgba(0, 0, 0, 0.35) 100%
-            )`,
-            backdropFilter: 'blur(1px)'
+            )`
           }}
         />
       </div>

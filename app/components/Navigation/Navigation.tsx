@@ -173,15 +173,19 @@ export default function Navigation({ menuProducts, menuServices, menuWhoWeHelps 
           </svg>
         </Link>
         
-        <div 
+        <button
+          type="button"
           id="mobile-menu-toggle"
-          className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`} 
+          className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={handleMobileMenuToggle}
+          aria-label="Menu"
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="nav-menu"
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
-        </div>
+        </button>
         
         <ul id="nav-menu" className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li 
