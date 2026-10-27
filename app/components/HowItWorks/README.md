@@ -1,20 +1,19 @@
 # HowItWorks Component
 
-A dynamic, interactive component that displays the company's 5-step process using scroll-based navigation and smooth transitions.
+Displays the company's 5-step process. The steps panel sticks below the navbar while the page scrolls through the section, and the step shown follows the scroll position. The page itself always scrolls normally.
 
 ## Features
 
 ### 🎯 Interactive Navigation
-- **Scroll-based progression**: Navigate through steps using mouse wheel or keyboard arrows
-- **Auto-scroll detection**: Activates when section comes into view
+- **Scroll-driven steps**: Any normal scrolling moves through the steps; nothing intercepts the wheel, touch or keyboard
 - **Smooth transitions**: Animated step changes with fade effects
 - **Progress indication**: Visual progress bar shows current step
 
 ### 📱 Responsive Design
 - **Mobile-first approach**: Optimized layouts for all screen sizes
 - **Adaptive typography**: Font sizes scale appropriately across devices
-- **Touch-friendly**: Keyboard navigation support for accessibility
-- **iPhone Safari optimized**: Special fixes for Safari mobile rendering
+- **Touch-friendly**: Native touch scrolling, with no gestures to learn
+- **Mobile browsers**: The panel is sized with `svh`, so it fits while the browser toolbars show
 
 ### 🎨 Visual Elements
 - **Video/Image media**: Supports both video and image content for each step
@@ -48,16 +47,15 @@ Each step follows this structure:
   media: {
     type: "video" | "image";
     src: string;     // Media source URL
+    poster?: string; // Still frame shown before a video plays
     alt?: string;    // Alt text for images
   }
 }
 ```
 
-## Keyboard Navigation
+## Navigation
 
-- **Arrow Down/Right**: Next step
-- **Arrow Up/Left**: Previous step
-- **Scroll wheel**: Navigate through steps when section is active
+The mouse wheel, trackpad, touch, arrow and Page keys, and the scrollbar all move through the steps, because they scroll the page.
 
 ## Browser Support
 
@@ -68,7 +66,7 @@ Each step follows this structure:
 
 ## Performance
 
-- **Lazy loading**: Images load only when needed
+- **Lazy loading**: Images load only when needed, and a step's video plays only while that step shows
 - **Optimized transitions**: Hardware-accelerated CSS animations
 - **Memory efficient**: Proper cleanup of event listeners
 - **SSR compatible**: Works with Next.js server-side rendering
