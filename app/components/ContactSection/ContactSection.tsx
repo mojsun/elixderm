@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import AutoplayVideo from "../AutoplayVideo/AutoplayVideo";
 
 const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -82,10 +83,11 @@ const ContactSection: React.FC = () => {
         <div className="contact-content">
           <div className="contact-visual">
             <div className="contact-video-container">
-              <video className="contact-video" autoPlay muted loop playsInline>
-                <source src="/videos/contact.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <AutoplayVideo
+                src="/videos/contact.mp4"
+                poster="/videos/contact-poster.webp"
+                className="contact-video"
+              />
             </div>
           </div>
           

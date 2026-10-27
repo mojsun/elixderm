@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import AutoplayVideo from "../AutoplayVideo/AutoplayVideo";
 import styles from './HowItWorks.module.css';
 
 export default function HowItWorks(): React.JSX.Element {
@@ -22,7 +23,8 @@ export default function HowItWorks(): React.JSX.Element {
       description: "We start with a comprehensive consultation to understand your vision, target market, and specific requirements. Our team analyzes your needs and provides expert guidance on formulation possibilities, packaging options, and regulatory considerations.",
       media: {
         type: "video" as const,
-        src: "/videos/discovery.mp4"
+        src: "/videos/discovery.mp4",
+        poster: "/videos/discovery-poster.webp"
       }
     },
     {
@@ -41,7 +43,8 @@ export default function HowItWorks(): React.JSX.Element {
       description: "We produce samples for your review and testing. You'll receive physical samples to evaluate texture, performance, and user experience. We iterate based on your feedback until the formulation is perfect.",
       media: {
         type: "video" as const,
-        src: "/videos/testing-video.mp4"
+        src: "/videos/testing-video.mp4",
+        poster: "/videos/testing-video-poster.webp"
       }
     },
     {
@@ -49,8 +52,9 @@ export default function HowItWorks(): React.JSX.Element {
       title: "Design & Packaging",
       description: "Our design team creates stunning packaging that reflects your brand identity. We handle everything from container selection to label design, ensuring your products stand out on shelves and online.",
       media: {
-        type: "video" as const, 
-        src: "/videos/design.mp4"
+        type: "video" as const,
+        src: "/videos/design.mp4",
+        poster: "/videos/design-poster.webp"
       }
     },
     {
@@ -59,7 +63,8 @@ export default function HowItWorks(): React.JSX.Element {
       description: "We manufacture your products with precision and care, maintaining strict quality control throughout the process. Your finished products are carefully packaged and delivered ready for market launch.",
       media: {
         type: "video" as const,
-        src: "/videos/packaging.mp4"
+        src: "/videos/packaging.mp4",
+        poster: "/videos/packaging-poster.webp"
       }
     }
   ];
@@ -351,19 +356,12 @@ export default function HowItWorks(): React.JSX.Element {
                 {/* Step Visual */}
                 <div className={styles.stepImageContainer}>
                   {step.media.type === 'video' ? (
-                    <video 
-                      key={step.media.src}
+                    <AutoplayVideo
+                      src={step.media.src}
+                      poster={step.media.poster}
                       className={styles.stepImage}
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src={step.media.src} type="video/mp4" />
-                      <div className="flex items-center justify-center h-full bg-gray-200">
-                        <p className="text-gray-500">Video: {step.title}</p>
-                      </div>
-                    </video>
+                      active={index === currentStepIndex}
+                    />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img 

@@ -1,21 +1,23 @@
 import React from "react";
 import Link from "next/link";
+import { preload } from "react-dom";
+import AutoplayVideo from "../AutoplayVideo/AutoplayVideo";
+
+const HERO_POSTER = "/videos/leaf-elix-poster.webp";
 
 const HeroSection: React.FC = () => {
+  // The poster is the first thing visitors see, so fetch it with the page.
+  preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
+
   return (
     <section className="hero-section relative flex items-center justify-center overflow-hidden" style={{ minHeight: '80vh', margin: '0 2rem', borderRadius: '0 0 2rem 2rem' }}>
       {/* Background Video */}
       <div className="hero-background absolute inset-0 pointer-events-none z-[1]">
-        <video
+        <AutoplayVideo
+          src="/videos/leaf-elix.mp4"
+          poster={HERO_POSTER}
           className="hero-video absolute inset-0 w-full h-full object-cover z-[1]"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/videos/leaf-elix.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        />
         <div 
           className="video-overlay absolute inset-0 z-[2]"
           style={{
