@@ -115,10 +115,7 @@ npm run sanity:deploy # Deploy Sanity Studio
 - `POST /api/home-contact` - Handle home page quick inquiries
 
 ### Admin Operations
-- `POST /api/update-contact-status` - Update contact submission status
-- `POST /api/update-home-contact-status` - Update home contact status
-- `DELETE /api/delete-contact` - Delete contact submission
-- `DELETE /api/delete-home-contact` - Delete home contact submission
+Submission status changes and deletions run in Sanity Studio with the signed-in editor's permissions. There are no public endpoints for them.
 
 ## 🔒 Authentication
 
