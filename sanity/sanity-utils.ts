@@ -1,4 +1,4 @@
-import { groq } from "next-sanity";
+import groq from "groq";
 import { Project } from "@/types/project";
 import { Page } from "@/types/Page";
 import { Product } from "@/types/Product";
