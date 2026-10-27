@@ -1,10 +1,10 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
-import { getMenuServices } from "@/sanity/sanity-utils";
+import { getMenuServices, hasPublishedNews } from "@/sanity/sanity-utils";
 import { ADDRESS } from "@/app/lib/business";
 
 export default async function Footer() {
-  const services = await getMenuServices();
+  const [services, hasNews] = await Promise.all([getMenuServices(), hasPublishedNews()]);
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
@@ -17,11 +17,13 @@ export default async function Footer() {
                   About Elixderm
                 </Link>
               </li>
-              <li>
-                <Link href="/news" className={styles.footerLink}>
-                  Latest News
-                </Link>
-              </li>
+              {hasNews && (
+                <li>
+                  <Link href="/news" className={styles.footerLink}>
+                    Latest News
+                  </Link>
+                </li>
+              )}
               <li className={styles.footerAddress}>
                 <div className={styles.addressContainer}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.locationIcon}>

@@ -4,8 +4,10 @@ import NewsSection from "@/app/components/NewsSection";
 import ContactSection from "@/app/components/ContactSection/ContactSection";
 import Breadcrumb from "@/app/components/Breadcrumb/Breadcrumb";
 import PageHero from "@/app/components/PageHero";
+import { hasPublishedNews } from "@/sanity/sanity-utils";
 
-export default function About() {
+export default async function About() {
+  const hasNews = await hasPublishedNews();
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "About Us" }
@@ -25,7 +27,7 @@ export default function About() {
 
         <OurStorySection />
         <TeamSection />
-        <NewsSection />
+        {hasNews && <NewsSection />}
         <ContactSection />
       </main>
     </div>

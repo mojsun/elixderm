@@ -742,6 +742,10 @@ export async function getWhoWeHelp(slug: string): Promise<WhoWeHelp> {
 }
 
 // News Functions
+export async function hasPublishedNews(): Promise<boolean> {
+  return serverClient.fetch(groq`count(*[_type == "news" && isPublished == true]) > 0`);
+}
+
 export async function getNews(): Promise<News[]> {
   return serverClient.fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc){
     _id,
