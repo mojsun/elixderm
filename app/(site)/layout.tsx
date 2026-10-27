@@ -5,6 +5,7 @@ import "../globals.css";
 import Footer from "../components/Footer/Footer";
 import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollHandler";
 import Navigation from "../components/Navigation";
+import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from "@/sanity/sanity-utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,11 +47,17 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [menuProducts, menuServices, menuWhoWeHelps] = await Promise.all([
+    getMenuProducts(),
+    getMenuServices(),
+    getMenuWhoWeHelps(),
+  ]);
+
   return (
     <html lang="en">
       <head>
@@ -71,7 +78,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${sairaStencil.variable} ${outfit.variable} ${dmSans.variable} antialiased`}
       >
         <div className="page-layout">
-          <Navigation />
+          <Navigation
+            menuProducts={menuProducts}
+            menuServices={menuServices}
+            menuWhoWeHelps={menuWhoWeHelps}
+          />
 
           <main className="page-content">
             {children}

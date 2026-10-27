@@ -1,4 +1,4 @@
-import { createClient, groq } from "next-sanity";
+import { groq } from "next-sanity";
 import { Project } from "@/types/project";
 import { Page } from "@/types/Page";
 import { Product } from "@/types/Product";
@@ -9,7 +9,7 @@ import { WhoWeHelp } from "@/types/WhoWeHelp";
 import { News } from "@/types/News";
 import { ProductOptions } from "@/types/ProductOptions";
 import { ChatbotFaqCategory } from "@/sanity/data/chatbot-faqs";
-import clientConfig from "./config/client-config";
+import { serverClient } from "./config/server-client";
 
 export interface ChatbotFaq {
   _id: string;
@@ -21,7 +21,7 @@ export interface ChatbotFaq {
 }
 
 export async function getChatbotFAQs(): Promise<ChatbotFaq[]> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "chatbotFaq" && isActive == true] | order(category asc, order asc){
       _id,
       question,
@@ -35,7 +35,7 @@ export async function getChatbotFAQs(): Promise<ChatbotFaq[]> {
   );
 }
 export async function getProjects(): Promise<Project[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "project"]{
+  return serverClient.fetch(groq`*[_type == "project"]{
     _id,
     _createdAt,
     name,
@@ -46,7 +46,7 @@ export async function getProjects(): Promise<Project[]> {
   }`);
 }
 export async function getProject(slug: string): Promise<Project> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "project" && slug.current == $slug][0]{
     _id,
     _createdAt,
@@ -62,7 +62,7 @@ export async function getProject(slug: string): Promise<Project> {
 }
 
 export async function getPages(): Promise<Page[]> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "page"]{
 _id,
 _createdAt,
@@ -73,7 +73,7 @@ title,
   );
 }
 export async function getPage(slug: string): Promise<Page> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "page" && slug.current == $slug][0]{
     _id,
     _createdAt,
@@ -87,7 +87,7 @@ export async function getPage(slug: string): Promise<Page> {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "product"]{
+  return serverClient.fetch(groq`*[_type == "product"]{
     _id,
     _createdAt,
     name,
@@ -109,7 +109,7 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getMenuProducts(): Promise<Product[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "product" && showInMenu == true] | order(category asc, name asc){
+  return serverClient.fetch(groq`*[_type == "product" && showInMenu == true] | order(category asc, name asc){
     _id,
     name,
     "slug": slug.current,
@@ -119,7 +119,7 @@ export async function getMenuProducts(): Promise<Product[]> {
 }
 
 export async function getProduct(slug: string): Promise<Product> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "product" && slug.current == $slug][0]{
       _id,
       _createdAt,
@@ -227,7 +227,7 @@ export async function getProduct(slug: string): Promise<Product> {
 }
 
 export async function getServices(): Promise<Service[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "service"]{
+  return serverClient.fetch(groq`*[_type == "service"]{
     _id,
     _createdAt,
     name,
@@ -245,7 +245,7 @@ export async function getServices(): Promise<Service[]> {
 }
 
 export async function getMenuServices(): Promise<Service[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "service" && showInMenu == true] | order(menuOrder asc, name asc){
+  return serverClient.fetch(groq`*[_type == "service" && showInMenu == true] | order(menuOrder asc, name asc){
     _id,
     name,
     "slug": slug.current,
@@ -257,7 +257,7 @@ export async function getMenuServices(): Promise<Service[]> {
 }
 
 export async function getService(slug: string): Promise<Service> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "service" && slug.current == $slug][0]{
       _id,
       _createdAt,
@@ -356,7 +356,7 @@ export async function getService(slug: string): Promise<Service> {
 
 // Blog Posts Functions
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "blogPost"] | order(publishedAt desc){
+  return serverClient.fetch(groq`*[_type == "blogPost"] | order(publishedAt desc){
     _id,
     _createdAt,
     title,
@@ -388,7 +388,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "blogPost" && featured == true] | order(publishedAt desc){
+  return serverClient.fetch(groq`*[_type == "blogPost" && featured == true] | order(publishedAt desc){
     _id,
     _createdAt,
     title,
@@ -420,7 +420,7 @@ export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "blogPost" && slug.current == $slug][0]{
       _id,
       _createdAt,
@@ -461,7 +461,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost> {
 }
 
 export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "blogPost" && category == $category] | order(publishedAt desc){
       _id,
       _createdAt,
@@ -496,7 +496,7 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
 }
 
 export async function getRecentBlogPosts(limit: number = 3): Promise<BlogPost[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "blogPost"] | order(publishedAt desc)[0...${limit}]{
+  return serverClient.fetch(groq`*[_type == "blogPost"] | order(publishedAt desc)[0...${limit}]{
     _id,
     _createdAt,
     title,
@@ -529,7 +529,7 @@ export async function getRecentBlogPosts(limit: number = 3): Promise<BlogPost[]>
 
 // Author Functions
 export async function getAuthors(): Promise<Author[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "author"] | order(name asc){
+  return serverClient.fetch(groq`*[_type == "author"] | order(name asc){
     _id,
     _createdAt,
     name,
@@ -547,7 +547,7 @@ export async function getAuthors(): Promise<Author[]> {
 }
 
 export async function getFeaturedAuthors(): Promise<Author[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "author" && featured == true] | order(name asc){
+  return serverClient.fetch(groq`*[_type == "author" && featured == true] | order(name asc){
     _id,
     _createdAt,
     name,
@@ -565,7 +565,7 @@ export async function getFeaturedAuthors(): Promise<Author[]> {
 }
 
 export async function getAuthor(slug: string): Promise<Author> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "author" && slug.current == $slug][0]{
       _id,
       _createdAt,
@@ -590,7 +590,7 @@ export async function getAuthor(slug: string): Promise<Author> {
 }
 
 export async function getBlogPostsByAuthor(authorSlug: string): Promise<BlogPost[]> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "blogPost" && author->slug.current == $authorSlug] | order(publishedAt desc){
       _id,
       _createdAt,
@@ -626,7 +626,7 @@ export async function getBlogPostsByAuthor(authorSlug: string): Promise<BlogPost
 
 // Who We Help Functions
 export async function getWhoWeHelps(): Promise<WhoWeHelp[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "whoWeHelp"]{
+  return serverClient.fetch(groq`*[_type == "whoWeHelp"]{
     _id,
     _createdAt,
     name,
@@ -644,7 +644,7 @@ export async function getWhoWeHelps(): Promise<WhoWeHelp[]> {
 }
 
 export async function getMenuWhoWeHelps(): Promise<WhoWeHelp[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "whoWeHelp" && showInMenu == true] | order(category asc, name asc){
+  return serverClient.fetch(groq`*[_type == "whoWeHelp" && showInMenu == true] | order(category asc, name asc){
     _id,
     name,
     "slug": slug.current,
@@ -654,7 +654,7 @@ export async function getMenuWhoWeHelps(): Promise<WhoWeHelp[]> {
 }
 
 export async function getWhoWeHelp(slug: string): Promise<WhoWeHelp> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "whoWeHelp" && slug.current == $slug][0]{
       _id,
       _createdAt,
@@ -743,7 +743,7 @@ export async function getWhoWeHelp(slug: string): Promise<WhoWeHelp> {
 
 // News Functions
 export async function getNews(): Promise<News[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc){
+  return serverClient.fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc){
     _id,
     _createdAt,
     title,
@@ -763,7 +763,7 @@ export async function getNews(): Promise<News[]> {
 }
 
 export async function getAllNews(): Promise<News[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "news"] | order(publishDate desc){
+  return serverClient.fetch(groq`*[_type == "news"] | order(publishDate desc){
     _id,
     _createdAt,
     title,
@@ -783,7 +783,7 @@ export async function getAllNews(): Promise<News[]> {
 }
 
 export async function getRecentNews(limit: number = 5): Promise<News[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc)[0...${limit}]{
+  return serverClient.fetch(groq`*[_type == "news" && isPublished == true] | order(publishDate desc)[0...${limit}]{
     _id,
     _createdAt,
     title,
@@ -803,7 +803,7 @@ export async function getRecentNews(limit: number = 5): Promise<News[]> {
 }
 
 export async function getProductOptions(): Promise<ProductOptions[]> {
-  return createClient(clientConfig).fetch(groq`*[_type == "productOptions"]{
+  return serverClient.fetch(groq`*[_type == "productOptions"]{
     _id,
     name,
     title,
@@ -826,7 +826,7 @@ export async function getProductOptions(): Promise<ProductOptions[]> {
 }
 
 export async function getProductOption(id: string): Promise<ProductOptions> {
-  return createClient(clientConfig).fetch(
+  return serverClient.fetch(
     groq`*[_type == "productOptions" && _id == $id][0]{
       _id,
       name,
