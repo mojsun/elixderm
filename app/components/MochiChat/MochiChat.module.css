@@ -188,6 +188,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 24px clamp(16px, 4vw, 80px) 16px;
   display: flex;
   flex-direction: column;

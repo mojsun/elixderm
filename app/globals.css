@@ -662,13 +662,10 @@ body {
 * {
   box-sizing: border-box;
   padding: 0;
-  overscroll-behavior: none;
 }
 
 html {
   scroll-behavior: smooth;
-  overscroll-behavior: none;
-  overscroll-behavior-y: none;
 }
 
 body {
@@ -677,8 +674,6 @@ body {
   line-height: 1.6;
   background: var(--color-light);
   overflow-x: clip;
-  overscroll-behavior: none;
-  overscroll-behavior-y: none;
   padding: 0;
   margin: 0;
   position: relative;
