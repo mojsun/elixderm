@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 import AutoplayVideo from "../AutoplayVideo/AutoplayVideo";
 import styles from './HowItWorks.module.css';
 
@@ -363,13 +364,13 @@ export default function HowItWorks(): React.JSX.Element {
                       active={index === currentStepIndex}
                     />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img 
-                      key={step.media.src}
-                      src={step.media.src} 
-                      alt={step.media.alt || step.title} 
+                    <Image
+                      src={step.media.src}
+                      alt={step.media.alt || step.title}
+                      width={1024}
+                      height={1024}
+                      sizes="(max-width: 768px) 320px, 600px"
                       className={styles.stepImage}
-                      loading="lazy"
                     />
                   )}
                 </div>
