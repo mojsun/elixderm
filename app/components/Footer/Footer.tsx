@@ -88,7 +88,7 @@ export default async function Footer() {
               <p className={styles.footerTagline}>Professional Beauty Solutions</p>
             </div>
             <div className={styles.footerLegal}>
-              <p className={styles.footerCopyright}>© 2025 Elixderm. All rights reserved.</p>
+              <p className={styles.footerCopyright}>© {new Date().getFullYear()} Elixderm. All rights reserved.</p>
               <div className={styles.footerLegalLinks}>
                 <Link href="/sitemap" className={styles.footerLegalLink}>Sitemap</Link>
               </div>
