@@ -1,15 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { createClient } from 'next-sanity';
-import clientConfig from '../config/client-config';
 import HomeContactChart from './HomeContactChart';
-
-// Create a client for fetching data (read-only)
-const sanityClient = createClient({
-  ...clientConfig,
-  useCdn: false,
-});
+import { usePublishedClient } from './usePublishedClient';
 
 interface HomeContactSubmission {
   _id: string;
@@ -22,6 +15,7 @@ interface HomeContactSubmission {
 }
 
 const HomeContactTable: React.FC = () => {
+  const client = usePublishedClient();
   const [submissions, setSubmissions] = useState<HomeContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +34,7 @@ const HomeContactTable: React.FC = () => {
           submittedAt
         }`;
         
-        const data = await sanityClient.fetch(query);
+        const data = await client.fetch(query);
         setSubmissions(data);
       } catch (err) {
         setError('Failed to fetch short contact form submissions');
@@ -51,26 +45,11 @@ const HomeContactTable: React.FC = () => {
     };
 
     fetchSubmissions();
-  }, []);
+  }, [client]);
 
   const updateStatus = async (submissionId: string, newStatus: string) => {
     try {
-      const response = await fetch('/api/update-home-contact-status', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: submissionId,
-          status: newStatus,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to update status');
-      }
+      await client.patch(submissionId).set({ status: newStatus }).commit();
 
       // Update local state
       setSubmissions(prev => prev.map(submission => 
@@ -92,21 +71,8 @@ const HomeContactTable: React.FC = () => {
 
     setDeleting(id);
     try {
-      const response = await fetch('/api/delete-home-contact', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      if (response.ok) {
-        setSubmissions(prev => prev.filter(submission => submission._id !== id));
-        console.log('Home contact deleted successfully');
-      } else {
-        console.error('Failed to delete home contact');
-        alert('Failed to delete contact. Please try again.');
-      }
+      await client.delete(id);
+      setSubmissions(prev => prev.filter(submission => submission._id !== id));
     } catch (error) {
       console.error('Error deleting home contact:', error);
       alert('Error deleting contact. Please try again.');

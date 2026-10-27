@@ -1,15 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { createClient } from 'next-sanity'
-
-const client = createClient({
-  projectId: '7v67lu84',
-  dataset: 'production',
-  apiVersion: '2025-07-17',
-  useCdn: false,
-  token: process.env.SANITY_API_WRITE_TOKEN || process.env.NEXT_PUBLIC_SANITY_TOKEN,
-})
+import React, { useState, useEffect, useCallback } from 'react'
+import { usePublishedClient } from './usePublishedClient'
 
 interface URLItem {
   id: string
@@ -27,6 +19,7 @@ interface URLItem {
 }
 
 export default function SiteURLs() {
+  const client = usePublishedClient()
   const [urls, setUrls] = useState<URLItem[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -34,10 +27,6 @@ export default function SiteURLs() {
   const [typeFilter, setTypeFilter] = useState('')
   const [editingField, setEditingField] = useState<{ id: string, field: string } | null>(null)
   const [tempValue, setTempValue] = useState('')
-
-  useEffect(() => {
-    fetchAllUrls()
-  }, [])
 
   useEffect(() => {
     let filtered = urls
@@ -59,7 +48,7 @@ export default function SiteURLs() {
     setFilteredUrls(filtered)
   }, [urls, searchQuery, typeFilter])
 
-  const fetchAllUrls = async () => {
+  const fetchAllUrls = useCallback(async () => {
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'
       const allUrls: URLItem[] = []
@@ -346,7 +335,11 @@ export default function SiteURLs() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [client])
+
+  useEffect(() => {
+    fetchAllUrls()
+  }, [fetchAllUrls])
 
   const deleteItem = async (item: URLItem) => {
     if (!window.confirm(`Are you sure you want to delete "${item.title}"? This action cannot be undone.`)) {
