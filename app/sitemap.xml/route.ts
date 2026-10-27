@@ -1,12 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createClient } from 'next-sanity'
-
-const client = createClient({
-  projectId: '7v67lu84',
-  dataset: 'production',
-  apiVersion: '2025-07-17',
-  useCdn: false,
-})
+import { serverClient } from '@/sanity/config/server-client'
 
 interface SitemapURL {
   url: string
@@ -117,35 +110,35 @@ export async function GET() {
     // Fetch dynamic pages from Sanity
     const [pages, projects, products, services, whoWeHelps] = await Promise.all([
       // Pages
-      client.fetch(`*[_type == "page" && defined(slug.current)] {
+      serverClient.fetch(`*[_type == "page" && defined(slug.current)] {
         _id,
         title,
         "slug": slug.current,
         _updatedAt
       }`),
       // Projects
-      client.fetch(`*[_type == "project" && defined(slug.current)] {
+      serverClient.fetch(`*[_type == "project" && defined(slug.current)] {
         _id,
         name,
         "slug": slug.current,
         _updatedAt
       }`),
       // Products
-      client.fetch(`*[_type == "product" && defined(slug.current)] {
+      serverClient.fetch(`*[_type == "product" && defined(slug.current)] {
         _id,
         name,
         "slug": slug.current,
         _updatedAt
       }`),
       // Services
-      client.fetch(`*[_type == "service" && defined(slug.current)] {
+      serverClient.fetch(`*[_type == "service" && defined(slug.current)] {
         _id,
         name,
         "slug": slug.current,
         _updatedAt
       }`),
       // Who We Help (only indexable pages)
-      client.fetch(`*[_type == "whoWeHelp" && defined(slug.current) && (!defined(seo.noIndex) || seo.noIndex != true)] {
+      serverClient.fetch(`*[_type == "whoWeHelp" && defined(slug.current) && (!defined(seo.noIndex) || seo.noIndex != true)] {
         _id,
         name,
         "slug": slug.current,
