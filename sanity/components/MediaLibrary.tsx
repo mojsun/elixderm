@@ -1,15 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { createClient } from 'next-sanity'
-
-const client = createClient({
-  projectId: '7v67lu84',
-  dataset: 'production',
-  apiVersion: '2025-07-17',
-  useCdn: false,
-  token: process.env.SANITY_API_WRITE_TOKEN || process.env.NEXT_PUBLIC_SANITY_TOKEN,
-})
+import React, { useState, useEffect, useCallback } from 'react'
+import { usePublishedClient } from './usePublishedClient'
 
 interface ImageAsset {
   _id: string
@@ -28,6 +20,7 @@ interface ImageAsset {
 }
 
 export default function MediaLibrary() {
+  const client = usePublishedClient()
   const [images, setImages] = useState<ImageAsset[]>([])
   const [filteredImages, setFilteredImages] = useState<ImageAsset[]>([])
   const [loading, setLoading] = useState(true)
@@ -35,10 +28,6 @@ export default function MediaLibrary() {
   const [searchQuery, setSearchQuery] = useState('')
   const [editingAltText, setEditingAltText] = useState<string | null>(null)
   const [tempAltText, setTempAltText] = useState('')
-
-  useEffect(() => {
-    fetchImages()
-  }, [])
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -52,7 +41,7 @@ export default function MediaLibrary() {
     }
   }, [images, searchQuery])
 
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     try {
       const query = `*[_type == "sanity.imageAsset"] | order(_createdAt desc) {
         _id,
@@ -72,7 +61,11 @@ export default function MediaLibrary() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [client])
+
+  useEffect(() => {
+    fetchImages()
+  }, [fetchImages])
 
   const updateAltText = async (imageId: string, newAltText: string) => {
     try {
