@@ -61,7 +61,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+        {/* Only the icons the site uses. Add new icon names here, in alphabetical order. */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=approval_delegation,balance,biotech,handshake,inventory,lab_research,lightbulb,price_check&display=swap" />
         
         {/* Favicon and App Icons */}
         <link rel="icon" href="/favicon.ico" />
