@@ -784,21 +784,21 @@ button:focus:not(:focus-visible),
 @keyframes titleReveal {
   to {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 
 @keyframes subtitleReveal {
   to {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 
 @keyframes ctaReveal {
   to {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 
@@ -886,6 +886,13 @@ button:focus:not(:focus-visible),
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .animate-title-reveal-1,
+  .animate-title-reveal-2,
+  .animate-subtitle-reveal,
+  .animate-cta-reveal {
+    translate: none !important;
   }
   
   .cta-primary:hover,
