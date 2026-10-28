@@ -1,3 +1,4 @@
+import TrackedLink from '../TrackedLink/TrackedLink'
 import styles from './NhpMentorNote.module.css'
 
 /**
@@ -15,16 +16,18 @@ export default function NhpMentorNote() {
         beta and not yet finalized, so our regulatory team remains your point of contact for
         guidance on your products.
       </p>
-      <a
+      <TrackedLink
         href="https://www.nhpmentor.com"
         className={styles.link}
         target="_blank"
         rel="noopener noreferrer"
+        event="nhp_mentor_click"
+        eventParams={{ link_location: 'regulatory_support_note' }}
       >
         nhpmentor.com
         <span aria-hidden="true"> ↗</span>
         <span className={styles.srOnly}> (opens in a new tab)</span>
-      </a>
+      </TrackedLink>
     </section>
   )
 }
