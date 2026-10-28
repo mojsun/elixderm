@@ -1,5 +1,6 @@
 import React from "react";
 import FeatureSection from "@/app/components/FeatureSection";
+import TrackedLink from "@/app/components/TrackedLink/TrackedLink";
 
 export default function WhyElixderm(): React.JSX.Element {
 
@@ -38,7 +39,19 @@ export default function WhyElixderm(): React.JSX.Element {
         </span>
       ),
       title: "Regulatory support included",
-      description: "Compliance guidance at every step"
+      description: (
+        <>
+          Compliance guidance at every step
+          <TrackedLink
+            href="/services/compliance#nhp-mentor"
+            className="mt-2 block text-sm font-semibold text-emerald-700 underline underline-offset-4 hover:text-emerald-800"
+            event="nhp_mentor_click"
+            eventParams={{ link_location: "home_regulatory_card" }}
+          >
+            NHP Mentor (Beta) <span aria-hidden="true">→</span>
+          </TrackedLink>
+        </>
+      )
     }
   ];
 

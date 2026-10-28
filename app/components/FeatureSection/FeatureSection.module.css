@@ -96,6 +96,19 @@
   height: auto;
 }
 
+/* Two-column simple cards keep their usual height but grow together, row by
+   row, when one needs more room. */
+@media (min-width: 769px) {
+  .simpleGrid {
+    grid-auto-rows: 1fr;
+  }
+
+  .simpleGrid .featureCard {
+    height: auto;
+    min-height: 240px;
+  }
+}
+
 /* Feature Cards */
 .featureCard {
   position: relative;

@@ -5,6 +5,7 @@
   border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: 20px;
   background: #f0fdf4;
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
 }
 
 .label {

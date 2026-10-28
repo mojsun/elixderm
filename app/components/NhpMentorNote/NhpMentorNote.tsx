@@ -7,7 +7,7 @@ import styles from './NhpMentorNote.module.css'
  */
 export default function NhpMentorNote() {
   return (
-    <section className={styles.note} aria-labelledby="nhp-mentor-note-title">
+    <section id="nhp-mentor" className={styles.note} aria-labelledby="nhp-mentor-note-title">
       <p className={styles.label}>Beta</p>
       <h2 id="nhp-mentor-note-title" className={styles.title}>NHP Mentor</h2>
       <p className={styles.text}>
