@@ -16,6 +16,12 @@ describe('buildChatbotSystemPrompt', () => {
     expect(prompt).toContain('based in Mississauga, Ontario, Canada')
     expect(prompt).not.toContain('Toronto')
   })
+
+  it('introduces NHP Mentor as a beta initiative, not a finished product', () => {
+    expect(prompt).toContain('NHP Mentor (www.nhpmentor.com)')
+    expect(prompt).toContain('in beta and not yet finalized')
+    expect(prompt).toContain("don't present it as a finished product")
+  })
 })
 
 describe('seeded location FAQ', () => {

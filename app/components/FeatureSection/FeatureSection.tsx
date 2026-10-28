@@ -6,7 +6,7 @@ import styles from "./FeatureSection.module.css";
 interface Feature {
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description: React.ReactNode;
 }
 
 interface FeatureSectionProps {

@@ -11,6 +11,7 @@ import ServiceCTARow from '@/app/components/ServiceCTARow/ServiceCTARow'
 import ServiceProductRange from '@/app/components/ServiceProductRange/ServiceProductRange'
 import ServiceMiddleCTA from '@/app/components/ServiceMiddleCTA/ServiceMiddleCTA'
 import ServiceFAQ from '@/app/components/ServiceFAQ/ServiceFAQ'
+import NhpMentorNote from '@/app/components/NhpMentorNote/NhpMentorNote'
 
 type Props = {
   params: Promise<{ service: string }>
@@ -96,6 +97,8 @@ export default async function ServicePage({ params }: Props) {
         <ServiceValue service={service} />
         <ServiceSpecialties service={service} />
         <ServiceProcess service={service} />
+        {/* Regulatory Support only */}
+        {serviceSlug === 'compliance' && <NhpMentorNote />}
         <ServiceCTARow service={service} type="top" />
         <ServiceProductRange service={service} />
         <ServiceMiddleCTA service={service} />
