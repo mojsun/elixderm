@@ -14,13 +14,14 @@ export default function PhilosophySection(): React.JSX.Element {
 
   const maxIndex = philosophyValues.length - 1;
 
-  // Auto-advance slides every 2.4 seconds
+  // Show each promise for 2.6 seconds; stay on the first for visitors who prefer reduced motion.
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
+      setCurrentIndex((prevIndex) =>
         prevIndex >= maxIndex ? 0 : prevIndex + 1
       );
-    }, 1800); // Change slide every 2.4 seconds
+    }, 2600);
 
     return () => clearInterval(interval);
   }, [maxIndex]);
@@ -59,14 +60,17 @@ export default function PhilosophySection(): React.JSX.Element {
                     : 'opacity-0 pointer-events-none'
                 }`}
                 style={{
-                  transition: 'all 0.48s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  // The outgoing phrase fades out before the next one fades in, so they never overlap.
+                  transition: index === currentIndex
+                    ? 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s'
+                    : 'opacity 0.2s ease-in, transform 0.2s ease-in',
                   transform: index === currentIndex ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
                 }}
                 data-index={index}
               >
                 <span className="value-text relative font-bold text-center whitespace-nowrap leading-none transition-all duration-[480ms] ease-out"
                       style={{
-                        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                        fontFamily: "var(--font-heading)",
                         fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                         fontWeight: '800',
                         lineHeight: '1.1',
