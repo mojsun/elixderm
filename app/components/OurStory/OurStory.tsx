@@ -1,5 +1,6 @@
 import React from "react";
 import FeatureSection from "@/app/components/FeatureSection";
+import IconFont from "@/app/components/IconFont/IconFont";
 
 const OurStorySection: React.FC = () => {
   const storyFeatures = [
@@ -42,13 +43,16 @@ const OurStorySection: React.FC = () => {
   ];
 
   return (
-    <FeatureSection
-      title="Our Story"
-      description="Elixderm was born from a simple observation: most beauty manufacturers operate like factories, prioritizing volume over vision. As scientists and entrepreneurs ourselves, we knew there was a better way to bridge the gap between complex chemistry and market success."
-      features={storyFeatures}
-      enableAnimation={false}
-      className="our-story-section"
-    />
+    <>
+      <IconFont />
+      <FeatureSection
+        title="Our Story"
+        description="Elixderm was born from a simple observation: most beauty manufacturers operate like factories, prioritizing volume over vision. As scientists and entrepreneurs ourselves, we knew there was a better way to bridge the gap between complex chemistry and market success."
+        features={storyFeatures}
+        enableAnimation={false}
+        className="our-story-section"
+      />
+    </>
   );
 };
 
