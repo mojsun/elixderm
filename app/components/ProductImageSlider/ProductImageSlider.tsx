@@ -38,10 +38,10 @@ export default function ProductImageSlider({ product }: ProductImageSliderProps)
           </div>
         ))}
       </div>
-      <button className={styles.prev} onClick={() => move(-1)}>
+      <button type="button" className={styles.prev} onClick={() => move(-1)} aria-label="Previous image">
         ❮
       </button>
-      <button className={styles.next} onClick={() => move(1)}>
+      <button type="button" className={styles.next} onClick={() => move(1)} aria-label="Next image">
         ❯
       </button>
     </section>
