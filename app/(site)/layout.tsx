@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Saira_Stencil_One, Outfit, DM_Sans } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 import "../globals.css";
 import Footer from "../components/Footer/Footer";
 import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollHandler";
@@ -93,7 +93,17 @@ export default async function RootLayout({
         </div>
 
       </body>
-      <GoogleAnalytics gaId="G-YTNY2D4FJV" />
+      {/* Google Analytics. The gtag queue is set up as soon as the page is interactive, so page
+          views and click events (TrackedLink) are recorded from the start; Google's 150 KB script
+          loads once the page has finished loading, instead of competing with the page's own
+          files. Visits that end before then are not counted. */}
+      <Script id="ga-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YTNY2D4FJV');`}
+      </Script>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-YTNY2D4FJV" strategy="lazyOnload" />
     </html>
   );
 }
