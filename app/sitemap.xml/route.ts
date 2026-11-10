@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { serverClient } from '@/sanity/config/server-client'
 
+// Rebuild the sitemap in the background at most once a minute, so pages added in Sanity are
+// listed without a redeploy. Without it, the page list cached by an earlier build never changes.
+export const revalidate = 60
+
 interface SitemapURL {
   url: string
   lastModified: string
