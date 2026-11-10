@@ -1,5 +1,6 @@
 import React from "react";
 import FeatureSection from "@/app/components/FeatureSection";
+import IconFont from "@/app/components/IconFont/IconFont";
 import TrackedLink from "@/app/components/TrackedLink/TrackedLink";
 
 export default function WhyElixderm(): React.JSX.Element {
@@ -56,11 +57,14 @@ export default function WhyElixderm(): React.JSX.Element {
   ];
 
   return (
-    <FeatureSection
-      title="Why Elixderm is Different"
-      description="While other manufacturers focus on volume and standardization, we've built our entire operation around flexibility, transparency, and genuine partnership. Here's what sets us apart in the beauty manufacturing landscape."
-      features={features}
-      enableAnimation={false}
-    />
+    <>
+      <IconFont />
+      <FeatureSection
+        title="Why Elixderm is Different"
+        description="While other manufacturers focus on volume and standardization, we've built our entire operation around flexibility, transparency, and genuine partnership. Here's what sets us apart in the beauty manufacturing landscape."
+        features={features}
+        enableAnimation={false}
+      />
+    </>
   );
 }
