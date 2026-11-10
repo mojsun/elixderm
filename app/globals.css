@@ -703,20 +703,28 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-primary);
 }
 
-/* Focus states - Only for form inputs and accessibility */
+/* Focus states: always on form fields; on links, buttons and other controls only when
+   reached with the keyboard (focus-visible), so mouse clicks show no outline. */
 input:focus,
 textarea:focus,
 select:focus,
-button:focus:focus-visible {
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Remove focus outline for links and interactive elements */
-a:focus,
+a:focus:not(:focus-visible),
 button:focus:not(:focus-visible),
 [tabindex]:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* The phone menu's quote button turns its outline off with !important; keep keyboard focus visible. */
+.cta-button:focus-visible {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 2px;
 }
 
 /* Utility classes */
