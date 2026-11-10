@@ -30,8 +30,6 @@ const ContactSection: React.FC = () => {
     setSubmitStatus('');
 
     try {
-      console.log('Submitting form data:', formData);
-      
       const response = await fetch('/api/home-contact', {
         method: 'POST',
         headers: {
@@ -40,11 +38,7 @@ const ContactSection: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-
       const result = await response.json();
-      console.log('Response data:', result);
 
       if (response.ok) {
         setSubmitStatus('success');
@@ -105,6 +99,8 @@ const ContactSection: React.FC = () => {
                       onChange={handleInputChange}
                       className="contact-input" 
                       placeholder="Your Name" 
+                      aria-label="Your name"
+                      autoComplete="name"
                       required 
                       disabled={isSubmitting}
                     />
@@ -115,6 +111,8 @@ const ContactSection: React.FC = () => {
                       onChange={handleInputChange}
                       className="contact-input" 
                       placeholder="Your Email Address" 
+                      aria-label="Your email address"
+                      autoComplete="email"
                       required 
                       disabled={isSubmitting}
                     />
@@ -124,6 +122,7 @@ const ContactSection: React.FC = () => {
                       onChange={handleInputChange}
                       className="contact-textarea" 
                       placeholder="Tell us about your project..." 
+                      aria-label="Tell us about your project"
                       rows={4} 
                       required
                       disabled={isSubmitting}
@@ -137,11 +136,13 @@ const ContactSection: React.FC = () => {
                     </button>
                   </div>
                 </form>
-                {submitMessage && (
-                  <div className={`submit-message ${submitStatus}`}>
-                    {submitMessage}
-                  </div>
-                )}
+                <div aria-live="polite">
+                  {submitMessage && (
+                    <div className={`submit-message ${submitStatus}`}>
+                      {submitMessage}
+                    </div>
+                  )}
+                </div>
                 <p className="contact-note">
                   Free consultation • No commitment • Response within 24 hours
                 </p>
