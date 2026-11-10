@@ -34,6 +34,15 @@ export default function ServicesMegaMenu({ services, isOpen, onClose }: Services
           </div>
         ))}
       </div>
+
+      {/* Same footer as the Products and Who We Help menus. On phones, tapping "Services" only
+          opens this menu, so this is the way to the /services overview. */}
+      <div className={styles.megaMenuFooter}>
+        <Link href="/services" className={styles.megaMenuMainCta} onClick={onClose}>
+          <span>View All Services</span>
+          <span className={styles.ctaArrow} aria-hidden="true">→</span>
+        </Link>
+      </div>
     </div>
   )
 }

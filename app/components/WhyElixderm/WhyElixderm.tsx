@@ -8,7 +8,7 @@ export default function WhyElixderm(): React.JSX.Element {
   const features = [
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           inventory
         </span>
       ),
@@ -17,7 +17,7 @@ export default function WhyElixderm(): React.JSX.Element {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           price_check
         </span>
       ),
@@ -26,7 +26,7 @@ export default function WhyElixderm(): React.JSX.Element {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           lab_research
         </span>
       ),
@@ -35,7 +35,7 @@ export default function WhyElixderm(): React.JSX.Element {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           balance
         </span>
       ),

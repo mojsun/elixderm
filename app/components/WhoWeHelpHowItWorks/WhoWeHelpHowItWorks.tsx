@@ -16,7 +16,7 @@ interface HowItWorksStep {
 export default function WhoWeHelpHowItWorks({ whoWeHelp }: WhoWeHelpHowItWorksProps) {
   // Default how it works steps with the specified content
   const defaultHowItWorks = {
-    title: "How It Works?",
+    title: "How It Works",
     description: whoWeHelp?.howItWorks?.description || null,
     steps: [
       {

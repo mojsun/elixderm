@@ -6,7 +6,7 @@ const OurStorySection: React.FC = () => {
   const storyFeatures = [
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           biotech
         </span>
       ),
@@ -15,7 +15,7 @@ const OurStorySection: React.FC = () => {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           handshake
         </span>
       ),
@@ -24,7 +24,7 @@ const OurStorySection: React.FC = () => {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           approval_delegation
         </span>
       ),
@@ -33,7 +33,7 @@ const OurStorySection: React.FC = () => {
     },
     {
       icon: (
-        <span className="material-symbols-outlined" style={{ fontSize: '32px' }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '32px' }} aria-hidden="true">
           lightbulb
         </span>
       ),

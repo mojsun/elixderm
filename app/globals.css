@@ -160,7 +160,7 @@ body {
 
 .nav-link:hover {
     color: var(--color-primary);
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(16, 185, 129, 0.1);
     transform: translateY(-1px);
 }
 
@@ -194,7 +194,7 @@ body {
 
 .search-button:hover {
     color: var(--color-primary);
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(16, 185, 129, 0.1);
     transform: translateY(-1px);
 }
 
@@ -215,7 +215,7 @@ body {
     display: flex;
     align-items: center;
     background: white;
-    border: 1px solid rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.2);
     border-radius: 25px;
     width: 0;
     overflow: hidden;
@@ -319,7 +319,7 @@ body {
 }
 
 .dropdown-item:hover {
-    background: linear-gradient(90deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.08));
     color: var(--color-primary);
     padding-left: 2rem;
 }
@@ -392,7 +392,7 @@ body {
 }
 
 .mobile-menu-toggle:hover {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(16, 185, 129, 0.1);
 }
 
 .hamburger-line {
@@ -490,7 +490,7 @@ body {
     }
     
     .nav-link:hover {
-        background: rgba(102, 126, 234, 0.1);
+        background: rgba(16, 185, 129, 0.1);
         color: var(--color-primary);
         transform: none;
     }
@@ -703,20 +703,28 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-primary);
 }
 
-/* Focus states - Only for form inputs and accessibility */
+/* Focus states: always on form fields; on links, buttons and other controls only when
+   reached with the keyboard (focus-visible), so mouse clicks show no outline. */
 input:focus,
 textarea:focus,
 select:focus,
-button:focus:focus-visible {
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Remove focus outline for links and interactive elements */
-a:focus,
+a:focus:not(:focus-visible),
 button:focus:not(:focus-visible),
 [tabindex]:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* The phone menu's quote button turns its outline off with !important; keep keyboard focus visible. */
+.cta-button:focus-visible {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 2px;
 }
 
 /* Utility classes */

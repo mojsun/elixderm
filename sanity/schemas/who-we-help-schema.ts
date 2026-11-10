@@ -212,7 +212,7 @@ const whoWeHelp = {
           name: 'title',
           title: 'Section Title',
           type: 'string',
-          initialValue: 'How It Works?'
+          initialValue: 'How It Works'
         },
         {
           name: 'description',

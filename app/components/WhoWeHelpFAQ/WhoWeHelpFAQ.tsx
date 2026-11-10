@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import styles from './WhoWeHelpFAQ.module.css'
 import { WhoWeHelp } from '@/types/WhoWeHelp'
 
@@ -15,6 +15,7 @@ interface FAQItem {
 
 export default function WhoWeHelpFAQ({ whoWeHelp }: WhoWeHelpFAQProps) {
   const [activeItems, setActiveItems] = useState<number[]>([])
+  const faqId = useId()
   const faqs = whoWeHelp?.faq || { title: '', subtitle: '', items: [] }
   
   // Default FAQ title that appears on all pages unless overridden in Sanity
@@ -88,18 +89,21 @@ export default function WhoWeHelpFAQ({ whoWeHelp }: WhoWeHelpFAQProps) {
               key={index} 
               className={`${styles.faqItem} ${activeItems.includes(index) ? styles.active : ''}`}
             >
-              <h3 className={styles.faqQuestion} onClick={() => toggleFAQ(index)}>
-                <span className={styles.toggleIcon}>
-                  {activeItems.includes(index) ? '-' : '+'}
-                </span>
-                <span>{faq.question}</span>
+              <h3 className={styles.faqHeading}>
+                <button
+                  type="button"
+                  className={styles.faqQuestion}
+                  onClick={() => toggleFAQ(index)}
+                  aria-expanded={activeItems.includes(index)}
+                  aria-controls={`${faqId}-answer-${index}`}
+                >
+                  <span className={styles.toggleIcon} aria-hidden="true">
+                    {activeItems.includes(index) ? '-' : '+'}
+                  </span>
+                  <span>{faq.question}</span>
+                </button>
               </h3>
-              <div 
-                className={styles.faqAnswer}
-                style={{ 
-                  maxHeight: activeItems.includes(index) ? '200px' : '0'
-                }}
-              >
+              <div className={styles.faqAnswer} id={`${faqId}-answer-${index}`}>
                 <div className={styles.answerContent}>
                   {faq.answer}
                 </div>

@@ -38,7 +38,7 @@
   
   .navLinkWithDropdown:hover,
   .navLinkWithDropdown:active {
-    background-color: rgba(102, 126, 234, 0.1);
+    background-color: rgba(16, 185, 129, 0.1);
     color: var(--color-primary);
   }
   

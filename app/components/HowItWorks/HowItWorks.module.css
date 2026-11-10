@@ -429,4 +429,9 @@
     transition: none;
     animation: none;
   }
+
+  /* The step number is revealed by its animation, so show it outright when animations are off. */
+  .stepNumber {
+    opacity: 1;
+  }
 }

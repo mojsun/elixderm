@@ -59,6 +59,9 @@ const personas: Record<
 
 
 
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export default function Testimonials() {
   const [active, setActive] = useState<Persona>("influencer");
   const [isMobile, setIsMobile] = useState(false);
@@ -101,10 +104,10 @@ export default function Testimonials() {
           const nextIndex = (currentIndex + 1) % personas_array.length;
           return personas_array[nextIndex];
         });
-      }, 3000); // Auto-switch every 3 seconds
+      }, 7000); // Auto-switch every 7 seconds, long enough to read a quote
     };
     
-    startAutoPlay();
+    if (!prefersReducedMotion()) startAutoPlay();
     
     return () => {
       if (autoPlayRef.current) {
@@ -130,6 +133,7 @@ export default function Testimonials() {
     }
     
     // Restart after a delay
+    if (prefersReducedMotion()) return;
     resetTimeoutRef.current = setTimeout(() => {
       autoPlayRef.current = setInterval(() => {
         setActive(current => {
@@ -137,8 +141,20 @@ export default function Testimonials() {
           const nextIndex = (currentIndex + 1) % personas_array.length;
           return personas_array[nextIndex];
         });
-      }, 3000); // Auto-switch every 3 seconds
+      }, 7000); // Auto-switch every 7 seconds, long enough to read a quote
     }, 5000); // Wait 5 seconds before restarting auto-play
+  };
+
+  // Pause while the pointer or keyboard focus is on the section; resetAutoPlay resumes it.
+  const pauseAutoPlay = () => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      autoPlayRef.current = null;
+    }
+    if (resetTimeoutRef.current) {
+      clearTimeout(resetTimeoutRef.current);
+      resetTimeoutRef.current = null;
+    }
   };
 
   // Swipe detection
@@ -192,7 +208,13 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="testimonials-section">
+    <section
+      className="testimonials-section"
+      onMouseEnter={pauseAutoPlay}
+      onMouseLeave={resetAutoPlay}
+      onFocus={pauseAutoPlay}
+      onBlur={resetAutoPlay}
+    >
       <div className="testimonials-container">
         <div className="testimonials-header">
           <h2 className="testimonials-title">Hear From People Just Like You</h2>

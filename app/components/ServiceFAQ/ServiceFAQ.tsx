@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import styles from './ServiceFAQ.module.css'
 import { Service } from '@/types/Service'
 
@@ -10,6 +10,7 @@ interface ServiceFAQProps {
 
 export default function ServiceFAQ({ service }: ServiceFAQProps) {
   const [activeItems, setActiveItems] = useState<number[]>([])
+  const faqId = useId()
 
   // Generate FAQ Schema for SEO
   useEffect(() => {
@@ -75,16 +76,21 @@ export default function ServiceFAQ({ service }: ServiceFAQProps) {
               key={index} 
               className={`${styles.faqItem} ${activeItems.includes(index) ? styles.active : ''}`}
             >
-              <h3 
-                className={styles.faqQuestion}
-                onClick={() => toggleFAQ(index)}
-              >
-                <span className={styles.toggleIcon}>
-                  {activeItems.includes(index) ? '-' : '+'}
-                </span>
-                <span>{item.question}</span>
+              <h3 className={styles.faqHeading}>
+                <button
+                  type="button"
+                  className={styles.faqQuestion}
+                  onClick={() => toggleFAQ(index)}
+                  aria-expanded={activeItems.includes(index)}
+                  aria-controls={`${faqId}-answer-${index}`}
+                >
+                  <span className={styles.toggleIcon} aria-hidden="true">
+                    {activeItems.includes(index) ? '-' : '+'}
+                  </span>
+                  <span>{item.question}</span>
+                </button>
               </h3>
-              <div className={styles.faqAnswer}>
+              <div className={styles.faqAnswer} id={`${faqId}-answer-${index}`}>
                 <div className={styles.answerContent}>
                   {item.answer}
                 </div>

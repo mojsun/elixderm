@@ -42,7 +42,7 @@
   overflow: hidden;
   margin: 0 40px;
   position: relative;
-  touch-action: pan-x;
+  touch-action: pan-y; /* the page scrolls on vertical swipes; sideways swipes change slides (JS) */
   user-select: none;
 }
 
