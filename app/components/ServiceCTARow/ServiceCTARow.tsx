@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isExternal, sitePath } from '@/app/lib/links'
 import styles from './ServiceCTARow.module.css'
 import { Service } from '@/types/Service'
 
@@ -15,7 +16,7 @@ export default function ServiceCTARow({ service, type = 'top' }: ServiceCTARowPr
     }
 
     return (
-      <Link href={ctaData.url || '/contact-us'} target="_blank">
+      <Link href={sitePath(ctaData.url || '/contact-us')} target={isExternal(ctaData.url || '') ? '_blank' : undefined}>
         <section className={styles.ctaRow2}>
           <div className={styles.ctaContainer}>
             <p>{ctaData.text}</p>
@@ -34,7 +35,7 @@ export default function ServiceCTARow({ service, type = 'top' }: ServiceCTARowPr
   }
 
   return (
-    <Link href={ctaData.url || '/contact-us'} target="_blank">
+    <Link href={sitePath(ctaData.url || '/contact-us')} target={isExternal(ctaData.url || '') ? '_blank' : undefined}>
       <section className={styles.ctaRow}>
         <p>{ctaData.text}</p>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">

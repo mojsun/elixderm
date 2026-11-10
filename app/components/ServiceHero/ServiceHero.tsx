@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isExternal, sitePath } from '@/app/lib/links'
 import Image from 'next/image'
 import styles from './ServiceHero.module.css'
 import { Service } from '@/types/Service'
@@ -18,7 +19,7 @@ export default function ServiceHero({ service }: ServiceHeroProps) {
             <p>{service?.hero?.description || 'Loading...'}</p>
             
             <div className={styles.buttonsHolder}>
-              <Link href={service?.hero?.ctaUrl || '/contact-us'} target={service?.hero?.ctaUrl ? '_blank' : '_self'}>
+              <Link href={sitePath(service?.hero?.ctaUrl || '/contact-us')} target={isExternal(service?.hero?.ctaUrl || '') ? '_blank' : undefined}>
                 <button className={styles.heroCTAButton}>
                   {service?.hero?.ctaText || 'Book a Call'}
                 </button>

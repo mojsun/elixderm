@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isExternal, sitePath } from '@/app/lib/links'
 import Image from 'next/image'
 import styles from './ServiceMiddleCTA.module.css'
 import { Service } from '@/types/Service'
@@ -36,7 +37,7 @@ export default function ServiceMiddleCTA({ service }: ServiceMiddleCTAProps) {
       <div className={styles.mctaText}>
         <p>{service.middleCTA.subheading}</p>
         <h2>{service.middleCTA.heading}</h2>
-        <Link href={service.middleCTA.ctaUrl || '/contact-us'} target="_blank">
+        <Link href={sitePath(service.middleCTA.ctaUrl || '/contact-us')} target={isExternal(service.middleCTA.ctaUrl || '') ? '_blank' : undefined}>
           <button>
             <span>{service.middleCTA.ctaText}</span>
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1422 800">

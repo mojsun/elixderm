@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import styles from './ProductOptionsModule.module.css'
 
 interface ProductOption {
@@ -28,12 +29,15 @@ interface ProductOptionsModuleProps {
 }
 
 export default function ProductOptionsModule({ options }: ProductOptionsModuleProps) {
+  const router = useRouter()
+
   if (!options) {
     return null
   }
 
+  // In-app navigation to the quote form, instead of reloading the whole site.
   const handleCTAClick = () => {
-    window.location.href = 'https://www.elixderm.com/contact-us'
+    router.push('/contact-us')
   }
 
   const plans = [options.plan1, options.plan2, options.plan3].filter(plan => plan && plan.title)
