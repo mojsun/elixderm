@@ -237,3 +237,60 @@
     box-sizing: border-box;
   }
 }
+
+/* "View All Services": the same footer button as the Products and Who We Help menus. */
+.megaMenuFooter {
+  background: rgba(248, 250, 252, 0.6);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  text-align: center;
+}
+
+.megaMenuMainCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-radius: 50px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+}
+
+.megaMenuMainCta:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+.ctaArrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.megaMenuMainCta:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .megaMenuFooter {
+    padding: 1.25rem 0 0.5rem;
+    background: transparent;
+    border-top: 1px solid #e5e7eb;
+    text-align: left;
+  }
+
+  .megaMenuMainCta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 380px;
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+}
