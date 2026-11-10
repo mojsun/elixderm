@@ -7,6 +7,10 @@ import NavbarScrollHandler from "../components/NavbarScrollHandler/NavbarScrollH
 import Navigation from "../components/Navigation";
 import { getMenuProducts, getMenuServices, getMenuWhoWeHelps } from "@/sanity/sanity-utils";
 
+// Rebuild each page in the background at most once a minute, so Sanity edits reach the site
+// without a redeploy. Without it, pages keep the Sanity data cached by an earlier build.
+export const revalidate = 60;
+
 // Only code snippets in blog posts use it, so it loads on demand.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
