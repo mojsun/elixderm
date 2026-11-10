@@ -174,12 +174,13 @@
   font-weight: 500;
   transition: all 0.2s ease;
   padding: 0.25rem 0.5rem;
+  margin: 0 -0.5rem; /* keeps the text aligned with the copyright line despite the padding */
   border-radius: 4px;
 }
 
 .footerLegalLink:hover {
   color: white;
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(16, 185, 129, 0.12);
 }
 
 /* Responsive Design */
