@@ -1,33 +1,41 @@
 import { Metadata } from 'next'
-import { getNews } from '@/sanity/sanity-utils'
+import { getNews, hasPublishedNews } from '@/sanity/sanity-utils'
 import PageHero from '@/app/components/PageHero'
 import Breadcrumb from '@/app/components/Breadcrumb'
 import NewsList from './components/NewsList'
 
-export const metadata: Metadata = {
-  title: 'Latest News & Updates | Elixderm - Cosmetic Manufacturing News',
-  description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm. Get the newest updates on our cosmetic manufacturing services and company developments.',
-  keywords: 'Elixderm news, cosmetic manufacturing updates, beauty industry news, company announcements, manufacturing insights',
-  openGraph: {
-    title: 'Latest News & Updates | Elixderm',
-    description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm.',
-    type: 'website',
-    siteName: 'Elixderm',
-    locale: 'en_US',
-    url: 'https://elixderm.com/news',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'Latest News & Updates | Elixderm',
-    description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: 'https://elixderm.com/news',
-  },
+const NEWS_URL = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.elixderm.com'}/news`
+
+export async function generateMetadata(): Promise<Metadata> {
+  // With no published news the page only says "No News Available", which Google reports as a
+  // soft 404. Keep it out of search results until there is news; its links are still followed.
+  const hasNews = await hasPublishedNews()
+
+  return {
+    title: 'Latest News & Updates | Elixderm - Cosmetic Manufacturing News',
+    description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm. Get the newest updates on our cosmetic manufacturing services and company developments.',
+    keywords: 'Elixderm news, cosmetic manufacturing updates, beauty industry news, company announcements, manufacturing insights',
+    openGraph: {
+      title: 'Latest News & Updates | Elixderm',
+      description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm.',
+      type: 'website',
+      siteName: 'Elixderm',
+      locale: 'en_US',
+      url: NEWS_URL,
+    },
+    twitter: {
+      card: 'summary',
+      title: 'Latest News & Updates | Elixderm',
+      description: 'Stay updated with the latest news, announcements, and industry insights from Elixderm.',
+    },
+    robots: {
+      index: hasNews,
+      follow: true,
+    },
+    alternates: {
+      canonical: NEWS_URL,
+    },
+  }
 }
 
 export default async function NewsPage() {
